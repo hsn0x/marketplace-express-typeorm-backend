@@ -9,4 +9,9 @@ export const SequelizeConfig = {
         dialect: process.env.S_DIALECT,
     },
 };
-console.log({ SequelizeConfig });
+
+export const expressConfig = {
+    port: process.env.EXPRESS_PORT,
+};
+
+console.log({ SequelizeConfig, expressConfig });

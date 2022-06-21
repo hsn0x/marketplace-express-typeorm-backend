@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
+import { User } from "../models/index.js";
 
-export const createFakeUsers = async (User) => {
+export const createFakeUsers = async () => {
     const fakeUsers = [];
     for (let index = 0; index < 5; index++) {
         fakeUsers.push({

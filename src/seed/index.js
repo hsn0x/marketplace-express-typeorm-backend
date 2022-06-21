@@ -1,4 +1,6 @@
-import students from "./students";
-import users from "./users";
+import { createFakeStudents } from "./students.js";
+import { createFakeUsers } from "./users.js";
 
-export { students, users };
+export { createFakeStudents };
+
+export { createFakeUsers };
