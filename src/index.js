@@ -11,6 +11,7 @@ import _ from "lodash";
 
 import { homeRoutes, productsRoute, usersRoute } from "./routes/index.js";
 import { expressConfig } from "./config.js";
+import { dbSeed } from "./seed/index.js";
 
 const app = express();
 app.use(bodyParser.json());
@@ -27,9 +28,9 @@ app.use("/products", productsRoute);
 const serverPort = expressConfig.port;
 
 const server = async () => {
-    // await sequelize.sync({ force: true });
-    await sequelize.sync();
-    await createFakeUsers();
+    await sequelize.sync({ force: true });
+    // await sequelize.sync();
+    await dbSeed();
     // await createFakeUsers(User);
     // await createFakeStudents(Student);
     // Code here

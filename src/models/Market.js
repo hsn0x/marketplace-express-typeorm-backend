@@ -1,18 +1,16 @@
-import Sequelize from "sequelize";
 import sequelize from "../db/connection.js";
-import Category from "./Category.js";
-import Product from "./Product.js";
+import { INTEGER, STRING } from "../db/dataTypes.js";
 
 const Market = sequelize.define("Market", {
     name: {
-        type: Sequelize.DataTypes.STRING,
+        type: STRING,
         allowNull: false,
     },
     about: {
-        type: Sequelize.DataTypes.STRING,
+        type: STRING,
     },
     slug: {
-        type: Sequelize.DataTypes.INTEGER,
+        type: INTEGER,
     },
 });
 

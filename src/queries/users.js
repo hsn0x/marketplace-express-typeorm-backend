@@ -15,18 +15,21 @@ const findOneUserQuery = (id) => {
 };
 
 const createUserQuery = async (user) => {
+    console.log(user);
     const createdUser = await User.create(user);
     return createdUser;
 };
 
-const updateUserQuery = async (id, user) => {
-    await User.update(user, { where: { ...id } });
+const updateUserQuery = async (user, where) => {
+    const updatedUser = await User.update(user, { where });
+    return updatedUser;
 };
 
-const deleteUserQuery = async (id) => {
-    await User.destroy({
-        where: id,
+const deleteUserQuery = async (where) => {
+    const deletedUser = await User.destroy({
+        where,
     });
+    return deletedUser;
 };
 
 export {

@@ -20,7 +20,7 @@ const getProductById = (request, response) => {
 const createProduct = (request, response) => {
     const product = createProductQuery(request.body);
     response.status(201).json({
-        message: `Product added with ID: ${results.rows[0].id}`,
+        message: `Product added with ID: ${product[0]?.id}`,
         data: product,
     });
 };

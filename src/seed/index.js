@@ -1,6 +1,9 @@
 import { createFakeStudents } from "./students.js";
 import { createFakeUsers } from "./users.js";
+import { createFakeProducts } from "./products.js";
 
-export { createFakeStudents };
-
-export { createFakeUsers };
+export const dbSeed = async () => {
+    await createFakeProducts();
+    await createFakeUsers();
+    await createFakeProducts();
+};

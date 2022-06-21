@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { Product } from "../models/index.js";
 
 const findAllProductsQuery = async () => {
@@ -15,7 +16,10 @@ const findOneProductQuery = (id) => {
 };
 
 const createProductQuery = async (product) => {
-    const createdProduct = await Product.create(product);
+    const { title, description, price, user_id, market_id } = product;
+    const createdProduct = await Product.create({ title, description, price });
+    createdProduct.setUser(user_id);
+    createdProduct.setMarket(market_id);
     return createdProduct;
 };
 

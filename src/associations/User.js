@@ -1,8 +1,24 @@
 import { Market, Post, Product, Student, User } from "../models/index.js";
 
-User.hasMany(Market);
-User.hasMany(Product);
-User.hasOne(Student);
-User.hasMany(Post);
+User.hasMany(Market, {
+    foreignKey: {
+        allowNull: false,
+    },
+});
+User.hasMany(Product, {
+    foreignKey: {
+        allowNull: false,
+    },
+});
+User.hasOne(Student, {
+    foreignKey: {
+        allowNull: false,
+    },
+});
+User.hasMany(Post, {
+    foreignKey: {
+        allowNull: false,
+    },
+});
 
 export default User;

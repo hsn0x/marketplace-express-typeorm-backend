@@ -1,18 +1,14 @@
 import sequelize from "../db/connection.js";
-import { faker } from "@faker-js/faker";
-import { BOOLEAN, INTEGER, STRING } from "../db/dataTypes.js";
-import Market from "./Market.js";
-import Product from "./Product.js";
-import Student from "./Student.js";
+import { INTEGER, STRING } from "../db/dataTypes.js";
 
 const User = sequelize.define("User", {
     firstName: {
         type: STRING,
-        allowNull: true,
+        allowNull: false,
     },
     lastName: {
         type: STRING,
-        // allowNull defaults to true
+        allowNull: false,
     },
     username: {
         type: STRING,
@@ -20,20 +16,19 @@ const User = sequelize.define("User", {
     },
     email: {
         type: STRING,
+        allowNull: false,
     },
     password: {
         type: STRING,
+        allowNull: false,
     },
     age: {
         type: INTEGER,
-        defaultValue: 21,
+        allowNull: false,
     },
     gender: {
         type: STRING,
-    },
-    isAdmin: {
-        type: BOOLEAN,
-        defaultValue: false,
+        allowNull: false,
     },
 });
 

@@ -19,16 +19,21 @@ const getUserById = (request, response) => {
 
 const createUser = (request, response) => {
     const user = createUserQuery(request.body);
-    response.status(201).json({
-        message: `User added with ID: ${results.rows[0].id}`,
-        data: user,
-    });
+    if (user) {
+        response.status(201).json({
+            message: `User added with ID: ${user[0]?.id}`,
+            data: user,
+        });
+    } else {
+        response.status(500).json({
+            message: `Faile to create a user`,
+        });
+    }
 };
 
 const updateUser = async (request, response) => {
     const id = parseInt(request.params.id);
     await updateUserQuery(request.body, { id });
-
     response.status(200).json({ message: `User modified with ID: ${id}` });
 };
 
