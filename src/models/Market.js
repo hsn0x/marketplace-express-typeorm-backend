@@ -1,4 +1,6 @@
 import sequelize from "../db/connection.js";
+import SequelizeSlugify from "sequelize-slugify";
+
 import { INTEGER, STRING, TEXT } from "../db/dataTypes.js";
 
 const Market = sequelize.define("Market", {
@@ -8,7 +10,6 @@ const Market = sequelize.define("Market", {
     },
     slug: {
         type: STRING,
-        allowNull: false,
     },
     about: {
         type: TEXT,
@@ -17,5 +18,6 @@ const Market = sequelize.define("Market", {
         type: STRING,
     },
 });
+SequelizeSlugify.slugifyModel(Market, { source: ["name"] });
 
 export default Market;

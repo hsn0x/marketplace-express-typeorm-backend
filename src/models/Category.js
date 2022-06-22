@@ -1,4 +1,6 @@
 import sequelize from "../db/connection.js";
+import SequelizeSlugify from "sequelize-slugify";
+
 import { STRING } from "../db/dataTypes.js";
 
 const Category = sequelize.define("Category", {
@@ -14,5 +16,6 @@ const Category = sequelize.define("Category", {
         type: STRING,
     },
 });
+SequelizeSlugify.slugifyModel(Category, { source: ["name"] });
 
 export default Category;

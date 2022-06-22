@@ -1,7 +1,7 @@
 import { User } from "../models/index.js";
 
-const findAllUsersQuery = async () => {
-    const users = await User.findAll();
+const findAllUsersQuery = async (include) => {
+    const users = await User.findAll({ include: [...include] });
     return users;
 };
 

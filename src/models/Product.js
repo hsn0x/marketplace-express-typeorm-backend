@@ -1,5 +1,7 @@
 import sequelize from "../db/connection.js";
-import { INTEGER, STRING, TEXT } from "../db/dataTypes.js";
+import SequelizeSlugify from "sequelize-slugify";
+
+import { ARRAY, INTEGER, STRING, TEXT } from "../db/dataTypes.js";
 
 const Product = sequelize.define("Product", {
     title: {
@@ -8,7 +10,7 @@ const Product = sequelize.define("Product", {
     },
     slug: {
         type: STRING,
-        allowNull: false,
+        unique: true,
     },
     description: {
         type: TEXT,
@@ -19,5 +21,7 @@ const Product = sequelize.define("Product", {
         allowNull: false,
     },
 });
+
+SequelizeSlugify.slugifyModel(Product, { source: ["title"] });
 
 export default Product;

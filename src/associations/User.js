@@ -1,4 +1,12 @@
-import { Market, Post, Product, Student, User } from "../models/index.js";
+import {
+    Avatar,
+    Image,
+    Market,
+    Post,
+    Product,
+    Student,
+    User,
+} from "../models/index.js";
 
 User.hasMany(Market, {
     foreignKey: {
@@ -18,6 +26,20 @@ User.hasOne(Student, {
 User.hasMany(Post, {
     foreignKey: {
         allowNull: false,
+    },
+});
+User.hasMany(Image, {
+    foreignKey: "imageableId",
+    constraints: false,
+    scope: {
+        imageableType: "image",
+    },
+});
+User.hasMany(Avatar, {
+    foreignKey: "avatarableId",
+    constraints: false,
+    scope: {
+        avatarableType: "avatar",
     },
 });
 

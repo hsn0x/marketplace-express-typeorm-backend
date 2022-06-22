@@ -8,7 +8,6 @@ export const createFakeCategories = async () => {
         const name = faker.random.word();
         fakeCategories.push({
             name,
-            slug: slugify(name),
             description: faker.lorem.sentence(),
         });
     }

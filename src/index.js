@@ -6,14 +6,21 @@ import "./associations/index.js";
 
 import express from "express";
 import bodyParser from "body-parser";
+
 import cors from "cors";
 import _ from "lodash";
 
-import { homeRoutes, productsRoute, usersRoute } from "./routes/index.js";
+import {
+    homeRoutes,
+    marketsRoute,
+    productsRoute,
+    usersRoute,
+} from "./routes/index.js";
 import { expressConfig } from "./config.js";
 import { dbSeed } from "./seed/index.js";
 
 const app = express();
+
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({
@@ -24,6 +31,7 @@ app.use(
 app.use("/", homeRoutes);
 app.use("/users", usersRoute);
 app.use("/products", productsRoute);
+app.use("/markets", marketsRoute);
 
 const serverPort = expressConfig.port;
 

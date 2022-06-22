@@ -1,4 +1,11 @@
-import { Category, Market, Product, User } from "../models/index.js";
+import {
+    Avatar,
+    Category,
+    Image,
+    Market,
+    Product,
+    User,
+} from "../models/index.js";
 
 Market.belongsTo(User, {
     foreignKey: {
@@ -14,6 +21,20 @@ Market.belongsToMany(Category, {
     through: "MarketCategories",
     foreignKey: {
         allowNull: false,
+    },
+});
+Market.hasMany(Image, {
+    foreignKey: "imageableId",
+    constraints: false,
+    scope: {
+        imageableType: "image",
+    },
+});
+Market.hasMany(Avatar, {
+    foreignKey: "avatarableId",
+    constraints: false,
+    scope: {
+        avatarableType: "avatar",
     },
 });
 

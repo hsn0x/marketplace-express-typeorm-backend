@@ -1,3 +1,4 @@
+import { Market, Product, Image, Avatar } from "../models/index.js";
 import {
     createUserQuery,
     deleteUserQuery,
@@ -7,7 +8,7 @@ import {
 } from "../queries/users.js";
 
 const getUsers = async (request, response) => {
-    const users = await findAllUsersQuery();
+    const users = await findAllUsersQuery([Market, Product, Image, Avatar]);
     response.status(200).json(users);
 };
 

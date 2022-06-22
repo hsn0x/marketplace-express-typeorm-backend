@@ -1,4 +1,4 @@
-import { Market, Product, User } from "../models/index.js";
+import { Image, Market, Product, User } from "../models/index.js";
 
 Product.belongsTo(Market, {
     foreignKey: {
@@ -8,6 +8,14 @@ Product.belongsTo(Market, {
 Product.belongsTo(User, {
     foreignKey: {
         allowNull: false,
+    },
+});
+
+Product.hasMany(Image, {
+    foreignKey: "imageableId",
+    constraints: false,
+    scope: {
+        imageableType: "image",
     },
 });
 

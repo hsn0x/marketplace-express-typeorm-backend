@@ -1,5 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { User } from "../models/index.js";
+import { cloudinary } from "../db/cloudinary.js";
+import { findAllUsersQuery } from "../queries/users.js";
 
 export const createFakeUsers = async () => {
     const fakeUsers = [];
@@ -17,4 +19,20 @@ export const createFakeUsers = async () => {
     }
 
     await User.bulkCreate(fakeUsers);
+
+    const users = await findAllUsersQuery([]);
+    for (let index = 0; index < 5; index++) {
+        const market = users[index];
+        await market.createImage({
+            public_id: faker.random.word(),
+            url: faker.image.imageUrl(),
+        });
+    }
+    for (let index = 0; index < 5; index++) {
+        const market = users[index];
+        await market.createAvatar({
+            public_id: faker.random.word(),
+            url: faker.image.imageUrl(),
+        });
+    }
 };
