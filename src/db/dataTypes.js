@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
 
-const { STRING, INTEGER, BOOLEAN, UUID } = DataTypes;
+const { STRING, INTEGER, BOOLEAN, UUID, TEXT } = DataTypes;
 
-export { STRING, INTEGER, BOOLEAN, UUID };
+export { STRING, INTEGER, BOOLEAN, UUID, TEXT };
