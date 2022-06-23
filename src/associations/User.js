@@ -4,6 +4,7 @@ import {
     Market,
     Post,
     Product,
+    Role,
     Student,
     User,
 } from "../models/index.js";
@@ -41,6 +42,10 @@ User.hasMany(Avatar, {
     scope: {
         avatarableType: "avatar",
     },
+});
+
+User.belongsToMany(Role, {
+    through: "user_roles",
 });
 
 export default User;

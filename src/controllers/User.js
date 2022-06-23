@@ -1,11 +1,13 @@
+import { genPassword } from "../lib/passwordUtils.js";
 import { Market, Product, Image, Avatar } from "../models/index.js";
 import {
     createUserQuery,
     deleteUserQuery,
     findAllUsersQuery,
-    findOneUserQuery,
+    findOneUserByIdQuery,
     updateUserQuery,
 } from "../queries/users.js";
+import { validateUser } from "../validation/User.js";
 
 const getUsers = async (request, response) => {
     const users = await findAllUsersQuery([Market, Product, Image, Avatar]);
@@ -14,15 +16,46 @@ const getUsers = async (request, response) => {
 
 const getUserById = (request, response) => {
     const id = parseInt(request.params.id);
-    const user = findOneUserQuery({ id });
+    const user = findOneUserByIdQuery({ id });
     response.status(200).json(user);
 };
 
-const createUser = (request, response) => {
-    const user = createUserQuery(request.body);
+const getUserByEmail = (request, response) => {
+    const email = parseInt(request.params.email);
+    const user = findOneUserByIdQuery({ email });
+    response.status(200).json(user);
+};
+
+const createUser = async (request, response, next) => {
+    const { firstName, lastName, username, email, password, age, gender } =
+        request.body;
+    const userData = {
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+        age,
+        gender,
+    };
+    userData.age = Number(userData.age);
+
+    const hashedPassword = genPassword(userData.password);
+    userData.passwordHash = hashedPassword.hash;
+    userData.passwordSalt = hashedPassword.salt;
+
+    const isUserValid = validateUser(userData);
+
+    if (!isUserValid.valid) {
+        return response.status(401).json({
+            valid: isUserValid.valid,
+            errors: isUserValid.errors,
+        });
+    }
+    const user = await createUserQuery(userData);
     if (user) {
         response.status(201).json({
-            message: `User added with ID: ${user[0]?.id}`,
+            message: `User added with ID: ${user?.id}`,
             data: user,
         });
     } else {
@@ -44,4 +77,11 @@ const deleteUser = async (request, response) => {
     response.status(200).json({ message: `User deleted with ID: ${id}` });
 };
 
-export { getUsers, getUserById, createUser, updateUser, deleteUser };
+export {
+    getUsers,
+    getUserById,
+    getUserByEmail,
+    createUser,
+    updateUser,
+    deleteUser,
+};

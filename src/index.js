@@ -1,37 +1,29 @@
+// NPM Modules
+import express from "express";
+import passport from "passport";
+// Local Import
 import sequelize from "./db/connection.js";
-import { Market, Product, Student, User, Category } from "./models/index.js";
-import { createFakeStudents } from "./seed/students.js";
-import { createFakeUsers } from "./seed/users.js";
 import "./associations/index.js";
 
-import express from "express";
-import bodyParser from "body-parser";
+// Route
+import routes from "./routes/index.js";
+import middlewares from "./middleware/index.js";
 
-import cors from "cors";
-import _ from "lodash";
+// ENV Config
+import { expressConfig } from "./config/index.js";
 
-import {
-    homeRoutes,
-    marketsRoute,
-    productsRoute,
-    usersRoute,
-} from "./routes/index.js";
-import { expressConfig } from "./config.js";
+// Seed Database
 import { dbSeed } from "./seed/index.js";
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(
-    bodyParser.urlencoded({
-        extended: true,
-    })
-);
+app.use(middlewares);
 
-app.use("/", homeRoutes);
-app.use("/users", usersRoute);
-app.use("/products", productsRoute);
-app.use("/markets", marketsRoute);
+/**
+ * -------------- ROUTES ----------------
+ */
+
+app.use(routes);
 
 const serverPort = expressConfig.port;
 
@@ -39,11 +31,11 @@ const server = async () => {
     await sequelize.sync({ force: true });
     // await sequelize.sync();
     await dbSeed();
-    // await createFakeUsers(User);
-    // await createFakeStudents(Student);
-    // Code here
+
     app.listen(serverPort, () => {
-        console.log(`API Server is runnig ..., on port ${serverPort}`);
+        console.log(
+            `Sequelize API Server is runnig ..., on port ${serverPort}`
+        );
     });
 };
 

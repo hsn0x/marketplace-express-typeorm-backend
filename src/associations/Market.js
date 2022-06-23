@@ -18,7 +18,7 @@ Market.hasMany(Product, {
     },
 });
 Market.belongsToMany(Category, {
-    through: "MarketCategories",
+    through: "market_categories",
     foreignKey: {
         allowNull: false,
     },

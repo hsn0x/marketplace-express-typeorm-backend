@@ -10,6 +10,7 @@ const Market = sequelize.define("Market", {
     },
     slug: {
         type: STRING,
+        allowNull: false,
     },
     about: {
         type: TEXT,

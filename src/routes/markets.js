@@ -6,16 +6,14 @@ import {
     getMarkets,
     updateMarket,
 } from "../controllers/Market.js";
-
-import multer from "multer";
-const multerUpload = multer({ dest: "uploads/" });
+import { isAuth } from "../middleware/Auth.js";
 
 const router = Router();
 
-router.get("/", multerUpload.any(), getMarkets);
+router.get("/", getMarkets);
 router.get("/:id", getMarketById);
-router.post("/", createMarket);
-router.put("/:id", updateMarket);
-router.delete("/:id", deleteMarket);
+router.post("/", isAuth, createMarket);
+router.put("/:id", isAuth, updateMarket);
+router.delete("/:id", isAuth, deleteMarket);
 
 export default router;

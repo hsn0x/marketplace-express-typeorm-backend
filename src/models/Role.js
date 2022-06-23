@@ -3,26 +3,21 @@ import SequelizeSlugify from "sequelize-slugify";
 
 import { ARRAY, INTEGER, STRING, TEXT } from "../db/dataTypes.js";
 
-const Product = sequelize.define("Product", {
-    title: {
+const Role = sequelize.define("Role", {
+    name: {
         type: STRING,
         allowNull: false,
     },
     slug: {
         type: STRING,
-        unique: true,
         allowNull: false,
     },
     description: {
-        type: TEXT,
-        allowNull: false,
-    },
-    price: {
-        type: INTEGER,
-        allowNull: false,
+        type: STRING,
+        unique: true,
     },
 });
 
-SequelizeSlugify.slugifyModel(Product, { source: ["title"] });
+SequelizeSlugify.slugifyModel(Role, { source: ["name"] });
 
-export default Product;
+export default Role;

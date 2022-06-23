@@ -1,7 +1,7 @@
 import { Category, Market, Product } from "../models/index.js";
 
 Category.belongsToMany(Market, {
-    through: "MarketCategories",
+    through: "market_categories",
     foreignKey: {
         allowNull: false,
     },

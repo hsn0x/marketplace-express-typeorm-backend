@@ -6,16 +6,14 @@ import {
     getProducts,
     updateProduct,
 } from "../controllers/Product.js";
-
-import multer from "multer";
-const multerUpload = multer({ dest: "uploads/" });
+import { isAuth } from "../middleware/Auth.js";
 
 const router = Router();
 
-router.get("/", multerUpload.any(), getProducts);
+router.get("/", getProducts);
 router.get("/:id", getProductById);
-router.post("/", createProduct);
-router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.post("/", isAuth, createProduct);
+router.put("/:id", isAuth, updateProduct);
+router.delete("/:id", isAuth, deleteProduct);
 
 export default router;

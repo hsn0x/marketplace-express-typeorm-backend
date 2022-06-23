@@ -5,19 +5,22 @@ const findAllUsersQuery = async (include) => {
     return users;
 };
 
-const findByPkUserQuery = (id) => {
-    const user = User.findByPk(id);
+const findByPkUserQuery = async (id) => {
+    const user = await User.findByPk(id);
     return user;
 };
-const findOneUserQuery = (id) => {
-    const user = User.findOne({ where: id });
+const findOneUserByIdQuery = async (id) => {
+    const user = await User.findOne({ where: id });
+    return user;
+};
+const findOneUserByEmailQuery = async (where) => {
+    const user = await User.findOne({ where });
     return user;
 };
 
 const createUserQuery = async (user) => {
-    console.log(user);
     const createdUser = await User.create(user);
-    return createdUser;
+    return await createdUser.toJSON();
 };
 
 const updateUserQuery = async (user, where) => {
@@ -35,7 +38,8 @@ const deleteUserQuery = async (where) => {
 export {
     findAllUsersQuery,
     findByPkUserQuery,
-    findOneUserQuery,
+    findOneUserByIdQuery,
+    findOneUserByEmailQuery,
     createUserQuery,
     updateUserQuery,
     deleteUserQuery,

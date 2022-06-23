@@ -18,7 +18,11 @@ const User = sequelize.define("User", {
         type: STRING,
         allowNull: false,
     },
-    password: {
+    passwordHash: {
+        type: STRING,
+        allowNull: false,
+    },
+    passwordSalt: {
         type: STRING,
         allowNull: false,
     },
