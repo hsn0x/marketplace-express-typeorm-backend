@@ -15,12 +15,13 @@ const Market = sequelize.define("Market", {
     },
     slug: {
         type: STRING,
-    },
-    about: {
-        type: TEXT,
+        unique: true,
     },
     title: {
         type: STRING,
+    },
+    about: {
+        type: TEXT,
     },
 });
 SequelizeSlugify.slugifyModel(Market, { source: ["name"] });

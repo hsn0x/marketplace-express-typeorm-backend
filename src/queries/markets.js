@@ -15,29 +15,20 @@ const findOneMarketQuery = async (where) => {
 };
 
 const createMarketQuery = async (market) => {
-    const { title, description, price, UserId, MarketId, CategoryId } = market;
-
-    const createdMarket = await Market.create({
-        title,
-        description,
-        price,
-        UserId,
-        MarketId,
-        CategoryId,
-    });
-    await createdMarket.setUser(UserId);
-    await createdMarket.setMarket(MarketId);
+    const createdMarket = await Market.create(market);
     return createdMarket;
 };
 
-const updateMarketQuery = async (id, market) => {
-    await Market.update(market, { where: { ...id } });
+const updateMarketQuery = async (market, where) => {
+    const updatedMarket = await Market.update(market, { where });
+    return updatedMarket;
 };
 
-const deleteMarketQuery = async (id) => {
-    await Market.destroy({
-        where: id,
+const deleteMarketQuery = async (where) => {
+    const deletedMarket = await Market.destroy({
+        where,
     });
+    return deletedMarket;
 };
 
 export {
