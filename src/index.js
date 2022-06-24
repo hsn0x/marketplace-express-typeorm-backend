@@ -13,7 +13,7 @@ import middlewares from "./middleware/index.js";
 import { expressConfig } from "./config/index.js";
 
 // Seed Database
-import { dbSeed } from "./seed/index.js";
+import { dbSeed, dbSeedFake } from "./seeders/index.js";
 
 const app = express();
 
@@ -31,6 +31,7 @@ const server = async () => {
     await sequelize.sync({ force: true });
     // await sequelize.sync();
     await dbSeed();
+    await dbSeedFake();
 
     app.listen(serverPort, () => {
         console.log(

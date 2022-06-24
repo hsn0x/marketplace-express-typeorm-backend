@@ -1,8 +1,11 @@
+import "./env.js";
+
 import { cloudinaryConfig } from "./cloudinary.js";
 import { expressConfig } from "./express.js";
 import { sequelizeConfig } from "./sequelize.js";
 import { sessionConfig } from "./session.js";
 import { passportConfig } from "./passport.js";
+import { ownerConfig } from "./owner.js";
 
 export {
     sequelizeConfig,
@@ -10,6 +13,7 @@ export {
     cloudinaryConfig,
     sessionConfig,
     passportConfig,
+    ownerConfig,
 };
 
 console.dir({
@@ -18,4 +22,6 @@ console.dir({
     cloudinaryConfig,
     sessionConfig,
     passportConfig,
+    sequelizeConfig,
+    ownerConfig,
 });

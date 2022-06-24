@@ -8,9 +8,13 @@ const Market = sequelize.define("Market", {
         type: STRING,
         allowNull: false,
     },
-    slug: {
+    username: {
         type: STRING,
         allowNull: false,
+        unique: true,
+    },
+    slug: {
+        type: STRING,
     },
     about: {
         type: TEXT,

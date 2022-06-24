@@ -10,7 +10,6 @@ const Category = sequelize.define("Category", {
     },
     slug: {
         type: STRING,
-        allowNull: false,
     },
     description: {
         type: STRING,

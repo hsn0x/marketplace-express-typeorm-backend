@@ -8,14 +8,20 @@ import {
 } from "../queries/markets.js";
 
 const getMarkets = async (request, response) => {
-    const markets = await findAllMarketsQuery([User, Product, Image, Avatar]);
+    const markets = await findAllMarketsQuery();
     response.status(200).json(markets);
 };
 
-const getMarketById = (request, response) => {
+const getMarketById = async (request, response) => {
     const id = parseInt(request.params.id);
-    const market = findOneMarketQuery({ id });
-    response.status(200).json(market);
+    const market = await findOneMarketQuery({ id });
+    if (market) {
+        response.status(200).json(market);
+    } else {
+        response
+            .status(404)
+            .json({ message: `Market not found with ID: ${id}` });
+    }
 };
 
 const createMarket = async (request, response) => {

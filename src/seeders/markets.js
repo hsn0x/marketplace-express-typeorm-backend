@@ -9,6 +9,7 @@ export const createFakeMarkets = async () => {
     for (let index = 0; index < 5; index++) {
         fakeMarkets.push({
             name: faker.random.word(),
+            username: faker.random.word(),
             title: faker.lorem.sentence(),
             about: faker.lorem.paragraph(),
             UserId: randomNumber(1, 5),

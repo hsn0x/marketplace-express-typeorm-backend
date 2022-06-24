@@ -1,7 +1,7 @@
 import { Router } from "express";
-import bodyParser from "./bodyParser.js";
-import passport from "./passport.js";
-import sequelize from "./sequelize.js";
+import bodyParser from "./BodyParser.js";
+import passport from "./Passport.js";
+import sequelize from "./Sequelize.js";
 
 const router = Router();
 

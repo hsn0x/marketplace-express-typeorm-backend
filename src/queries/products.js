@@ -1,17 +1,16 @@
-import { faker } from "@faker-js/faker";
-import { Market, Product, User } from "../models/index.js";
+import { Product } from "../scopes/index.js";
 
-const findAllProductsQuery = async (include) => {
-    const products = await Product.findAll({ include: [...include] });
+const findAllProductsQuery = async () => {
+    const products = await Product.scope("withAssociations").findAll();
     return products;
 };
 
-const findByPkProductQuery = (id) => {
-    const product = Product.findByPk(id);
+const findByPkProductQuery = async (id) => {
+    const product = await Product.scope("withAssociations").findByPk(id);
     return product;
 };
-const findOneProductQuery = (id) => {
-    const product = Product.findOne({ where: id });
+const findOneProductQuery = async (where) => {
+    const product = await Product.scope("withAssociations").findOne({ where });
     return product;
 };
 

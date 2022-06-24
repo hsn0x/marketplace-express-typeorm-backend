@@ -6,7 +6,7 @@
     "license": "MIT",
     "type": "module",
     "scripts": {
-        "dev": "nodemon src/index.js"
+        "dev": "Set NODE_ENV=development nodemon src/index.js"
     },
     "dependencies": {
         "@faker-js/faker": "^7.2.0",

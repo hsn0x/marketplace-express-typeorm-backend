@@ -7,7 +7,6 @@ export const findAllStudents = async (Student) => {
                 subscribed_to_withcode: true,
             },
         },
-        raw: true,
     });
 
     students.forEach((student) => console.log(student));

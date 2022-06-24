@@ -1,16 +1,16 @@
-import { Market } from "../models/index.js";
+import { Market } from "../scopes/index.js";
 
-const findAllMarketsQuery = async (include) => {
-    const markets = await Market.findAll({ include: [...include] });
+const findAllMarketsQuery = async () => {
+    const markets = await Market.scope("withAssociations").findAll();
     return markets;
 };
 
-const findByPkMarketQuery = (id) => {
-    const market = Market.findByPk(id);
+const findByPkMarketQuery = async (id) => {
+    const market = await Market.scope("withAssociations").findByPk(id);
     return market;
 };
-const findOneMarketQuery = (id) => {
-    const market = Market.findOne({ where: id });
+const findOneMarketQuery = async (where) => {
+    const market = await Market.scope("withAssociations").findOne({ where });
     return market;
 };
 

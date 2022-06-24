@@ -9,8 +9,8 @@ const findByPkPermissionQuery = (id) => {
     const permission = Permission.findByPk(id);
     return permission;
 };
-const findOnePermissionQuery = (id) => {
-    const permission = Permission.findOne({ where: id });
+const findOnePermissionQuery = (where) => {
+    const permission = Permission.findOne({ where });
     return permission;
 };
 

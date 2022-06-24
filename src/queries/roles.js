@@ -9,8 +9,8 @@ const findByPkRoleQuery = (id) => {
     const role = Role.findByPk(id);
     return role;
 };
-const findOneRoleQuery = (id) => {
-    const role = Role.findOne({ where: id });
+const findOneRoleQuery = (where) => {
+    const role = Role.findOne({ where });
     return role;
 };
 

@@ -1,11 +1,11 @@
-import dotenv from "dotenv";
-dotenv.config();
+import fs from "fs";
 
 export const sequelizeConfig = {
-    database: process.env.S_DATABASE,
-    username: process.env.S_USERNAME,
-    password: process.env.S_PASSWORD,
+    database: process.env.SEQUELIZE_DB_DATABASE,
+    username: process.env.SEQUELIZE_DB_USERNAME,
+    password: process.env.SEQUELIZE_DB_PASSWORD,
     options: {
-        dialect: process.env.S_DIALECT,
+        host: process.env.SEQUELIZE_DB_HOSTNAME,
+        dialect: process.env.SEQUELIZE_DB_DIALECT,
     },
 };

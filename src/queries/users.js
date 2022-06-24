@@ -1,26 +1,33 @@
-import { User } from "../models/index.js";
+import UserSensitiveData from "../constants/SensitiveData.js";
+import { User } from "../scopes/index.js";
 
-const findAllUsersQuery = async (include) => {
-    const users = await User.findAll({ include: [...include] });
-    return users;
+const findAllUsersQuery = async (withoutPassword = true) => {
+    return withoutPassword
+        ? await User.scope(["withoutPassword", "withAssociations"]).findAll()
+        : await User.scope(["withAssociations"]).findAll();
 };
 
 const findByPkUserQuery = async (id) => {
     const user = await User.findByPk(id);
     return user;
 };
-const findOneUserByIdQuery = async (id) => {
-    const user = await User.findOne({ where: id });
-    return user;
-};
-const findOneUserByEmailQuery = async (where) => {
-    const user = await User.findOne({ where });
-    return user;
+
+const findOneUserQuery = async (where, withoutPassword = true) => {
+    return withoutPassword
+        ? await User.scope(["withoutPassword", "withAssociations"]).findOne({
+              where,
+          })
+        : await User.scope(["withAssociations"]).findOne({ where });
 };
 
 const createUserQuery = async (user) => {
     const createdUser = await User.create(user);
-    return await createdUser.toJSON();
+
+    delete createdUser.dataValues.password;
+    delete createdUser.dataValues.passwordHash;
+    delete createdUser.dataValues.passwordSalt;
+
+    return createdUser;
 };
 
 const updateUserQuery = async (user, where) => {
@@ -38,8 +45,7 @@ const deleteUserQuery = async (where) => {
 export {
     findAllUsersQuery,
     findByPkUserQuery,
-    findOneUserByIdQuery,
-    findOneUserByEmailQuery,
+    findOneUserQuery,
     createUserQuery,
     updateUserQuery,
     deleteUserQuery,
