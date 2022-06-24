@@ -3,7 +3,7 @@ import SequelizeSlugify from "sequelize-slugify";
 
 import { ARRAY, INTEGER, STRING, TEXT } from "../db/dataTypes.js";
 
-const Role = sequelize.define("Role", {
+const Resource = sequelize.define("Resource", {
     name: {
         type: STRING,
         allowNull: false,
@@ -18,6 +18,6 @@ const Role = sequelize.define("Role", {
     },
 });
 
-SequelizeSlugify.slugifyModel(Role, { source: ["name"] });
+SequelizeSlugify.slugifyModel(Resource, { source: ["name"] });
 
-export default Role;
+export default Resource;

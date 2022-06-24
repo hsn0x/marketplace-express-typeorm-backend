@@ -10,7 +10,6 @@ Product.belongsTo(User, {
         allowNull: false,
     },
 });
-
 Product.hasMany(Image, {
     foreignKey: "imageableId",
     constraints: false,

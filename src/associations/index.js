@@ -10,6 +10,7 @@ import Video from "./Video.js";
 import Comment from "./Comment.js";
 import Role from "./Role.js";
 import Permission from "./Permission.js";
+import Resource from "./Resource.js";
 
 export {
     Category,
@@ -24,4 +25,5 @@ export {
     Comment,
     Role,
     Permission,
+    Resource,
 };

@@ -7,18 +7,22 @@ import {
     User,
 } from "../models/index.js";
 
+// belongsTo
 Market.belongsTo(User, {
     foreignKey: {
         allowNull: false,
     },
 });
-Market.hasMany(Product, {
-    foreignKey: {
-        allowNull: false,
+
+// hasMany
+Market.hasMany(Avatar, {
+    foreignKey: "avatarableId",
+    constraints: false,
+    scope: {
+        avatarableType: "avatar",
     },
 });
-Market.belongsToMany(Category, {
-    through: "market_categories",
+Market.hasMany(Product, {
     foreignKey: {
         allowNull: false,
     },
@@ -30,11 +34,12 @@ Market.hasMany(Image, {
         imageableType: "image",
     },
 });
-Market.hasMany(Avatar, {
-    foreignKey: "avatarableId",
-    constraints: false,
-    scope: {
-        avatarableType: "avatar",
+
+// belongsToMany
+Market.belongsToMany(Category, {
+    through: "market_categories",
+    foreignKey: {
+        allowNull: false,
     },
 });
 
