@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Op } from "sequelize";
-import sequelize from "../db/connection.js";
+import sequelize from "../db/sequelize.js";
 import { BOOLEAN, INTEGER, STRING } from "../db/dataTypes.js";
 
 const Student = sequelize.define("Student", {

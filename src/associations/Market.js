@@ -15,13 +15,6 @@ Market.belongsTo(User, {
 });
 
 // hasMany
-Market.hasMany(Avatar, {
-    foreignKey: "avatarableId",
-    constraints: false,
-    scope: {
-        avatarableType: "avatar",
-    },
-});
 Market.hasMany(Product, {
     foreignKey: {
         allowNull: false,
@@ -31,15 +24,21 @@ Market.hasMany(Image, {
     foreignKey: "imageableId",
     constraints: false,
     scope: {
-        imageableType: "image",
+        imageableType: "market",
     },
 });
-
-// belongsToMany
-Market.belongsToMany(Category, {
-    through: "market_categories",
-    foreignKey: {
-        allowNull: false,
+Market.hasMany(Avatar, {
+    foreignKey: "avatarableId",
+    constraints: false,
+    scope: {
+        avatarableType: "market",
+    },
+});
+Market.hasMany(Category, {
+    foreignKey: "categoryableId",
+    constraints: false,
+    scope: {
+        imageableType: "market",
     },
 });
 

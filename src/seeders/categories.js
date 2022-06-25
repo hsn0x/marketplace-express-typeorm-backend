@@ -9,8 +9,24 @@ export const createFakeCategories = async () => {
         fakeCategories.push({
             name,
             description: faker.lorem.sentence(),
+            UserId: 1,
         });
     }
 
-    await Category.bulkCreate(fakeCategories);
+    const categories = await Category.bulkCreate(fakeCategories);
+
+    for (let index = 0; index < 5; index++) {
+        const category = categories[index];
+        await category.createImage({
+            public_id: faker.random.word(),
+            url: faker.image.imageUrl(),
+        });
+    }
+    for (let index = 0; index < 5; index++) {
+        const category = categories[index];
+        await category.createAvatar({
+            public_id: faker.random.word(),
+            url: faker.image.imageUrl(),
+        });
+    }
 };

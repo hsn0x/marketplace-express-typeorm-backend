@@ -1,4 +1,4 @@
-import sequelize from "../db/connection.js";
+import sequelize from "../db/sequelize.js";
 import SequelizeSlugify from "sequelize-slugify";
 
 import { STRING } from "../db/dataTypes.js";

@@ -2,7 +2,7 @@
 import express from "express";
 import passport from "passport";
 // Local Import
-import sequelize from "./db/connection.js";
+import sequelize from "./db/sequelize.js";
 import "./associations/index.js";
 
 // Route

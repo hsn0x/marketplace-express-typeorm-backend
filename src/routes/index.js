@@ -1,5 +1,3 @@
-import { Router } from "express";
-
 /**
  * @description - Import routes for the application.
  */
@@ -9,8 +7,21 @@ import products from "./products.js";
 import markets from "./markets.js";
 import auth from "./auth.js";
 import admin from "./admin.js";
+import categories from "./categories.js";
+
+/**
+ * import Middleware for the application.
+ */
 import { isAdmin, isAuth } from "../middleware/Auth.js";
 
+/**
+ * @description - Import router for the application.
+ */
+import { Router } from "express";
+
+/**
+ * @description - Create a new router for the application.
+ */
 const router = Router();
 
 /**
@@ -27,5 +38,6 @@ router.use("/users", users);
 router.use("/products", products);
 router.use("/markets", markets);
 router.use("/admin", isAuth, isAdmin, admin);
+router.use("/categories", categories);
 
 export default router;

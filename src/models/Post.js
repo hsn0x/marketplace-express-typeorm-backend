@@ -1,4 +1,4 @@
-import sequelize from "../db/connection.js";
+import sequelize from "../db/sequelize.js";
 import { STRING } from "../db/dataTypes.js";
 
 const Post = sequelize.define("Post", {

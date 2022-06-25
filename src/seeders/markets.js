@@ -16,9 +16,8 @@ export const createFakeMarkets = async () => {
         });
     }
 
-    await Market.bulkCreate(fakeMarkets);
+    const markets = await Market.bulkCreate(fakeMarkets);
 
-    const markets = await findAllMarketsQuery([]);
     for (let index = 0; index < 5; index++) {
         const market = markets[index];
         await market.createImage({

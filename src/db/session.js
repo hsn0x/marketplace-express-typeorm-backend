@@ -2,7 +2,7 @@
 import connectSessionSequelize from "connect-session-sequelize";
 import session from "express-session";
 
-import sequelize from "./connection.js";
+import sequelize from "./sequelize.js";
 
 // Sequelize Session Store
 const SequelizeStore = connectSessionSequelize(session.Store);

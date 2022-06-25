@@ -1,20 +1,27 @@
-import sequelize from "../db/connection.js";
+import sequelize from "../db/sequelize.js";
 import SequelizeSlugify from "sequelize-slugify";
 
-import { STRING } from "../db/dataTypes.js";
+import { INTEGER, STRING } from "../db/dataTypes.js";
+import { Model } from "sequelize";
 
-const Category = sequelize.define("Category", {
-    name: {
-        type: STRING,
-        allowNull: false,
+class Category extends Model {}
+
+Category.init(
+    {
+        name: {
+            type: STRING,
+            allowNull: false,
+        },
+        slug: {
+            type: STRING,
+        },
+        description: {
+            type: STRING,
+        },
+        categoryableId: { type: INTEGER },
+        categoryableType: { type: STRING },
     },
-    slug: {
-        type: STRING,
-    },
-    description: {
-        type: STRING,
-    },
-});
-SequelizeSlugify.slugifyModel(Category, { source: ["name"] });
+    { sequelize, modelName: "category" }
+);
 
 export default Category;

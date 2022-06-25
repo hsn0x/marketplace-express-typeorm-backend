@@ -1,5 +1,5 @@
 import { Model } from "sequelize";
-import sequelize from "../db/connection.js";
+import sequelize from "../db/sequelize.js";
 import { INTEGER, STRING, TEXT } from "../db/dataTypes.js";
 import { uppercaseFirst } from "../utils/index.js";
 

@@ -7,5 +7,6 @@ export const sequelizeConfig = {
     options: {
         host: process.env.SEQUELIZE_DB_HOSTNAME,
         dialect: process.env.SEQUELIZE_DB_DIALECT,
+        logging: process.env.SEQUELIZE_DB_LOGGING == "true" ? true : false,
     },
 };
