@@ -13,7 +13,7 @@ const router = Router();
 
 router.get("/", getMarkets);
 router.get("/:id", getMarketById);
-router.post("/", isAuth, isMarketUsernameTaken, isMarketOwner, createMarket);
+router.post("/", isAuth, isMarketUsernameTaken, createMarket);
 router.put("/:id", isAuth, isMarketUsernameTaken, isMarketOwner, updateMarket);
 router.delete("/:id", isAuth, isMarketOwner, deleteMarket);
 

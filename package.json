@@ -6,7 +6,8 @@
     "license": "MIT",
     "type": "module",
     "scripts": {
-        "dev": "Set NODE_ENV=development nodemon src/index.js"
+        "dev": "cross-env NODE_ENV=development nodemon src/index.js",
+        "start": "cross-env NODE_ENV=production node src/index.js"
     },
     "dependencies": {
         "@faker-js/faker": "^7.2.0",
@@ -37,6 +38,7 @@
         "validator": "^13.7.0"
     },
     "devDependencies": {
-        "@faker-js/faker": "^7.2.0"
+        "@faker-js/faker": "^7.2.0",
+        "cross-env": "^7.0.3"
     }
 }

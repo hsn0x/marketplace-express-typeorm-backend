@@ -1,4 +1,3 @@
-import { Avatar, Image, Product, User } from "../models/index.js";
 import {
     createMarketQuery,
     deleteMarketQuery,
@@ -14,7 +13,10 @@ import {
 const getMarkets = async (request, response) => {
     const markets = await findAllMarketsQuery();
     if (markets) {
-        response.status(200).json({ message: "Markets", data: markets });
+        response.status(200).json({
+            message: `Markets found`,
+            data: markets,
+        });
     } else {
         response.status(404).json({ message: "No markets found" });
     }
@@ -24,11 +26,14 @@ const getMarketById = async (request, response) => {
     const id = parseInt(request.params.id);
     const market = await findOneMarketQuery({ id });
     if (market) {
-        response.status(200).json(market);
+        response.status(200).json({
+            message: `Market found with ID: ${id}`,
+            data: market,
+        });
     } else {
-        response
-            .status(404)
-            .json({ message: `Market not found with ID: ${id}` });
+        response.status(404).json({
+            message: `Market not found with ID: ${id}`,
+        });
     }
 };
 

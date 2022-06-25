@@ -15,13 +15,20 @@ const isMarketUsernameTaken = async (req, res, next) => {
 const isMarketOwner = async (req, res, next) => {
     const id = parseInt(req.params.id);
     const { session, user } = req;
+
+    if (!user.Markets || !user.Markets.length > 0) {
+        return res.status(401).json({
+            message: `You dont have any markets`,
+        });
+    }
+
     const isMarketOwner = user.Markets.find((market) => market.id === id);
-    console.log({ id, marketId: user.Markets[0].id });
+
     if (isMarketOwner) {
         return next();
     } else {
         return res.status(401).json({
-            message: `You are not authorized to perform this action`,
+            message: `You are not the owner of the market`,
         });
     }
 };
