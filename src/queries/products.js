@@ -25,19 +25,21 @@ const createProductQuery = async (product) => {
         MarketId,
         CategoryId,
     });
-    await createdProduct.setUser(UserId);
-    await createdProduct.setMarket(MarketId);
     return createdProduct;
 };
 
-const updateProductQuery = async (id, product) => {
-    await Product.update(product, { where: { ...id } });
+const updateProductQuery = async (product, where) => {
+    const updatedProduct = await Product.update(product, { where });
+
+    return updatedProduct;
 };
 
 const deleteProductQuery = async (id) => {
-    await Product.destroy({
+    const deletedProduct = await Product.destroy({
         where: id,
     });
+
+    return deletedProduct;
 };
 
 export {

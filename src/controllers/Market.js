@@ -38,7 +38,6 @@ const getMarketById = async (request, response) => {
 };
 
 const createMarket = async (request, response) => {
-    const id = parseInt(request.params.id);
     const { session, user } = request;
 
     const { name, username, about, title } = request.body;
@@ -52,19 +51,26 @@ const createMarket = async (request, response) => {
 
     const isMarketValid = validateCreateMarket(marketData);
 
-    if (!isMarketValid) {
-        response.status(400).json({ message: "Invalid market data" });
+    if (!isMarketValid.valid) {
+        return response
+            .status(400)
+            .json({
+                message: "Invalid market data",
+                errors: isMarketValid.errors,
+            });
     }
 
     const createdMarket = await createMarketQuery(marketData);
 
     if (createdMarket) {
-        response.status(201).json({
+        return response.status(201).json({
             message: `Market added with ID: ${createdMarket.id}`,
             data: createdMarket,
         });
     } else {
-        response.status(500).json({ message: `Faile to create a market` });
+        return response
+            .status(500)
+            .json({ message: `Faile to create a market` });
     }
 };
 

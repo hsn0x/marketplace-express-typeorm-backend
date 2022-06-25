@@ -43,6 +43,10 @@ const isUserAuth = (req, res, next) => {
 const isUsernameTaken = async (req, res, next) => {
     const { username } = req.body;
 
+    if (!username) {
+        return res.status(400).json({ message: "Username is required" });
+    }
+
     const isUsernameTaken = await findOneUserQuery({ username });
     if (isUsernameTaken) {
         return res.status(401).json({

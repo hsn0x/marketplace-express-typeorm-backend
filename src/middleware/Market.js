@@ -2,6 +2,11 @@ import { findOneMarketQuery } from "../queries/markets.js";
 
 const isMarketUsernameTaken = async (req, res, next) => {
     const { username } = req.body;
+
+    if (!username) {
+        return res.status(400).json({ message: "Username is required" });
+    }
+
     const isMarketUsernameTaken = await findOneMarketQuery({ username });
     if (isMarketUsernameTaken) {
         return res.status(401).json({
