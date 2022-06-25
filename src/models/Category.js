@@ -14,6 +14,7 @@ Category.init(
         },
         slug: {
             type: STRING,
+            unique: true,
         },
         description: {
             type: STRING,
@@ -23,5 +24,7 @@ Category.init(
     },
     { sequelize, modelName: "category" }
 );
+
+SequelizeSlugify.slugifyModel(Category, { source: ["name"] });
 
 export default Category;

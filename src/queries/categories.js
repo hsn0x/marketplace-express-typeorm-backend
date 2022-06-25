@@ -16,24 +16,13 @@ const findOneCategoryQuery = async (where) => {
     return category;
 };
 
-const createCategoryQuery = async (category) => {
-    const { title, description, price, UserId, MarketId, CategoryId } =
-        category;
-
-    const createdCategory = await Category.create({
-        title,
-        description,
-        price,
-        UserId,
-        MarketId,
-        CategoryId,
-    });
+const createCategoryQuery = async (categoryData) => {
+    const createdCategory = await Category.create(categoryData);
     return createdCategory;
 };
 
-const updateCategoryQuery = async (category, where) => {
-    const updatedCategory = await Category.update(category, { where });
-
+const updateCategoryQuery = async (categoryData, where) => {
+    const updatedCategory = await Category.update(categoryData, { where });
     return updatedCategory;
 };
 

@@ -12,6 +12,7 @@ const Role = sequelize.define("Role", {
     slug: {
         type: STRING,
         allowNull: false,
+        unique: true,
     },
     description: {
         type: STRING,

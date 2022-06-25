@@ -12,6 +12,7 @@ const Resource = sequelize.define("Resource", {
     slug: {
         type: STRING,
         allowNull: false,
+        unique: true,
     },
     description: {
         type: STRING,

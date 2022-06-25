@@ -12,6 +12,7 @@ const Permission = sequelize.define("Permission", {
     slug: {
         type: STRING,
         allowNull: false,
+        unique: true,
     },
     description: {
         type: STRING,

@@ -92,13 +92,21 @@ const isEmailExist = async (req, res, next) => {
  */
 const isAdmin = (req, res, next) => {
     const auth = req.isAuthenticated();
-    const roleName = req.user.Roles[0].name;
-    const hasAdminRole = roleName === "ADMIN";
-    if (auth && hasAdminRole) {
-        return next();
+
+    const roles = req.user.Roles;
+    if (auth) {
+        const isAdmin =
+            roles.length > 0 && roles.some((role) => role.name === "ADMIN");
+        if (isAdmin) {
+            return next();
+        } else {
+            return res.status(401).json({
+                message: "You need to be an admin to do this action",
+            });
+        }
     } else {
-        res.status(401).json({
-            message: "Only ADMIN are authorized to view this resource",
+        return res.status(401).json({
+            message: "You need to be logged in to do this action",
         });
     }
 };

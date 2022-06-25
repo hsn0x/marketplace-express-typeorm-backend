@@ -1,4 +1,4 @@
-import sequelize from "../db/sequelize";
+import sequelize from "../db/sequelize.js";
 
 const querySQLFile = (fileName) => {
     return new Promise((resolve, reject) => {

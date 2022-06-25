@@ -41,12 +41,10 @@ const getCategoryById = async (request, response) => {
 const createCategory = async (request, response) => {
     const { session, user } = request;
 
-    const { name, username, about, title } = request.body;
+    const { name, description } = request.body;
     const categoryData = {
         name,
-        username,
-        about,
-        title,
+        description,
         UserId: user.id,
     };
 

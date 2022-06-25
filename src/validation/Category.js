@@ -8,8 +8,9 @@ const CreateCategorySchema = {
         name: { type: "string" },
         description: { type: "string" },
         parentId: { type: "number" },
+        UserId: { type: "number" },
     },
-    required: ["name", "description"],
+    required: ["name", "description", "UserId"],
     additionalProperties: false,
 };
 
@@ -19,8 +20,9 @@ const UpdateCategorySchema = {
         name: { type: "string" },
         description: { type: "string" },
         parentId: { type: "number" },
+        UserId: { type: "number" },
     },
-    required: ["name", "description"],
+    required: ["name", "description", "UserId"],
     additionalProperties: false,
 };
 

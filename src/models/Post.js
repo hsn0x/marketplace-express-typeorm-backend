@@ -9,6 +9,7 @@ const Post = sequelize.define("Post", {
     slug: {
         type: STRING,
         allowNull: false,
+        unique: true,
     },
     content: {
         type: STRING,
