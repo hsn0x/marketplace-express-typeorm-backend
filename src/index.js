@@ -25,6 +25,7 @@ app.use(middlewares);
 
 app.use(routes);
 
+const serverHost = expressConfig.host;
 const serverPort = expressConfig.port;
 
 const server = async () => {
@@ -35,7 +36,7 @@ const server = async () => {
 
     app.listen(serverPort, () => {
         console.log(
-            `Sequelize API Server is runnig ..., on port ${serverPort}`
+            `Sequelize API Server is runnig ..., on port http://${serverHost}:${serverPort}`
         );
     });
 };
