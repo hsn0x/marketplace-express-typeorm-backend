@@ -10,12 +10,14 @@ const login = (req, res, next) => {
 
         if (!user)
             return res.status(401).json({
+                isAuthenticated: req.isAuthenticated(),
                 message: info.message,
             });
 
         req.login(user, (err) => {
             if (err) {
                 return res.status(500).json({
+                    isAuthenticated: req.isAuthenticated(),
                     message: err.message,
                 });
             }

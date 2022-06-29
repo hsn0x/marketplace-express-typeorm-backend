@@ -18,15 +18,6 @@ const router = Router();
 router.post("/login", isGuest, login);
 router.get("/me", isAuth, profile);
 
-// router.post(
-//     "/login",
-//     isGuest,
-//     passport.authenticate("local", {
-//         failureRedirect: "/api/v1/auth/login/failure",
-//         successRedirect: "/api/v1/auth/login/success",
-//     })
-// );
-
 router.post("/register", isGuest, isEmailExist, isUsernameTaken, register);
 
 router.get("/login/failure", isGuest, (req, res, next) => {
