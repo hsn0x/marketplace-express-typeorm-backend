@@ -23,7 +23,7 @@ app.use(middlewares);
  * -------------- ROUTES ----------------
  */
 
-app.use(routes);
+app.use("/api/v1", routes);
 
 const serverHost = expressConfig.host;
 const serverPort = expressConfig.port;

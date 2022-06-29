@@ -1,6 +1,11 @@
 import { Router } from "express";
-import passport from "passport";
-import { login, register } from "../controllers/Auth.js";
+import {
+    login,
+    register,
+    profile,
+    logout,
+    logoutSession,
+} from "../controllers/Auth.js";
 import {
     isAuth,
     isEmailExist,
@@ -10,36 +15,31 @@ import {
 
 const router = Router();
 
-router.post(
-    "/login",
-    isGuest,
-    passport.authenticate("local", {
-        failureRedirect: "/auth/login-failure",
-        successRedirect: "/auth/login-success",
-    })
-);
+router.post("/login", isGuest, login);
+router.get("/me", isAuth, profile);
+
+// router.post(
+//     "/login",
+//     isGuest,
+//     passport.authenticate("local", {
+//         failureRedirect: "/api/v1/auth/login/failure",
+//         successRedirect: "/api/v1/auth/login/success",
+//     })
+// );
+
 router.post("/register", isGuest, isEmailExist, isUsernameTaken, register);
-router.get("/login-failure", isGuest, (req, res, next) => {
-    res.status(401).json({
+
+router.get("/login/failure", isGuest, (req, res, next) => {
+    return res.status(401).json({
         message: "Invalid username or password",
     });
 });
-router.get("/login-success", isAuth, (req, res, next) => {
-    res.status(200).json({
+router.get("/login/success", isAuth, (req, res, next) => {
+    return res.status(200).json({
         message: "Login successful",
     });
 });
 
-router.get("/logout", isAuth, (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            next(err);
-        }
-        res.status(200).json({
-            status: "success",
-            message: "Logged out successfully",
-        });
-    });
-});
+router.get("/logout", logout, logoutSession);
 
 export default router;

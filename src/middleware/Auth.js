@@ -144,6 +144,7 @@ const isModerator = (req, res, next) => {
  */
 const isGuest = (req, res, next) => {
     const auth = req.isAuthenticated();
+
     if (!auth) {
         return next();
     } else {

@@ -216,14 +216,7 @@ const updateUserPassword = async (request, response) => {
     /**
      * Check if the password is correct
      */
-    console.log({
-        password: userData.password,
-        id: currentUser.id,
-        username: currentUser.username,
-        email: currentUser.email,
-        passhash: currentUser.passwordHash,
-        passsalt: currentUser.passwordSalt,
-    });
+
     const isPasswordMatch = passwordMatch(
         userData.password,
         currentUser.passwordHash,
