@@ -23,6 +23,9 @@ const Market = sequelize.define("Market", {
     about: {
         type: TEXT,
     },
+    description: {
+        type: TEXT,
+    },
 });
 SequelizeSlugify.slugifyModel(Market, { source: ["name"] });
 

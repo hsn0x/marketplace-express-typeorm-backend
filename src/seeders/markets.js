@@ -14,6 +14,7 @@ export const createFakeMarkets = async (record) => {
             username,
             title: faker.lorem.sentence(),
             about: faker.lorem.paragraph(),
+            description: faker.commerce.productDescription(),
             UserId: randomNumber(1, record),
         });
     }
@@ -24,7 +25,7 @@ export const createFakeMarkets = async (record) => {
         const market = markets[index];
         await market.createImage({
             public_id: faker.random.word(),
-            url: faker.image.image(),
+            url: faker.image.imageUrl(1200, 800, "business", true),
         });
     }
     for (let index = 0; index < record; index++) {

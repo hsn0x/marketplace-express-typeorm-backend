@@ -15,7 +15,7 @@ const getMarkets = async (request, response) => {
     if (markets) {
         response.status(200).json({
             message: `Markets found`,
-            data: markets,
+            markets,
         });
     } else {
         response.status(404).json({ message: "No markets found" });
@@ -28,11 +28,25 @@ const getMarketById = async (request, response) => {
     if (market) {
         response.status(200).json({
             message: `Market found with ID: ${id}`,
-            data: market,
+            market,
         });
     } else {
         response.status(404).json({
             message: `Market not found with ID: ${id}`,
+        });
+    }
+};
+const getMarketByName = async (request, response) => {
+    const slug = request.params.slug;
+    const market = await findOneMarketQuery({ slug });
+    if (market) {
+        response.status(200).json({
+            message: `Market found with ID: ${slug}`,
+            market,
+        });
+    } else {
+        response.status(404).json({
+            message: `Market not found with ID: ${slug}`,
         });
     }
 };
@@ -52,12 +66,10 @@ const createMarket = async (request, response) => {
     const isMarketValid = validateCreateMarket(marketData);
 
     if (!isMarketValid.valid) {
-        return response
-            .status(400)
-            .json({
-                message: "Invalid market data",
-                errors: isMarketValid.errors,
-            });
+        return response.status(400).json({
+            message: "Invalid market data",
+            errors: isMarketValid.errors,
+        });
     }
 
     const createdMarket = await createMarketQuery(marketData);
@@ -111,4 +123,11 @@ const deleteMarket = async (request, response) => {
     response.status(200).json({ message: `Market deleted with ID: ${id}` });
 };
 
-export { getMarkets, getMarketById, createMarket, updateMarket, deleteMarket };
+export {
+    getMarkets,
+    getMarketById,
+    getMarketByName,
+    createMarket,
+    updateMarket,
+    deleteMarket,
+};

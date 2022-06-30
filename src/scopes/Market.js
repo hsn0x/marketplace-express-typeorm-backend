@@ -9,7 +9,7 @@ Market.addScope("withAssociations", {
                 exclude: [...UserSensitiveData],
             },
         },
-        { model: Product },
+        { model: Product, include: [{ model: Image }] },
         { model: Image },
         { model: Avatar },
     ],

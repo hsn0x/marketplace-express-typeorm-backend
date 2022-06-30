@@ -3,6 +3,7 @@ import {
     createMarket,
     deleteMarket,
     getMarketById,
+    getMarketByName,
     getMarkets,
     updateMarket,
 } from "../controllers/Market.js";
@@ -13,6 +14,7 @@ const router = Router();
 
 router.get("/", getMarkets);
 router.get("/:id", getMarketById);
+router.get("/name/:slug", getMarketByName);
 router.post("/", isAuth, isMarketUsernameTaken, createMarket);
 router.put("/:id", isAuth, isMarketUsernameTaken, isMarketOwner, updateMarket);
 router.delete("/:id", isAuth, isMarketOwner, deleteMarket);
