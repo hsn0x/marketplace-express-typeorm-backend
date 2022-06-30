@@ -56,14 +56,14 @@ const createFakeUsers = async (record) => {
         const user = users[index];
         await user.createImage({
             public_id: faker.random.word(),
-            url: faker.image.image(),
+            url: faker.image.imageUrl(200, 200, "nature"),
         });
     }
     for (let index = 0; index < record; index++) {
         const user = users[index];
         await user.createAvatar({
             public_id: faker.random.word(),
-            url: faker.image.avatar(),
+            url: faker.image.imageUrl(200, 200, "people"),
         });
     }
 };

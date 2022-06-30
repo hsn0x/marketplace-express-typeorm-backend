@@ -19,14 +19,20 @@ export const createFakeProducts = async (record) => {
     }
 
     const products = await Product.bulkCreate(fakeProducts);
-    Array.from(products, (product) =>
-        Array.from({ length: randomNumber(1, 5) }, () =>
+    for (let productIndex = 0; productIndex < products.length; productIndex++) {
+        const product = products[productIndex];
+        for (
+            let imageIndex = 0;
+            imageIndex < randomNumber(1, 3);
+            imageIndex++
+        ) {
+            const url = faker.image.imageUrl(600, 400, "Business", true);
             product.createImage({
                 public_id: faker.random.word(),
-                url: faker.image.image(),
-            })
-        )
-    );
+                url,
+            });
+        }
+    }
 
     // for (let productIndex = 0; productIndex < products.length; productIndex++) {
     //     const proudct = products[productIndex];

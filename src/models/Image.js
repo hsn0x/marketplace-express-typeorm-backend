@@ -1,7 +1,7 @@
 import sequelize from "../db/sequelize.js";
 import SequelizeSlugify from "sequelize-slugify";
 
-import { STRING } from "../db/dataTypes.js";
+import { STRING, TEXT } from "../db/dataTypes.js";
 import { Model } from "sequelize";
 
 class Image extends Model {}
@@ -39,7 +39,7 @@ Image.init(
             type: STRING,
         },
         url: {
-            type: STRING,
+            type: TEXT,
         },
         secure_url: {
             type: STRING,
