@@ -31,9 +31,9 @@ const createUsers = async () => {
     await ADMIN_USER.addRole(EDITOR_ROLE.id);
 };
 
-const createFakeUsers = async () => {
+const createFakeUsers = async (record) => {
     const fakeUsers = [];
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < record; index++) {
         const hashedPassword = genPassword(faker.internet.password());
         const passwordHash = hashedPassword.hash;
         const passwordSalt = hashedPassword.salt;
@@ -52,18 +52,18 @@ const createFakeUsers = async () => {
 
     const users = await User.bulkCreate(fakeUsers);
 
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < record; index++) {
         const user = users[index];
         await user.createImage({
             public_id: faker.random.word(),
-            url: faker.image.imageUrl(),
+            url: faker.image.image(),
         });
     }
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < record; index++) {
         const user = users[index];
         await user.createAvatar({
             public_id: faker.random.word(),
-            url: faker.image.imageUrl(),
+            url: faker.image.avatar(),
         });
     }
 };

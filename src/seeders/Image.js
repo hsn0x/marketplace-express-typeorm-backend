@@ -2,9 +2,9 @@ import { faker } from "@faker-js/faker";
 import { Image, Product } from "../models/index.js";
 import { cloudinary } from "../db/cloudinary.js";
 
-export const createFakeImages = async () => {
+export const createFakeImages = async (record) => {
     const fakeImages = [];
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < record; index++) {
         fakeImages.push({
             url: faker.image.imageUrl(),
         });

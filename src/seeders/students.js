@@ -1,8 +1,9 @@
 import { faker } from "@faker-js/faker";
+import { Student } from "../models/index.js";
 
-export const createFakeStudents = async (Student) => {
+export const createFakeStudents = async (record) => {
     const fakeStudents = [];
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < record; index++) {
         fakeStudents.push({
             name: faker.name.firstName(),
             age: faker.datatype.number({ min: 18, max: 75 }),
@@ -12,5 +13,5 @@ export const createFakeStudents = async (Student) => {
             subscribed_to_withcode: faker.datatype.boolean(),
         });
     }
-    await Student.bulkCreate(fakeStudents);
+    const students = await Student.bulkCreate(fakeStudents);
 };
