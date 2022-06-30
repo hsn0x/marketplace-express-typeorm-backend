@@ -14,7 +14,7 @@ import {
 const getProducts = async (request, response) => {
     const products = await findAllProductsQuery([User, Market, Image]);
     if (products) {
-        response.status(200).json(products);
+        response.status(200).json({ products });
     } else {
         response.status(404).json({ message: `Products not found` });
     }
@@ -24,11 +24,23 @@ const getProductById = async (request, response) => {
     const id = parseInt(request.params.id);
     const product = await findOneProductQuery({ id });
     if (product) {
-        response.status(200).json(product);
+        response.status(200).json({ product });
     } else {
         response
             .status(404)
             .json({ message: `Product not found with ID: ${id}` });
+    }
+};
+
+const getProductBySlug = async (request, response) => {
+    const slug = request.params.slug;
+    const product = await findOneProductQuery({ slug });
+    if (product) {
+        response.status(200).json({ product });
+    } else {
+        response
+            .status(404)
+            .json({ message: `Product not found with Slug: ${slug}` });
     }
 };
 
@@ -59,7 +71,7 @@ const createProduct = async (request, response) => {
     if (createdProduct) {
         return response.status(201).json({
             message: `Product created with ID: ${createdProduct.id}`,
-            data: createdProduct,
+            createdProduct,
         });
     } else {
         return response
@@ -96,7 +108,7 @@ const updateProduct = async (request, response) => {
     if (updatedProduct) {
         return response.status(200).json({
             message: `Product updated with ID: ${updatedProduct.id}`,
-            data: updatedProduct,
+            updatedProduct,
         });
     } else {
         return response
@@ -114,6 +126,7 @@ const deleteProduct = async (request, response) => {
 export {
     getProducts,
     getProductById,
+    getProductBySlug,
     createProduct,
     updateProduct,
     deleteProduct,

@@ -10,7 +10,7 @@ const Product = sequelize.define("Product", {
     },
     slug: {
         type: STRING,
-        unique: true,
+        // unique: true,
     },
     description: {
         type: TEXT,
