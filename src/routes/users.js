@@ -3,6 +3,7 @@ import {
     createUser,
     deleteUser,
     getUserById,
+    getUserByUsername,
     getUsers,
     updateUser,
     updateUserEmail,
@@ -21,6 +22,7 @@ const router = Router();
 
 router.get("/", getUsers);
 router.get("/:id", getUserById);
+router.get("/username/:username", getUserByUsername);
 router.post("/", isAuth, isAdmin, isEmailExist, isUsernameTaken, createUser);
 router.put("/:id", isAuth, isUsernameTaken, isUserAuth, updateUser);
 router.put("/email/:id", isAuth, isEmailExist, isUserAuth, updateUserEmail);

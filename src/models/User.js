@@ -1,5 +1,5 @@
 import sequelize from "../db/sequelize.js";
-import { INTEGER, STRING } from "../db/dataTypes.js";
+import { INTEGER, STRING, TEXT } from "../db/dataTypes.js";
 
 const User = sequelize.define("User", {
     firstName: {
@@ -14,6 +14,10 @@ const User = sequelize.define("User", {
         type: STRING,
         allowNull: false,
         unique: true,
+    },
+    description: {
+        type: TEXT,
+        allowNull: false,
     },
     email: {
         type: STRING,

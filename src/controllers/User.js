@@ -25,7 +25,7 @@ import {
 const getUsers = async (request, response) => {
     const users = await findAllUsersQuery(true);
     if (users) {
-        response.status(200).json(users);
+        response.status(200).json({ users });
     } else {
         response.status(500).json({ message: `Faile to get users` });
     }
@@ -35,9 +35,21 @@ const getUserById = async (request, response) => {
     const id = parseInt(request.params.id);
     const user = await findOneUserQuery({ id });
     if (user) {
-        response.status(200).json(user);
+        response.status(200).json({ user });
     } else {
         response.status(404).json({ message: `User not found with ID: ${id}` });
+    }
+};
+
+const getUserByUsername = async (request, response) => {
+    const username = request.params.username;
+    const user = await findOneUserQuery({ username });
+    if (user) {
+        response.status(200).json({ user });
+    } else {
+        response
+            .status(404)
+            .json({ message: `User not found with ID: ${username}` });
     }
 };
 
@@ -45,7 +57,7 @@ const getUserByEmail = async (request, response) => {
     const email = parseInt(request.params.email);
     const user = await findOneUserQuery({ email });
     if (user) {
-        response.status(200).json(user);
+        response.status(200).json({ user });
     } else {
         response.status(404).json({
             message: `User not found with email: ${email}`,
@@ -85,7 +97,7 @@ const createUser = async (request, response, next) => {
     if (user) {
         response.status(201).json({
             message: `User created with ID: ${user.id}`,
-            data: user,
+            user,
         });
     } else {
         response.status(500).json({
@@ -118,11 +130,12 @@ const updateUser = async (request, response) => {
             errors: isUserValid.errors,
         });
     }
+
     const updatedUser = await updateUserQuery(userData, { id });
     if (updatedUser) {
         response.status(200).json({
             message: `User updated with ID: ${user.id}`,
-            data: updatedUser,
+            updatedUser,
         });
     } else {
         response.status(500).json({
@@ -251,6 +264,7 @@ const deleteUser = async (request, response) => {
 export {
     getUsers,
     getUserById,
+    getUserByUsername,
     getUserByEmail,
     createUser,
     updateUser,

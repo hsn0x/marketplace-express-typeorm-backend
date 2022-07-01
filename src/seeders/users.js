@@ -16,6 +16,7 @@ const createUsers = async () => {
         lastName: ownerConfig.lastName,
         username: ownerConfig.username,
         email: ownerConfig.email,
+        description: ownerConfig.description,
         passwordHash,
         passwordSalt,
         age: ownerConfig.age,
@@ -29,6 +30,15 @@ const createUsers = async () => {
     await ADMIN_USER.addRole(ADMIN_ROLE.id);
     await ADMIN_USER.addRole(MODERATOR_ROLE.id);
     await ADMIN_USER.addRole(EDITOR_ROLE.id);
+
+    await ADMIN_USER.createImage({
+        public_id: faker.random.word(),
+        url: faker.image.imageUrl(200, 200, "nature", true),
+    });
+    await ADMIN_USER.createAvatar({
+        public_id: faker.random.word(),
+        url: faker.image.imageUrl(200, 200, "people", true),
+    });
 };
 
 const createFakeUsers = async (record) => {
@@ -42,6 +52,7 @@ const createFakeUsers = async (record) => {
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
             username: faker.internet.userName(),
+            description: faker.lorem.paragraph(),
             email: faker.internet.email(),
             passwordHash,
             passwordSalt,
@@ -56,14 +67,14 @@ const createFakeUsers = async (record) => {
         const user = users[index];
         await user.createImage({
             public_id: faker.random.word(),
-            url: faker.image.imageUrl(200, 200, "nature"),
+            url: faker.image.imageUrl(200, 200, "nature", true),
         });
     }
     for (let index = 0; index < record; index++) {
         const user = users[index];
         await user.createAvatar({
             public_id: faker.random.word(),
-            url: faker.image.imageUrl(200, 200, "people"),
+            url: faker.image.imageUrl(200, 200, "people", true),
         });
     }
 };
