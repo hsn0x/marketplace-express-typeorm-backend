@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { Category } from "../models/index.js";
 import slugify from "slugify";
+import { randomNumber } from "../utils/index.js";
 
 export const createFakeCategories = async (record) => {
     const fakeCategories = [];
@@ -9,6 +10,7 @@ export const createFakeCategories = async (record) => {
         fakeCategories.push({
             name,
             description: faker.lorem.sentence(),
+            parentId: randomNumber(0, 2),
             UserId: 1,
         });
     }

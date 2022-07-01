@@ -16,7 +16,7 @@ const getCategories = async (request, response) => {
     if (categories) {
         response.status(200).json({
             message: `Categories found`,
-            data: categories,
+            categories,
         });
     } else {
         response.status(404).json({ message: "No categories found" });
@@ -29,7 +29,7 @@ const getCategoryById = async (request, response) => {
     if (category) {
         response.status(200).json({
             message: `Category found with ID: ${id}`,
-            data: category,
+            category,
         });
     } else {
         response.status(404).json({
@@ -38,13 +38,30 @@ const getCategoryById = async (request, response) => {
     }
 };
 
+const getCategoryByName = async (request, response) => {
+    const name = request.params.name;
+    const category = await findOneCategoryQuery({ name });
+    if (category) {
+        response.status(200).json({
+            message: `Category found with ID: ${name}`,
+            category,
+        });
+    } else {
+        response.status(404).json({
+            message: `Category not found with ID: ${name}`,
+        });
+    }
+};
+
 const createCategory = async (request, response) => {
     const { session, user } = request;
+    const parentId = parseInt(request.body.parentId);
 
     const { name, description } = request.body;
     const categoryData = {
         name,
         description,
+        parentId,
         UserId: user.id,
     };
 
@@ -62,7 +79,7 @@ const createCategory = async (request, response) => {
     if (createdCategory) {
         return response.status(201).json({
             message: `Category added with ID: ${createdCategory.id}`,
-            data: createdCategory,
+            createdCategory,
         });
     } else {
         return response
@@ -93,7 +110,7 @@ const updateCategory = async (request, response) => {
     if (updatedCategory) {
         response.status(200).json({
             message: `Category updated with ID: ${updatedCategory[0]?.id}`,
-            data: updatedCategory,
+            updatedCategory,
         });
     } else {
         response.status(500).json({
@@ -111,6 +128,7 @@ const deleteCategory = async (request, response) => {
 export {
     getCategories,
     getCategoryById,
+    getCategoryByName,
     createCategory,
     updateCategory,
     deleteCategory,

@@ -19,6 +19,9 @@ Category.init(
         description: {
             type: STRING,
         },
+        parentId: {
+            type: INTEGER,
+        },
         categoryableId: { type: INTEGER },
         categoryableType: { type: STRING },
     },
