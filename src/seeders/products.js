@@ -12,6 +12,7 @@ export const createFakeProducts = async (record) => {
             title: faker.commerce.productName(),
             description: faker.commerce.productDescription(),
             price: faker.commerce.price(),
+            quantity: randomNumber(1, 100),
             CategoryId: randomNumber(1, record),
             MarketId: randomNumber(1, record),
             UserId: randomNumber(1, record),

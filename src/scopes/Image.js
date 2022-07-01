@@ -1,8 +1,7 @@
 import UserSensitiveData from "../constants/SensitiveData.js";
+import { Image, Product, Image, Avatar, User } from "../models/index.js";
 
-import { Market, Product, Image, User, Avatar } from "../models/index.js";
-
-Product.addScope("withAssociations", {
+Image.addScope("withAssociations", {
     include: [
         {
             model: User,
@@ -10,9 +9,10 @@ Product.addScope("withAssociations", {
                 exclude: [...UserSensitiveData],
             },
         },
-        { model: Market, include: [{ model: Avatar }] },
+        { model: Product, include: [{ model: Image }] },
         { model: Image },
+        { model: Avatar },
     ],
 });
 
-export default Product;
+export default Image;

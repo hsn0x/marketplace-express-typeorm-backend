@@ -20,6 +20,10 @@ const Product = sequelize.define("Product", {
         type: INTEGER,
         allowNull: false,
     },
+    quantity: {
+        type: INTEGER,
+        allowNull: false,
+    },
 });
 
 SequelizeSlugify.slugifyModel(Product, { source: ["title"] });
