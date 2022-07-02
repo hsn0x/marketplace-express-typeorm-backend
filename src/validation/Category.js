@@ -10,7 +10,7 @@ const CreateCategorySchema = {
         parentId: { type: "number" },
         UserId: { type: "number" },
     },
-    required: ["name", "UserId"],
+    required: ["name", "parentId", "UserId"],
     additionalProperties: false,
 };
 
@@ -22,7 +22,7 @@ const UpdateCategorySchema = {
         parentId: { type: "number" },
         UserId: { type: "number" },
     },
-    required: ["name", "description", "UserId"],
+    required: ["name", "parentId", "UserId"],
     additionalProperties: false,
 };
 
