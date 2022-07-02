@@ -10,7 +10,7 @@ const CreateCategorySchema = {
         parentId: { type: "number" },
         UserId: { type: "number" },
     },
-    required: ["name", "description", "UserId"],
+    required: ["name", "UserId"],
     additionalProperties: false,
 };
 
