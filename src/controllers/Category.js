@@ -2,6 +2,7 @@ import {
     createCategoryQuery,
     deleteCategoryQuery,
     findAllCategoriesQuery,
+    findAllCategoriesWhereQuery,
     findOneCategoryQuery,
     updateCategoryQuery,
 } from "../queries/categories.js";
@@ -22,7 +23,18 @@ const getCategories = async (request, response) => {
         response.status(404).json({ message: "No categories found" });
     }
 };
-
+const getCategoriesByType = async (request, response) => {
+    const type = request.params.type;
+    const categories = await findAllCategoriesWhereQuery({ type });
+    if (categories) {
+        response.status(200).json({
+            message: `Categories found`,
+            categories,
+        });
+    } else {
+        response.status(404).json({ message: "No categories found" });
+    }
+};
 const getCategoryById = async (request, response) => {
     const id = parseInt(request.params.id);
     const category = await findOneCategoryQuery({ id });
@@ -57,12 +69,13 @@ const createCategory = async (request, response) => {
     const { session, user } = request;
     const parentId = parseInt(request.body.parentId);
 
-    const { name, description } = request.body;
+    const { name, description, type } = request.body;
     const categoryData = {
         name,
         description,
         parentId,
         UserId: user.id,
+        type,
     };
 
     const isCategoryValid = validateCreateCategory(categoryData);
@@ -128,6 +141,7 @@ const deleteCategory = async (request, response) => {
 export {
     getCategories,
     getCategoryById,
+    getCategoriesByType,
     getCategoryByName,
     createCategory,
     updateCategory,

@@ -44,17 +44,18 @@ const getProductBySlug = async (request, response) => {
     }
 };
 
-const createProduct = async (request, response) => {
+const createProduct = async (request, response, next) => {
     const { session, user } = request;
-    const { title, description, price, quantity, MarketId, CategoryId } =
+    const { title, description, price, quantity, MarketId, CategoriesIds } =
         request.body;
+
     const productData = {
         title,
         description,
-        price: Number(price),
-        quantity: Number(quantity),
-        MarketId: Number(MarketId),
-        CategoryId,
+        price,
+        quantity,
+        MarketId,
+        CategoriesIds,
         UserId: user.id,
     };
 

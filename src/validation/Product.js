@@ -10,7 +10,12 @@ const CreateProductSchema = {
         price: { type: "number" },
         quantity: { type: "number" },
         MarketId: { type: "number" },
-        CategoryId: { type: "array" },
+        CategoriesIds: {
+            type: "array",
+            items: {
+                type: "number",
+            },
+        },
         UserId: { type: "number" },
     },
     required: [
@@ -19,7 +24,7 @@ const CreateProductSchema = {
         "price",
         "quantity",
         "MarketId",
-        "CategoryId",
+        "CategoriesIds",
         "UserId",
     ],
     additionalProperties: false,
@@ -33,7 +38,7 @@ const UpdateProductSchema = {
         price: { type: "string" },
         quantity: { type: "number" },
         MarketId: { type: "number" },
-        CategoryId: { type: "number" },
+        CategoriesIds: { type: "number" },
         UserId: { type: "number" },
     },
     required: [
@@ -42,7 +47,7 @@ const UpdateProductSchema = {
         "price",
         "quantity",
         "MarketId",
-        "CategoryId",
+        "CategoriesIds",
         "UserId",
     ],
     additionalProperties: false,

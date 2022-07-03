@@ -14,7 +14,8 @@ export const createFakeProducts = async (record) => {
             price: faker.commerce.price(),
             quantity: randomNumber(1, 100),
             CategoryId: randomNumber(1, record),
-            MarketId: randomNumber(1, record),
+            // MarketId: randomNumber(1, record),
+            MarketId: 1,
             UserId: randomNumber(1, record),
         });
     }
@@ -22,6 +23,7 @@ export const createFakeProducts = async (record) => {
     const products = await Product.bulkCreate(fakeProducts);
     for (let productIndex = 0; productIndex < products.length; productIndex++) {
         const product = products[productIndex];
+
         for (
             let imageIndex = 0;
             imageIndex < randomNumber(1, 3);
@@ -33,20 +35,7 @@ export const createFakeProducts = async (record) => {
                 url,
             });
         }
+
+        await product.addCategory(productIndex);
     }
-
-    // for (let productIndex = 0; productIndex < products.length; productIndex++) {
-    //     const proudct = products[productIndex];
-
-    //     for (
-    //         let imageIndex = 0;
-    //         imageIndex < randomNumber(1, 5);
-    //         imageIndex++
-    //     ) {
-    //         await proudct.createImage({
-    //             public_id: faker.random.word(),
-    //             url: faker.image.image(),
-    //         });
-    //     }
-    // }
 };

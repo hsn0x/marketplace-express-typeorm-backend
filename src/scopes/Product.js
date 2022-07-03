@@ -1,9 +1,18 @@
 import UserSensitiveData from "../constants/SensitiveData.js";
 
-import { Market, Product, Image, User, Avatar } from "../models/index.js";
+import {
+    Market,
+    Product,
+    Image,
+    User,
+    Avatar,
+    Category,
+} from "../models/index.js";
 
 Product.addScope("withAssociations", {
     include: [
+        { model: Category },
+
         {
             model: User,
             attributes: {

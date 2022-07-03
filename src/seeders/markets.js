@@ -21,8 +21,17 @@ export const createFakeMarkets = async (record) => {
 
     const markets = await Market.bulkCreate(fakeMarkets);
 
+    /**
+     * Loop through all markets and create a fake image for each one
+     * Loop through all markets and create a fake avatar for each one
+     * Loop through all markets and create a fake category for each one
+     */
     for (let marketIndex = 0; marketIndex < markets.length; marketIndex++) {
         const market = markets[marketIndex];
+
+        /**
+         * Create images for each market
+         */
         for (
             let imageIndex = 0;
             imageIndex < randomNumber(1, 3);
@@ -34,13 +43,19 @@ export const createFakeMarkets = async (record) => {
                 url,
             });
         }
-    }
 
-    for (let index = 0; index < record; index++) {
-        const market = markets[index];
+        /**
+         * Create avatar for each market
+         */
         await market.createAvatar({
             public_id: faker.random.word(),
             url: faker.image.imageUrl(128, 128, "business", true),
         });
+
+        /**
+         * Add categorys to each market
+         */
+
+        // await market.addCategory(marketIndex);
     }
 };

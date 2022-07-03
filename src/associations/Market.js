@@ -1,6 +1,7 @@
 import {
     Avatar,
     Category,
+    Category_Categoryable,
     Image,
     Market,
     Product,
@@ -34,12 +35,17 @@ Market.hasMany(Avatar, {
         avatarableType: "market",
     },
 });
-Market.hasMany(Category, {
+
+Market.belongsToMany(Category, {
+    through: {
+        model: Category_Categoryable,
+        unique: false,
+        scope: {
+            categoryableType: "market",
+        },
+    },
     foreignKey: "categoryableId",
     constraints: false,
-    scope: {
-        imageableType: "market",
-    },
 });
 
 export default Market;

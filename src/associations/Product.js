@@ -1,4 +1,11 @@
-import { Category, Image, Market, Product, User } from "../models/index.js";
+import {
+    Category,
+    Category_Categoryable,
+    Image,
+    Market,
+    Product,
+    User,
+} from "../models/index.js";
 
 //
 Product.belongsTo(Market, {
@@ -11,12 +18,16 @@ Product.belongsTo(User, {
         allowNull: false,
     },
 });
-Product.hasMany(Category, {
+Product.belongsToMany(Category, {
+    through: {
+        model: Category_Categoryable,
+        unique: false,
+        scope: {
+            categoryableType: "product",
+        },
+    },
     foreignKey: "categoryableId",
     constraints: false,
-    scope: {
-        imageableType: "product",
-    },
 });
 
 // hasMany

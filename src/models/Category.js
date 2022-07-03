@@ -4,7 +4,14 @@ import SequelizeSlugify from "sequelize-slugify";
 import { INTEGER, STRING } from "../db/dataTypes.js";
 import { Model } from "sequelize";
 
-class Category extends Model {}
+class Category extends Model {
+    async getCategoryables(options) {
+        const markets = await this.getMarkets(options);
+        const products = await this.getProducts(options);
+
+        return markets.concat(products);
+    }
+}
 
 Category.init(
     {
@@ -14,7 +21,6 @@ Category.init(
         },
         slug: {
             type: STRING,
-            unique: true,
         },
         description: {
             type: STRING,
@@ -22,8 +28,9 @@ Category.init(
         parentId: {
             type: INTEGER,
         },
-        categoryableId: { type: INTEGER },
-        categoryableType: { type: STRING },
+        type: {
+            type: STRING,
+        },
     },
     { sequelize, modelName: "category" }
 );

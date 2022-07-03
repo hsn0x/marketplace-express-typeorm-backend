@@ -1,6 +1,7 @@
 import {
     Avatar,
     Category,
+    Category_Categoryable,
     Image,
     Market,
     Product,
@@ -8,13 +9,21 @@ import {
 } from "../models/index.js";
 
 // belongsToMany
-Category.belongsTo(Market, {
-    foreignKey: "categoryableId",
+Category.belongsToMany(Market, {
+    through: {
+        model: Category_Categoryable,
+        unique: false,
+    },
+    foreignKey: "categoryId",
     constraints: false,
 });
 
-Category.belongsTo(Product, {
-    foreignKey: "categoryableId",
+Category.belongsToMany(Product, {
+    through: {
+        model: Category_Categoryable,
+        unique: false,
+    },
+    foreignKey: "categoryId",
     constraints: false,
 });
 

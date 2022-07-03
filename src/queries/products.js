@@ -14,26 +14,13 @@ const findOneProductQuery = async (where) => {
     return product;
 };
 
-const createProductQuery = async (product) => {
-    const {
-        title,
-        description,
-        price,
-        quantity,
-        UserId,
-        MarketId,
-        CategoryId,
-    } = product;
-
-    const createdProduct = await Product.create({
-        title,
-        description,
-        price,
-        quantity,
-        UserId,
-        MarketId,
-        // CategoryId,
-    });
+const createProductQuery = async (productData) => {
+    console.log(productData);
+    const createdProduct = await Product.create(productData);
+    console.log(createdProduct.id);
+    productData.CategoriesIds.map(
+        async (ci) => await createdProduct.addCategory(ci)
+    );
     return createdProduct;
 };
 

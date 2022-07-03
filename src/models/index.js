@@ -11,6 +11,7 @@ import Comment from "./Comment.js";
 import Role from "./Role.js";
 import Permission from "./Permission.js";
 import Resource from "./Resource.js";
+import Category_Categoryable from "./Category_Categoryable.js";
 
 export {
     Market,
@@ -26,4 +27,5 @@ export {
     Role,
     Permission,
     Resource,
+    Category_Categoryable,
 };

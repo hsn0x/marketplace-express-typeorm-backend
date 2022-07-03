@@ -4,6 +4,12 @@ const findAllCategoriesQuery = async () => {
     const categories = await Category.scope("withAssociations").findAll();
     return categories;
 };
+const findAllCategoriesWhereQuery = async (where) => {
+    const categories = await Category.scope("withAssociations").findAll({
+        where,
+    });
+    return categories;
+};
 
 const findByPkCategoryQuery = async (id) => {
     const category = await Category.scope("withAssociations").findByPk(id);
@@ -36,6 +42,7 @@ const deleteCategoryQuery = async (id) => {
 
 export {
     findAllCategoriesQuery,
+    findAllCategoriesWhereQuery,
     findByPkCategoryQuery,
     findOneCategoryQuery,
     createCategoryQuery,
