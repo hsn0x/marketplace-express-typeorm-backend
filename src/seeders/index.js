@@ -27,10 +27,15 @@ const dbSeed = async () => {
  */
 const dbSeedFake = async () => {
     await createFakeUsers(RECORD);
+    await createFakeUsers(RECORD);
+    await createFakeMarkets(RECORD);
     await createFakeMarkets(RECORD);
     await createFakeProducts(RECORD);
+    await createFakeProducts(RECORD);
+    await createFakeCategories(RECORD);
     await createFakeCategories(RECORD);
     // await createFakeImages(RECORD);
+    await createFakeComments(RECORD);
     await createFakeComments(RECORD);
 
     // await createFakeStudents(RECORD);

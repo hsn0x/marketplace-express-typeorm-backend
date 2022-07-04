@@ -86,13 +86,15 @@ const updateProduct = async (request, response) => {
     const id = parseInt(request.params.id);
     const { session, user } = request;
 
-    const { title, description, price, MarketId, CategoryId } = request.body;
+    const { title, description, price, quantity, MarketId, CategoriesIds } =
+        request.body;
     const productData = {
         title,
         description,
         price,
-        MarketId: Number(MarketId),
-        CategoryId: Number(CategoryId),
+        quantity,
+        MarketId,
+        CategoriesIds,
         UserId: user.id,
     };
 

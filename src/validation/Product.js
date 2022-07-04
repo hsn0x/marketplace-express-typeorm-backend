@@ -35,10 +35,15 @@ const UpdateProductSchema = {
     properties: {
         title: { type: "string" },
         description: { type: "string" },
-        price: { type: "string" },
+        price: { type: "number" },
         quantity: { type: "number" },
         MarketId: { type: "number" },
-        CategoriesIds: { type: "number" },
+        CategoriesIds: {
+            type: "array",
+            items: {
+                type: "number",
+            },
+        },
         UserId: { type: "number" },
     },
     required: [
