@@ -21,7 +21,16 @@ User.addScope("withoutPassword", {
 User.addScope("withAssociations", {
     include: [
         { model: Market, include: [{ model: Avatar }, { model: Image }] },
-        { model: Product, include: [{ model: Image }] },
+        {
+            model: Product,
+            include: [
+                { model: Image },
+                {
+                    model: Market,
+                    include: [{ model: Avatar }, { model: Image }],
+                },
+            ],
+        },
         Image,
         Avatar,
         Role,
