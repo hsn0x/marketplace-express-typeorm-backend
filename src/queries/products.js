@@ -30,9 +30,9 @@ const updateProductQuery = async (product, where) => {
     return updatedProduct;
 };
 
-const deleteProductQuery = async (id) => {
+const deleteProductQuery = async (where) => {
     const deletedProduct = await Product.destroy({
-        where: id,
+        where,
     });
 
     return deletedProduct;
