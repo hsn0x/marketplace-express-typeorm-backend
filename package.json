@@ -10,6 +10,7 @@
         "start": "cross-env NODE_ENV=production node src/index.js"
     },
     "dependencies": {
+        "@elastic/elasticsearch": "^8.2.1",
         "@faker-js/faker": "^7.2.0",
         "ajv": "^8.11.0",
         "axios": "^0.27.2",

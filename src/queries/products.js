@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { Product } from "../scopes/index.js";
 
 const findAllProductsQuery = async () => {
@@ -11,6 +12,20 @@ const findByPkProductQuery = async (id) => {
 };
 const findOneProductQuery = async (where) => {
     const product = await Product.scope("withAssociations").findOne({ where });
+    return product;
+};
+const findAllProductsBySearchQuery = async ({ query }) => {
+    const queries = query
+        .trim()
+        .split(" ")
+        .filter((q) => q !== "")
+        .map((q) => ({ title: { [Op.like]: `%${q}%` } }));
+
+    const product = await Product.scope("withAssociations").findAll({
+        where: {
+            [Op.or]: [...queries],
+        },
+    });
     return product;
 };
 
@@ -50,6 +65,7 @@ export {
     findAllProductsQuery,
     findByPkProductQuery,
     findOneProductQuery,
+    findAllProductsBySearchQuery,
     createProductQuery,
     updateProductQuery,
     deleteProductQuery,

@@ -1,10 +1,10 @@
-import { User, Market, Image } from "../models/index.js";
 import {
     createProductQuery,
     deleteProductQuery,
     findAllProductsQuery,
     findOneProductQuery,
     updateProductQuery,
+    findAllProductsBySearchQuery,
 } from "../queries/products.js";
 import {
     validateCreateProduct,
@@ -12,14 +12,29 @@ import {
 } from "../validation/Product.js";
 
 const getProducts = async (request, response) => {
-    const products = await findAllProductsQuery([User, Market, Image]);
+    const products = await findAllProductsQuery();
     if (products) {
         response.status(200).json({ products });
     } else {
         response.status(404).json({ message: `Products not found` });
     }
 };
+const getProductsBySearch = async (request, response) => {
+    const query = request.params.query;
 
+    const products = await findAllProductsBySearchQuery({ query });
+    if (products) {
+        return response.status(200).json({
+            message: `Products found with query: ${query}, `,
+            length: products.length,
+            products,
+        });
+    } else {
+        return response
+            .status(404)
+            .json({ message: `Product not found with Query: ${query}` });
+    }
+};
 const getProductById = async (request, response) => {
     const id = parseInt(request.params.id);
     const product = await findOneProductQuery({ id });
@@ -31,7 +46,6 @@ const getProductById = async (request, response) => {
             .json({ message: `Product not found with ID: ${id}` });
     }
 };
-
 const getProductBySlug = async (request, response) => {
     const slug = request.params.slug;
     const product = await findOneProductQuery({ slug });
@@ -81,7 +95,6 @@ const createProduct = async (request, response, next) => {
             .json({ message: `Faile to create a product` });
     }
 };
-
 const updateProduct = async (request, response) => {
     const id = parseInt(request.params.id);
     const { session, user } = request;
@@ -120,7 +133,6 @@ const updateProduct = async (request, response) => {
             .json({ message: `Faile to update a product` });
     }
 };
-
 const deleteProduct = async (request, response) => {
     const id = parseInt(request.params.id);
     await deleteProductQuery({ id });
@@ -131,6 +143,7 @@ export {
     getProducts,
     getProductById,
     getProductBySlug,
+    getProductsBySearch,
     createProduct,
     updateProduct,
     deleteProduct,

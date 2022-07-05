@@ -7,6 +7,7 @@ import { sessionConfig } from "./session.js";
 import { passportConfig } from "./passport.js";
 import { ownerConfig } from "./owner.js";
 import { seedersConfig } from "./seeders.js";
+import { elasticSearchConfig } from "./elasticSearch.js";
 
 export {
     sequelizeConfig,
@@ -16,15 +17,9 @@ export {
     passportConfig,
     ownerConfig,
     seedersConfig,
+    elasticSearchConfig,
 };
 
 console.dir({
-    sequelizeConfig,
-    expressConfig,
-    cloudinaryConfig,
-    sessionConfig,
-    passportConfig,
-    sequelizeConfig,
-    ownerConfig,
-    seedersConfig,
+    elasticSearchConfig,
 });
