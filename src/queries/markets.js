@@ -14,8 +14,11 @@ const findOneMarketQuery = async (where) => {
     return market;
 };
 
-const createMarketQuery = async (market) => {
-    const createdMarket = await Market.create(market);
+const createMarketQuery = async (marketData) => {
+    const createdMarket = await Market.create(marketData);
+    marketData.CategoriesIds.map(
+        async (ci) => await createdMarket.addCategory(ci)
+    );
     return createdMarket;
 };
 

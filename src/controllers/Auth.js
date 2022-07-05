@@ -1,5 +1,8 @@
 import { createUser } from "./User.js";
 import passport from "passport";
+import { validateRegister } from "../validation/Auth.js";
+import { registerUserQuery } from "../queries/auth.js";
+import { genPassword } from "../lib/passwordUtils.js";
 
 const login = (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
@@ -31,7 +34,41 @@ const login = (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
-    await createUser(req, res, next);
+    const { firstName, lastName, username, email, password } = req.body;
+
+    const userData = {
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+    };
+
+    const hashedPassword = genPassword(userData.password);
+    userData.passwordHash = hashedPassword.hash;
+    userData.passwordSalt = hashedPassword.salt;
+
+    const isRegisterValid = validateRegister(userData);
+
+    if (!isRegisterValid.valid) {
+        return res.status(401).json({
+            valid: isRegisterValid.valid,
+            errors: isRegisterValid.errors,
+        });
+    }
+
+    const user = await registerUserQuery(userData);
+
+    if (user) {
+        res.status(201).json({
+            message: `User created with ID: ${user.id}`,
+            user,
+        });
+    } else {
+        res.status(500).json({
+            message: `Faile to create a user`,
+        });
+    }
 };
 
 const profile = async (req, res, next) => {

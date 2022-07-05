@@ -66,18 +66,27 @@ const getUserByEmail = async (request, response) => {
 };
 
 const createUser = async (request, response, next) => {
-    const { firstName, lastName, username, email, password, age, gender } =
-        request.body;
-    const userData = {
+    const {
         firstName,
         lastName,
         username,
+        description,
         email,
         password,
         age,
         gender,
+    } = request.body;
+
+    const userData = {
+        firstName,
+        lastName,
+        username,
+        description,
+        email,
+        password,
+        gender,
     };
-    userData.age = Number(userData.age);
+    userData.age = Number(age);
 
     const hashedPassword = genPassword(userData.password);
     userData.passwordHash = hashedPassword.hash;

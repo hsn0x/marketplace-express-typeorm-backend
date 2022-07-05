@@ -54,13 +54,16 @@ const getMarketByName = async (request, response) => {
 const createMarket = async (request, response) => {
     const { session, user } = request;
 
-    const { name, username, about, title } = request.body;
+    const { name, username, title, description, about, CategoriesIds } =
+        request.body;
     const marketData = {
         name,
         username,
-        about,
         title,
+        description,
+        about,
         UserId: user.id,
+        CategoriesIds,
     };
 
     const isMarketValid = validateCreateMarket(marketData);

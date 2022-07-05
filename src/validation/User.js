@@ -8,6 +8,7 @@ const CreateUserSchema = {
         firstName: { type: "string" },
         lastName: { type: "string" },
         username: { type: "string" },
+        description: { type: "string" },
         email: { type: "string" },
         password: { type: "string" },
         passwordHash: { type: "string" },
@@ -15,7 +16,15 @@ const CreateUserSchema = {
         age: { type: "number" },
         gender: { type: "string" },
     },
-    required: ["username", "email", "password", "passwordHash", "passwordSalt"],
+    required: [
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "password",
+        "passwordHash",
+        "passwordSalt",
+    ],
     additionalProperties: false,
 };
 
@@ -25,6 +34,7 @@ const UpdateUserSchema = {
         firstName: { type: "string" },
         lastName: { type: "string" },
         username: { type: "string" },
+        description: { type: "string" },
         age: { type: "number" },
         gender: { type: "string" },
     },

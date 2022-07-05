@@ -17,7 +17,6 @@ const User = sequelize.define("User", {
     },
     description: {
         type: TEXT,
-        allowNull: false,
     },
     email: {
         type: STRING,
@@ -34,11 +33,9 @@ const User = sequelize.define("User", {
     },
     age: {
         type: INTEGER,
-        allowNull: false,
     },
     gender: {
         type: STRING,
-        allowNull: false,
     },
 });
 
