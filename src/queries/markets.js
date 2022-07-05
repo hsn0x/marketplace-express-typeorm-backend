@@ -19,8 +19,17 @@ const createMarketQuery = async (market) => {
     return createdMarket;
 };
 
-const updateMarketQuery = async (market, where) => {
-    const updatedMarket = await Market.update(market, { where });
+const updateMarketQuery = async (marketData, where) => {
+    await Market.update(marketData, { where });
+    const updatedMarket = await Market.scope("withAssociations").findOne({
+        where,
+    });
+    updatedMarket.categories.map(
+        async (c) => await updatedMarket.removeCategory(c.id)
+    );
+    marketData.CategoriesIds.map(
+        async (ci) => await updatedMarket.addCategory(ci)
+    );
     return updatedMarket;
 };
 

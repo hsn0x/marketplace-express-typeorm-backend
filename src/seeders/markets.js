@@ -56,6 +56,6 @@ export const createFakeMarkets = async (record) => {
          * Add categorys to each market
          */
 
-        // await market.addCategory(marketIndex);
+        await market.addCategory(marketIndex + record);
     }
 };

@@ -5,7 +5,7 @@ import { randomNumber } from "../utils/index.js";
 
 export const createFakeCategories = async (record) => {
     const fakeCategories = [];
-    for (let index = 0; index < record * 3; index++) {
+    for (let index = 0; index < record; index++) {
         const name = faker.random.word() + faker.random.word();
         fakeCategories.push({
             name,
@@ -16,7 +16,7 @@ export const createFakeCategories = async (record) => {
         });
     }
 
-    for (let index = 0; index < record * 3; index++) {
+    for (let index = 0; index < record; index++) {
         const name = faker.random.word() + faker.random.word();
         fakeCategories.push({
             name,

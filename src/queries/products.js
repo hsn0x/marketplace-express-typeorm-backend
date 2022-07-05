@@ -15,7 +15,6 @@ const findOneProductQuery = async (where) => {
 };
 
 const createProductQuery = async (productData) => {
-    console.log(productData);
     const createdProduct = await Product.create(productData);
     console.log(createdProduct.id);
     productData.CategoriesIds.map(
@@ -24,8 +23,17 @@ const createProductQuery = async (productData) => {
     return createdProduct;
 };
 
-const updateProductQuery = async (product, where) => {
-    const updatedProduct = await Product.update(product, { where });
+const updateProductQuery = async (productData, where) => {
+    await Product.update(productData, { where });
+    const updatedProduct = await Product.scope("withAssociations").findOne({
+        where,
+    });
+    updatedProduct.categories.map(
+        async (c) => await updatedProduct.removeCategory(c.id)
+    );
+    productData.CategoriesIds.map(
+        async (ci) => await updatedProduct.addCategory(ci)
+    );
 
     return updatedProduct;
 };

@@ -8,10 +8,25 @@ const CreateMarketSchema = {
         name: { type: "string" },
         username: { type: "string" },
         title: { type: "string" },
+        description: { type: "string" },
         about: { type: "string" },
+        CategoriesIds: {
+            type: "array",
+            items: {
+                type: "number",
+            },
+        },
         UserId: { type: "number" },
     },
-    required: ["name", "username", "title", "about", "UserId"],
+    required: [
+        "name",
+        "username",
+        "title",
+        "description",
+        "about",
+        "CategoriesIds",
+        "UserId",
+    ],
     additionalProperties: false,
 };
 
@@ -21,10 +36,25 @@ const UpdateMarketSchema = {
         name: { type: "string" },
         username: { type: "string" },
         title: { type: "string" },
+        description: { type: "string" },
         about: { type: "string" },
+        CategoriesIds: {
+            type: "array",
+            items: {
+                type: "number",
+            },
+        },
         UserId: { type: "number" },
     },
-    required: ["name", "username", "title", "about", "UserId"],
+    required: [
+        "name",
+        "username",
+        "title",
+        "description",
+        "about",
+        "CategoriesIds",
+        "UserId",
+    ],
     additionalProperties: false,
 };
 

@@ -88,13 +88,19 @@ const createMarket = async (request, response) => {
 
 const updateMarket = async (request, response) => {
     const id = parseInt(request.params.id);
-    const { name, username, about, title } = request.body;
+    const { session, user } = request;
+
+    const { name, username, about, title, description, CategoriesIds } =
+        request.body;
 
     const marketData = {
         name,
         username,
-        about,
         title,
+        description,
+        about,
+        CategoriesIds,
+        UserId: user.id,
     };
 
     const isMarketValid = validateUpdateMarket(marketData);
