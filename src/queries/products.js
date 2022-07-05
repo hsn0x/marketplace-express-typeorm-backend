@@ -28,7 +28,6 @@ const findAllProductsBySearchQuery = async ({ query }) => {
     });
     return product;
 };
-
 const createProductQuery = async (productData) => {
     const createdProduct = await Product.create(productData);
     console.log(createdProduct.id);

@@ -1,6 +1,7 @@
 import {
     createMarketQuery,
     deleteMarketQuery,
+    findAllMarketsBySearchQuery,
     findAllMarketsQuery,
     findOneMarketQuery,
     updateMarketQuery,
@@ -21,7 +22,22 @@ const getMarkets = async (request, response) => {
         response.status(404).json({ message: "No markets found" });
     }
 };
+const getMarketsBySearch = async (request, response) => {
+    const query = request.params.query;
 
+    const markets = await findAllMarketsBySearchQuery({ query });
+    if (markets) {
+        return response.status(200).json({
+            message: `Markets found with query: ${query}, `,
+            length: markets.length,
+            markets,
+        });
+    } else {
+        return response
+            .status(404)
+            .json({ message: `Market not found with Query: ${query}` });
+    }
+};
 const getMarketById = async (request, response) => {
     const id = parseInt(request.params.id);
     const market = await findOneMarketQuery({ id });
@@ -135,6 +151,7 @@ const deleteMarket = async (request, response) => {
 export {
     getMarkets,
     getMarketById,
+    getMarketsBySearch,
     getMarketByName,
     createMarket,
     updateMarket,

@@ -5,6 +5,7 @@ import {
     getMarketById,
     getMarketByName,
     getMarkets,
+    getMarketsBySearch,
     updateMarket,
 } from "../controllers/Market.js";
 import { isAuth } from "../middleware/Auth.js";
@@ -14,6 +15,7 @@ const router = Router();
 
 router.get("/", getMarkets);
 router.get("/:id", getMarketById);
+router.get("/q/:query", getMarketsBySearch);
 router.get("/name/:slug", getMarketByName);
 router.post("/", isAuth, isMarketUsernameTaken, createMarket);
 router.put("/:id", isAuth, isMarketUsernameTaken, isMarketOwner, updateMarket);

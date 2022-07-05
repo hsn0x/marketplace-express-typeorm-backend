@@ -1,10 +1,24 @@
+import { Op } from "sequelize";
 import { Market } from "../scopes/index.js";
 
 const findAllMarketsQuery = async () => {
     const markets = await Market.scope("withAssociations").findAll();
     return markets;
 };
+const findAllMarketsBySearchQuery = async ({ query }) => {
+    const queries = query
+        .trim()
+        .split(" ")
+        .filter((q) => q !== "")
+        .map((q) => ({ name: { [Op.like]: `%${q}%` } }));
 
+    const market = await Market.scope("withAssociations").findAll({
+        where: {
+            [Op.or]: [...queries],
+        },
+    });
+    return market;
+};
 const findByPkMarketQuery = async (id) => {
     const market = await Market.scope("withAssociations").findByPk(id);
     return market;
@@ -45,6 +59,7 @@ const deleteMarketQuery = async (where) => {
 
 export {
     findAllMarketsQuery,
+    findAllMarketsBySearchQuery,
     findByPkMarketQuery,
     findOneMarketQuery,
     createMarketQuery,
