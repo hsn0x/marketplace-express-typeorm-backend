@@ -10,7 +10,27 @@ export const createFakeCategories = async (record) => {
         fakeCategories.push({
             name,
             description: faker.lorem.sentence(),
-            parentId: randomNumber(0, 2),
+            parentId: 0,
+            UserId: 1,
+            type: "product",
+        });
+    }
+    for (let index = 0; index < record; index++) {
+        const name = faker.random.word() + faker.random.word();
+        fakeCategories.push({
+            name,
+            description: faker.lorem.sentence(),
+            parentId: randomNumber(1, record),
+            UserId: 1,
+            type: "product",
+        });
+    }
+    for (let index = 0; index < record; index++) {
+        const name = faker.random.word() + faker.random.word();
+        fakeCategories.push({
+            name,
+            description: faker.lorem.sentence(),
+            parentId: randomNumber(record, record * 2),
             UserId: 1,
             type: "product",
         });
@@ -21,7 +41,29 @@ export const createFakeCategories = async (record) => {
         fakeCategories.push({
             name,
             description: faker.lorem.sentence(),
-            parentId: randomNumber(0, 2),
+            parentId: 0,
+            UserId: 1,
+            type: "market",
+        });
+    }
+
+    for (let index = 0; index < record; index++) {
+        const name = faker.random.word() + faker.random.word();
+        fakeCategories.push({
+            name,
+            description: faker.lorem.sentence(),
+            parentId: randomNumber(record * 3, record * 4),
+            UserId: 1,
+            type: "market",
+        });
+    }
+
+    for (let index = 0; index < record; index++) {
+        const name = faker.random.word() + faker.random.word();
+        fakeCategories.push({
+            name,
+            description: faker.lorem.sentence(),
+            parentId: randomNumber(record * 4, record * 5),
             UserId: 1,
             type: "market",
         });

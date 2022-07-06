@@ -17,6 +17,7 @@ const getCategories = async (request, response) => {
     if (categories) {
         response.status(200).json({
             message: `Categories found`,
+            length: categories.length,
             categories,
         });
     } else {
@@ -29,6 +30,7 @@ const getCategoriesByType = async (request, response) => {
     if (categories) {
         response.status(200).json({
             message: `Categories found`,
+            length: categories.length,
             categories,
         });
     } else {
