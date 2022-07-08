@@ -5,6 +5,7 @@ import {
     findOneProductQuery,
     updateProductQuery,
     findAllProductsBySearchQuery,
+    findAllProductsBySearchQueryWithFilters,
 } from "../queries/products.js";
 import {
     validateCreateProduct,
@@ -23,6 +24,31 @@ const getProductsBySearch = async (request, response) => {
     const query = request.params.query;
 
     const products = await findAllProductsBySearchQuery({ query });
+    if (products) {
+        return response.status(200).json({
+            message: `Products found with query: ${query}, `,
+            length: products.length,
+            products,
+        });
+    } else {
+        return response
+            .status(404)
+            .json({ message: `Product not found with Query: ${query}` });
+    }
+};
+const getProductsBySearchWithFilters = async (request, response) => {
+    const query = request.params.query;
+    const filters = {};
+    filters.minPrice = Number(request.query.minPrice);
+    filters.maxPrice = Number(request.query.maxPrice);
+    filters.CategoriesIds = request.query.CategoriesIds?.map((ci) =>
+        Number(ci)
+    );
+
+    const products = await findAllProductsBySearchQueryWithFilters({
+        query,
+        filters,
+    });
     if (products) {
         return response.status(200).json({
             message: `Products found with query: ${query}, `,
@@ -57,7 +83,6 @@ const getProductBySlug = async (request, response) => {
             .json({ message: `Product not found with Slug: ${slug}` });
     }
 };
-
 const createProduct = async (request, response, next) => {
     const { session, user } = request;
     const { title, description, price, quantity, MarketId, CategoriesIds } =
@@ -144,6 +169,7 @@ export {
     getProductById,
     getProductBySlug,
     getProductsBySearch,
+    getProductsBySearchWithFilters,
     createProduct,
     updateProduct,
     deleteProduct,
