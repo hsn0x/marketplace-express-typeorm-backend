@@ -9,6 +9,10 @@ import auth from "./auth.js";
 import admin from "./admin.js";
 import categories from "./categories.js";
 
+import likes from "./likes.js";
+import votes from "./votes.js";
+import favorites from "./favorites.js";
+
 /**
  * import Middleware for the application.
  */
@@ -39,5 +43,10 @@ router.use("/products", products);
 router.use("/markets", markets);
 router.use("/admin", isAuth, isAdmin, admin);
 router.use("/categories", categories);
+
+// Buttons
+router.use("/likes", likes);
+router.use("/votes", votes);
+router.use("/favorites", favorites);
 
 export default router;

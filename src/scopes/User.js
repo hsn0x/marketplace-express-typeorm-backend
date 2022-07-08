@@ -8,6 +8,9 @@ import {
     Role,
     Student,
     User,
+    Like,
+    Vote,
+    Favorite,
 } from "../models/index.js";
 
 import {} from "./index.js";
@@ -34,6 +37,9 @@ User.addScope("withAssociations", {
         Image,
         Avatar,
         Role,
+        Like,
+        Vote,
+        Favorite,
     ],
 });
 

@@ -1,13 +1,16 @@
 import {
     Avatar,
     Category,
+    Favorite,
     Image,
+    Like,
     Market,
     Post,
     Product,
     Role,
     Student,
     User,
+    Vote,
 } from "../models/index.js";
 
 // hasMany
@@ -31,7 +34,6 @@ User.hasMany(Post, {
         allowNull: false,
     },
 });
-
 User.hasMany(Image, {
     foreignKey: "imageableId",
     constraints: false,
@@ -46,7 +48,21 @@ User.hasMany(Avatar, {
         avatarableType: "user",
     },
 });
-
+User.hasMany(Like, {
+    foreignKey: {
+        allowNull: false,
+    },
+});
+User.hasMany(Vote, {
+    foreignKey: {
+        allowNull: false,
+    },
+});
+User.hasMany(Favorite, {
+    foreignKey: {
+        allowNull: false,
+    },
+});
 // hasOne
 User.hasOne(Student, {
     foreignKey: {

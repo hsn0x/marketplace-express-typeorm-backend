@@ -3,4 +3,8 @@ import Market from "./Market.js";
 import Product from "./Product.js";
 import Category from "./Category.js";
 
-export { User, Market, Product, Category };
+import Like from "./Like.js";
+import Vote from "./Vote.js";
+import Favorite from "./Favorite.js";
+
+export { User, Market, Product, Category, Like, Vote, Favorite };

@@ -12,6 +12,10 @@ import Role from "./Role.js";
 import Permission from "./Permission.js";
 import Resource from "./Resource.js";
 
+import Like from "./Like.js";
+import Vote from "./Vote.js";
+import Favorite from "./Favorite.js";
+
 export {
     Category,
     Market,
@@ -26,4 +30,7 @@ export {
     Role,
     Permission,
     Resource,
+    Like,
+    Vote,
+    Favorite,
 };
