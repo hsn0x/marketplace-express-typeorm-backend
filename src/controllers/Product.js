@@ -1,3 +1,4 @@
+import { getPagingData } from "../lib/handlePagination.js";
 import {
     createProductQuery,
     deleteProductQuery,
@@ -13,9 +14,14 @@ import {
 } from "../validation/Product.js";
 
 const getProducts = async (request, response) => {
-    const products = await findAllProductsQuery();
+    const { page, size } = request.query;
+    const params = {
+        page: parseInt(page),
+        size: parseInt(size),
+    };
+    const products = await findAllProductsQuery(params);
     if (products) {
-        response.status(200).json({ products });
+        response.status(200).json(products);
     } else {
         response.status(404).json({ message: `Products not found` });
     }

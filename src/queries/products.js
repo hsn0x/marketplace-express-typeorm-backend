@@ -1,12 +1,29 @@
 import { Op } from "sequelize";
 import { Product } from "../scopes/index.js";
 import { Category } from "../models/index.js";
+import { getPagination, getPagingData } from "../lib/handlePagination.js";
 
-const findAllProductsQuery = async () => {
-    const products = await Product.scope("withAssociations").findAll();
-    return products;
+const findAllProductsQuery = async ({ page, size }) => {
+    const { limit, offset } = getPagination(page, size);
+
+    const products = await Product.scope("withAssociations").findAll({
+        limit,
+        offset,
+    });
+    const count = await Product.count();
+    const { totalItems, totalPages, currentPage } = getPagingData(
+        count,
+        page,
+        limit
+    );
+    return {
+        totalItems,
+        totalPages,
+        currentPage,
+        count,
+        rows: products,
+    };
 };
-
 const findByPkProductQuery = async (id) => {
     const product = await Product.scope("withAssociations").findByPk(id);
     return product;
