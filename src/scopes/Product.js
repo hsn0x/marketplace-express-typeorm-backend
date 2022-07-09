@@ -29,8 +29,18 @@ Product.addScope("withAssociations", {
         { model: Like },
         { model: Vote },
         { model: Favorite },
-        { model: Comment },
-        { model: Review },
+        {
+            model: Comment,
+            include: [
+                { model: User, include: [{ model: Avatar }, { model: Image }] },
+            ],
+        },
+        {
+            model: Review,
+            include: [
+                { model: User, include: [{ model: Avatar }, { model: Image }] },
+            ],
+        },
     ],
 });
 

@@ -40,12 +40,12 @@ export const createFakeProducts = async (record) => {
             await product.createReview({
                 rate: randomNumber(1, 5),
                 title: faker.lorem.sentence(),
-                content: faker.lorem.paragraph(),
+                content: faker.lorem.paragraph(10),
                 UserId: randomNumber(1, record),
             });
             await product.createComment({
                 title: faker.lorem.sentence(),
-                content: faker.lorem.paragraph(),
+                content: faker.lorem.paragraph(10),
                 UserId: randomNumber(1, record),
             });
         }
