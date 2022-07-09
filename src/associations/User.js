@@ -1,6 +1,8 @@
 import {
     Avatar,
     Category,
+    Comment,
+    Review,
     Favorite,
     Image,
     Like,
@@ -63,6 +65,17 @@ User.hasMany(Favorite, {
         allowNull: false,
     },
 });
+User.hasMany(Comment, {
+    foreignKey: {
+        allowNull: false,
+    },
+});
+User.hasMany(Review, {
+    foreignKey: {
+        allowNull: false,
+    },
+});
+
 // hasOne
 User.hasOne(Student, {
     foreignKey: {

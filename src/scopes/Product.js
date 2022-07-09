@@ -10,6 +10,8 @@ import {
     Like,
     Vote,
     Favorite,
+    Comment,
+    Review,
 } from "../models/index.js";
 
 Product.addScope("withAssociations", {
@@ -27,6 +29,8 @@ Product.addScope("withAssociations", {
         { model: Like },
         { model: Vote },
         { model: Favorite },
+        { model: Comment },
+        { model: Review },
     ],
 });
 

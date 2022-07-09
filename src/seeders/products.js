@@ -36,6 +36,20 @@ export const createFakeProducts = async (record) => {
             });
         }
 
+        for (let index = 0; index < randomNumber(10, 30); index++) {
+            await product.createReview({
+                rate: randomNumber(1, 5),
+                title: faker.lorem.sentence(),
+                content: faker.lorem.paragraph(),
+                UserId: randomNumber(1, record),
+            });
+            await product.createComment({
+                title: faker.lorem.sentence(),
+                content: faker.lorem.paragraph(),
+                UserId: randomNumber(1, record),
+            });
+        }
+
         await product.addCategory(productIndex);
     }
 };

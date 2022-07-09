@@ -1,12 +1,11 @@
-import { Comment, Image, Video } from "../models/index.js";
+import { Comment, Image, Product, User } from "../models/index.js";
 
-Comment.belongsTo(Image, {
+Comment.belongsTo(Product, {
     foreignKey: "commentableId",
     constraints: false,
 });
-Comment.belongsTo(Video, {
-    foreignKey: "commentableId",
-    constraints: false,
-});
+
+// belongsTo
+Comment.belongsTo(User);
 
 export default Comment;

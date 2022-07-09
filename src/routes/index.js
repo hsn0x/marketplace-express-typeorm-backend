@@ -9,6 +9,9 @@ import auth from "./auth.js";
 import admin from "./admin.js";
 import categories from "./categories.js";
 
+import comments from "./comments.js";
+import reviews from "./reviews.js";
+
 import likes from "./likes.js";
 import votes from "./votes.js";
 import favorites from "./favorites.js";
@@ -43,6 +46,9 @@ router.use("/products", products);
 router.use("/markets", markets);
 router.use("/admin", isAuth, isAdmin, admin);
 router.use("/categories", categories);
+
+router.use("/comments", comments);
+router.use("/reviews", reviews);
 
 // Buttons
 router.use("/likes", likes);

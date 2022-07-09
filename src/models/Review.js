@@ -3,9 +3,13 @@ import sequelize from "../db/sequelize.js";
 import { INTEGER, STRING, TEXT } from "../db/dataTypes.js";
 import { Model } from "sequelize";
 
-class Comment extends Model {}
-Comment.init(
+class Review extends Model {}
+Review.init(
     {
+        rate: {
+            type: INTEGER,
+            allowNull: false,
+        },
         title: {
             type: STRING,
             allowNull: false,
@@ -14,10 +18,10 @@ Comment.init(
             type: TEXT,
             allowNull: false,
         },
-        commentableId: { type: INTEGER },
-        commentableType: { type: STRING },
+        reviewableId: { type: INTEGER },
+        reviewableType: { type: STRING },
     },
-    { sequelize, modelName: "comment" }
+    { sequelize, modelName: "review" }
 );
 
-export default Comment;
+export default Review;

@@ -8,6 +8,7 @@ import Image from "./Image.js";
 import Avatar from "./Avatar.js";
 import Video from "./Video.js";
 import Comment from "./Comment.js";
+import Review from "./Review.js";
 import Role from "./Role.js";
 import Permission from "./Permission.js";
 import Resource from "./Resource.js";
@@ -27,6 +28,7 @@ export {
     Avatar,
     Video,
     Comment,
+    Review,
     Role,
     Permission,
     Resource,

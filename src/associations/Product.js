@@ -1,11 +1,13 @@
 import {
     Category,
     Category_Categoryable,
+    Comment,
     Favorite,
     Image,
     Like,
     Market,
     Product,
+    Review,
     User,
     Vote,
 } from "../models/index.js";
@@ -61,6 +63,20 @@ Product.hasMany(Image, {
     constraints: false,
     scope: {
         imageableType: "product",
+    },
+});
+Product.hasMany(Comment, {
+    foreignKey: "commentableId",
+    constraints: false,
+    scope: {
+        commentableType: "product",
+    },
+});
+Product.hasMany(Review, {
+    foreignKey: "reviewableId",
+    constraints: false,
+    scope: {
+        reviewableType: "product",
     },
 });
 

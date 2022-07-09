@@ -9,8 +9,9 @@ export const createFakeComments = async (record) => {
         fakeComments.push({
             title: faker.lorem.sentence(),
             content: faker.lorem.paragraph(),
+            UserId: randomNumber(1, record),
         });
     }
 
-    await Comment.bulkCreate(fakeComments);
+    // await Comment.bulkCreate(fakeComments);
 };
