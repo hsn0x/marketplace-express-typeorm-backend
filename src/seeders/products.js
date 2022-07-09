@@ -11,10 +11,10 @@ export const createFakeProducts = async (record) => {
         fakeProducts.push({
             title: faker.commerce.productName(),
             description: faker.commerce.productDescription(),
+            about: faker.lorem.paragraph(40),
             price: faker.commerce.price(),
             quantity: randomNumber(1, 100),
             CategoryId: randomNumber(1, record),
-            // MarketId: randomNumber(1, record),
             MarketId: 1,
             UserId: randomNumber(1, record),
         });

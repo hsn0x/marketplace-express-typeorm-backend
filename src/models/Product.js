@@ -18,6 +18,10 @@ const Product = sequelize.define(
             type: TEXT,
             allowNull: false,
         },
+        about: {
+            type: TEXT,
+            allowNull: false,
+        },
         price: {
             type: INTEGER,
             allowNull: false,
