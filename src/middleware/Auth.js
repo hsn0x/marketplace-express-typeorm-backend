@@ -15,6 +15,7 @@ const isAuth = (req, res, next) => {
         return next();
     } else {
         res.status(401).json({
+            isAuthenticated: req.isAuthenticated(),
             message: "You need to be logged in ",
         });
     }
@@ -25,6 +26,7 @@ const isUserAuth = (req, res, next) => {
     const { session, user } = req;
     if (user.id !== id) {
         return res.status(401).json({
+            isAuthenticated: req.isAuthenticated(),
             message: "You are not authorized to do this action",
         });
     } else {
