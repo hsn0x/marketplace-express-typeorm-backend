@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
-import { Comment } from "../scopes/index.js";
+import { Comment, Product } from "../scopes/index.js";
+import { findByPkProductQuery } from "./products.js";
 const findAllCommentsQuery = async () => {
     const comments = await Comment.scope("withAssociations").findAll();
     return comments;
@@ -28,8 +29,10 @@ const findOneCommentQuery = async (where) => {
 };
 
 const createCommentQuery = async (commentData) => {
-    const createdComment = await Comment.create(commentData);
-    return createdComment;
+    const product = await findByPkProductQuery(commentData.productId);
+    const createdComment = await product.createComment(commentData);
+    const comment = await findByPkCommentQuery(createdComment.id);
+    return comment;
 };
 
 const updateCommentQuery = async (commentData, where) => {

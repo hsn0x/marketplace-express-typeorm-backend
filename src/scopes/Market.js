@@ -6,6 +6,9 @@ import {
     Avatar,
     User,
     Category,
+    Like,
+    Vote,
+    Favorite,
 } from "../models/index.js";
 
 Market.addScope("withAssociations", {
@@ -19,7 +22,12 @@ Market.addScope("withAssociations", {
         },
         {
             model: Product,
-            include: [{ model: Image }],
+            include: [
+                { model: Image },
+                { model: Like },
+                { model: Vote },
+                { model: Favorite },
+            ],
         },
         { model: Image },
         { model: Avatar },

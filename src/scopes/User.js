@@ -11,6 +11,8 @@ import {
     Like,
     Vote,
     Favorite,
+    Review,
+    Comment,
 } from "../models/index.js";
 
 import {} from "./index.js";
@@ -43,6 +45,8 @@ User.addScope("withAssociations", {
         Like,
         Vote,
         Favorite,
+        Comment,
+        Review,
     ],
 });
 

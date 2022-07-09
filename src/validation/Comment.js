@@ -7,9 +7,10 @@ const CreateCommentSchema = {
     properties: {
         title: { type: "string" },
         content: { type: "string" },
+        productId: { type: "number" },
         UserId: { type: "number" },
     },
-    required: ["title", "content", "UserId"],
+    required: ["title", "content", "productId", "UserId"],
     additionalProperties: false,
 };
 
@@ -18,9 +19,10 @@ const UpdateCommentSchema = {
     properties: {
         title: { type: "string" },
         content: { type: "string" },
+        productId: { type: "number" },
         UserId: { type: "number" },
     },
-    required: ["title", "content", "UserId"],
+    required: ["title", "content", "productId", "UserId"],
     additionalProperties: false,
 };
 

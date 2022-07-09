@@ -69,10 +69,11 @@ const getCommentByName = async (request, response) => {
 const createComment = async (request, response) => {
     const { session, user } = request;
 
-    const { title, content } = request.body;
+    const { title, content, productId } = request.body;
     const commentData = {
         title,
         content,
+        productId: parseInt(productId),
         UserId: user.id,
     };
 
