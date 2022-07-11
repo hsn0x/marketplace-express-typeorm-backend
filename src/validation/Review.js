@@ -8,9 +8,10 @@ const CreateReviewSchema = {
         rate: { type: "number" },
         title: { type: "string" },
         content: { type: "string" },
+        productId: { type: "number" },
         UserId: { type: "number" },
     },
-    required: ["rate", "title", "content", "UserId"],
+    required: ["rate", "title", "content", "productId", "UserId"],
     additionalProperties: false,
 };
 
@@ -20,9 +21,10 @@ const UpdateReviewSchema = {
         rate: { type: "number" },
         title: { type: "string" },
         content: { type: "string" },
+        productId: { type: "number" },
         UserId: { type: "number" },
     },
-    required: ["rate", "title", "content", "UserId"],
+    required: ["rate", "title", "content", "productId", "UserId"],
     additionalProperties: false,
 };
 

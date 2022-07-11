@@ -70,11 +70,12 @@ const getReviewByName = async (request, response) => {
 const createReview = async (request, response) => {
     const { session, user } = request;
 
-    const { rate, title, content } = request.body;
+    const { rate, title, content, productId } = request.body;
     const reviewData = {
         rate: parseInt(rate),
         title,
         content,
+        productId: parseInt(productId),
         UserId: user.id,
     };
 

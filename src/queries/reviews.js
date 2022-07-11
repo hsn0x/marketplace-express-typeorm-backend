@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
 import { Review } from "../scopes/index.js";
+import { findByPkProductQuery } from "./products.js";
 
 const findAllReviewsQuery = async () => {
     const reviews = await Review.scope("withAssociations").findAll();
@@ -29,8 +30,10 @@ const findOneReviewQuery = async (where) => {
 };
 
 const createReviewQuery = async (reviewData) => {
-    const createdReview = await Review.create(reviewData);
-    return createdReview;
+    const product = await findByPkProductQuery(reviewData.productId);
+    const createdReview = await product.createReview(reviewData);
+    const review = await findByPkReviewQuery(createdReview.id);
+    return review;
 };
 
 const updateReviewQuery = async (reviewData, where) => {

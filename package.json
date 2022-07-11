@@ -1,10 +1,11 @@
 {
-    "name": "sequelize-expressjs-api",
-    "version": "1.0.1",
+    "name": "hsn-marketplace-expressjs-sequelize-backend",
+    "version": "1.0.2",
     "main": "index.js",
     "author": "Hassane Bendaoud <40140987+realHassaneBen@users.noreply.github.com>",
     "license": "MIT",
     "type": "module",
+    "private": true,
     "scripts": {
         "dev": "cross-env NODE_ENV=development nodemon src/index.js",
         "start": "cross-env NODE_ENV=production node src/index.js"
