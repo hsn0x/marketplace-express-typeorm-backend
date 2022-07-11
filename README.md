@@ -2,6 +2,8 @@
 
 Marketplace Backend for [hsn-marketplace-nextjs-frontend](https://github.com/realHassaneBen/hsn-marketplace-nextjs-frontend)
 
+Using Express.js and Sequelize for interacting with databases
+
 ### Clone Reposition
 
 ```
