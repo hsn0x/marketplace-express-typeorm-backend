@@ -22,9 +22,13 @@ npm run dev
 yarn dev
 ```
 
+Open http://localhost:5000 with your browser to see the result.
+
 ### Run on Production
 
 ```
 yarn start
 npm run start
 ```
+
+Open http://localhost:5000 with your browser to see the result.
