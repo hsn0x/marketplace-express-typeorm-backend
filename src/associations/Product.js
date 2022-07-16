@@ -35,27 +35,6 @@ Product.belongsToMany(Category, {
     foreignKey: "categoryableId",
     constraints: false,
 });
-Product.hasMany(Like, {
-    foreignKey: "likeableId",
-    constraints: false,
-    scope: {
-        likeableType: "product",
-    },
-});
-Product.hasMany(Vote, {
-    foreignKey: "voteableId",
-    constraints: false,
-    scope: {
-        voteableType: "product",
-    },
-});
-Product.hasMany(Favorite, {
-    foreignKey: "favoriteableId",
-    constraints: false,
-    scope: {
-        favoriteableType: "product",
-    },
-});
 
 // hasMany
 Product.hasMany(Image, {
@@ -77,6 +56,27 @@ Product.hasMany(Review, {
     constraints: false,
     scope: {
         reviewableType: "product",
+    },
+});
+Product.hasMany(Like, {
+    foreignKey: "likeableId",
+    constraints: false,
+    scope: {
+        likeableType: "product",
+    },
+});
+Product.hasMany(Vote, {
+    foreignKey: "voteableId",
+    constraints: false,
+    scope: {
+        voteableType: "product",
+    },
+});
+Product.hasMany(Favorite, {
+    foreignKey: "favoriteableId",
+    constraints: false,
+    scope: {
+        favoriteableType: "product",
     },
 });
 

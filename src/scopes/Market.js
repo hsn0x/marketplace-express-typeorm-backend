@@ -13,7 +13,9 @@ import {
 
 Market.addScope("withAssociations", {
     include: [
-        { model: Category },
+        {
+            model: Category,
+        },
         {
             model: User,
             attributes: {
@@ -22,15 +24,27 @@ Market.addScope("withAssociations", {
         },
         {
             model: Product,
+            separate: true,
             include: [
-                { model: Image },
-                { model: Like },
-                { model: Vote },
-                { model: Favorite },
+                {
+                    model: Image,
+                },
+                {
+                    model: Like,
+                },
+                {
+                    model: Vote,
+                },
+                {
+                    model: Favorite,
+                },
             ],
         },
-        { model: Image },
-        { model: Avatar },
+        {
+            model: Image,
+            separate: true,
+        },
+        { model: Avatar, separate: true },
     ],
 });
 

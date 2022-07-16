@@ -16,29 +16,80 @@ import {
 
 Product.addScope("withAssociations", {
     include: [
-        { model: Category },
-
+        {
+            model: Category,
+            seperate: true,
+        },
         {
             model: User,
+            seperate: true,
             attributes: {
                 exclude: [...UserSensitiveData],
             },
         },
-        { model: Market, include: [{ model: Avatar }] },
-        { model: Image },
-        { model: Like },
-        { model: Vote },
-        { model: Favorite },
+        {
+            model: Market,
+            seperate: true,
+            include: [
+                {
+                    model: Avatar,
+                },
+            ],
+        },
+        {
+            model: Image,
+            seperate: true,
+        },
+        {
+            model: Like,
+            seperate: true,
+        },
+        {
+            model: Vote,
+            seperate: true,
+        },
+        {
+            model: Favorite,
+            seperate: true,
+        },
         {
             model: Comment,
+            seperate: true,
             include: [
-                { model: User, include: [{ model: Avatar }, { model: Image }] },
+                {
+                    model: User,
+                    seperate: true,
+                    include: [
+                        {
+                            model: Avatar,
+                            seperate: true,
+                        },
+                        {
+                            model: Image,
+                            seperate: true,
+                        },
+                    ],
+                },
             ],
         },
         {
             model: Review,
+            seperate: true,
             include: [
-                { model: User, include: [{ model: Avatar }, { model: Image }] },
+                {
+                    model: User,
+                    seperate: true,
+                    include: [
+                        {
+                            model: Avatar,
+                            seperate: true,
+                        },
+                        {
+                            model: Image,
+                            seperate: true,
+                        },
+                    ],
+                },
             ],
         },
     ],

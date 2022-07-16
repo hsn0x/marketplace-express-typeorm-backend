@@ -7,8 +7,10 @@ import { findAllMarketsQuery } from "../queries/markets.js";
 export const createFakeMarkets = async (record) => {
     const fakeMarkets = [];
     for (let index = 0; index < record; index++) {
-        const name = faker.random.word() + faker.random.word();
-        const username = faker.random.word() + faker.random.word();
+        const name =
+            faker.random.word() + faker.random.word() + faker.random.word();
+        const username =
+            faker.random.word() + faker.random.word() + faker.random.word();
         fakeMarkets.push({
             name,
             username,

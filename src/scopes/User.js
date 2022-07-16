@@ -25,28 +25,88 @@ User.addScope("withoutPassword", {
 
 User.addScope("withAssociations", {
     include: [
-        { model: Market, include: [{ model: Avatar }, { model: Image }] },
         {
-            model: Product,
+            model: Market,
+            separate: true,
             include: [
-                { model: Image },
                 {
-                    model: Market,
-                    include: [{ model: Avatar }, { model: Image }],
+                    model: Avatar,
+                    separate: true,
                 },
-                { model: Like },
-                { model: Vote },
-                { model: Favorite },
+                {
+                    model: Image,
+                    separate: true,
+                },
             ],
         },
-        Image,
-        Avatar,
-        Role,
-        Like,
-        Vote,
-        Favorite,
-        Comment,
-        Review,
+        {
+            model: Product,
+            separate: true,
+            include: [
+                {
+                    model: Image,
+                    separate: true,
+                },
+                {
+                    model: Market,
+                    separate: true,
+                    include: [
+                        {
+                            model: Avatar,
+                            separate: true,
+                        },
+                        {
+                            model: Image,
+                            separate: true,
+                        },
+                    ],
+                },
+                {
+                    model: Like,
+                    separate: true,
+                },
+                {
+                    model: Vote,
+                    separate: true,
+                },
+                {
+                    model: Favorite,
+                    separate: true,
+                },
+            ],
+        },
+        {
+            model: Image,
+            separate: true,
+        },
+        {
+            model: Avatar,
+            separate: true,
+        },
+        {
+            model: Role,
+            separate: true,
+        },
+        {
+            model: Like,
+            separate: true,
+        },
+        {
+            model: Vote,
+            separate: true,
+        },
+        {
+            model: Favorite,
+            separate: true,
+        },
+        {
+            model: Comment,
+            separate: true,
+        },
+        {
+            model: Review,
+            separate: true,
+        },
     ],
 });
 

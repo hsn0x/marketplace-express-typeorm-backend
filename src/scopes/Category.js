@@ -9,8 +9,13 @@ Category.addScope("withAssociations", {
                 exclude: [...UserSensitiveData],
             },
         },
-        { model: Market },
-        { model: Image },
+        {
+            model: Market,
+        },
+        {
+            model: Image,
+            separate: true,
+        },
     ],
 });
 
