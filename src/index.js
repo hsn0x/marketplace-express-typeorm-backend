@@ -30,6 +30,7 @@ const serverPort = expressConfig.port;
 
 const server = async () => {
     await sequelize.sync({ force: true });
+    // await sequelize.sync({ alter: true });
     // await sequelize.sync();
     await dbSeed();
     await dbSeedFake();

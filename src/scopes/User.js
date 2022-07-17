@@ -49,7 +49,6 @@ User.addScope("withAssociations", {
                 },
                 {
                     model: Market,
-                    separate: true,
                     include: [
                         {
                             model: Avatar,
@@ -85,7 +84,6 @@ User.addScope("withAssociations", {
         },
         {
             model: Role,
-            separate: true,
         },
         {
             model: Like,

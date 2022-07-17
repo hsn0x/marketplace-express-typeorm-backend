@@ -33,6 +33,7 @@ Product.addScope("withAssociations", {
             include: [
                 {
                     model: Avatar,
+                    seperate: true,
                 },
             ],
         },

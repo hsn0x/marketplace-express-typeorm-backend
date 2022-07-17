@@ -4,7 +4,7 @@ import { cloudinary } from "../db/cloudinary.js";
 import { findAllUsersQuery, findOneUserQuery } from "../queries/users.js";
 import { genPassword } from "../lib/passwordUtils.js";
 import { findOneRoleQuery } from "../queries/roles.js";
-import { ownerConfig } from "../config/owner.js";
+import { ownerConfig } from "../config/index.js";
 
 const createUsers = async () => {
     const hashedPassword = genPassword(ownerConfig.password);

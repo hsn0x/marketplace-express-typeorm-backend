@@ -7,7 +7,7 @@ import { createFakeComments } from "./comments.js";
 import { createRoles } from "./roles.js";
 import { createPermissions } from "./permissions.js";
 import { createResources } from "./resources.js";
-import { seedersConfig } from "../config/seeders.js";
+import { seedersConfig } from "../config/index.js";
 import { createFakeCategories } from "./categories.js";
 import { createFakeReviews } from "./review.js";
 
@@ -31,11 +31,8 @@ const dbSeedFake = async () => {
     await createFakeMarkets(RECORD);
     await createFakeProducts(RECORD);
     await createFakeCategories(RECORD);
-    // await createFakeImages(RECORD);
     await createFakeComments(RECORD);
     await createFakeReviews(RECORD);
-
-    // await createFakeStudents(RECORD);
 };
 
 export { dbSeed, dbSeedFake };
