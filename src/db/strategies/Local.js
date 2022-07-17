@@ -1,6 +1,6 @@
 import { Strategy as LocalStrategy } from "passport-local";
 import { passwordMatch } from "../../lib/passwordUtils.js";
-import { Avatar, Image, Market, Product, Role } from "../../models/index.js";
+import { User } from "../../models/index.js";
 import { findOneUserQuery } from "../../queries/users.js";
 
 const customFields = {
@@ -10,7 +10,12 @@ const customFields = {
 
 const verifyCallback = async (email, password, done) => {
     try {
-        const user = await findOneUserQuery({ email }, false);
+        const user = await findOneUserQuery(
+            {
+                email,
+            },
+            ["withAssociations"]
+        );
         if (!user) {
             return done(null, false, {
                 message: "Incorrect email or password.",
