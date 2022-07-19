@@ -1,6 +1,6 @@
 {
     "name": "hsn-marketplace-expressjs-sequelize-backend",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "hsn marketplace with multi stores, products, members",
     "main": "src/index.js",
     "author": "Hassane Bendaoud <40140987+realHassaneBen@users.noreply.github.com>",
