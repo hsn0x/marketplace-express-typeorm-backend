@@ -15,7 +15,7 @@ Multiple Stores Listing Backend API
 
 ## Authors
 
--   [@realHassaneBen](https://www.github.com/realHassaneBen)
+-   [@hsn0x](https://www.github.com/hsn0x)
 
 ## Demo
 
@@ -34,7 +34,7 @@ on progress
 Clone the project
 
 ```bash
-  git clone https://github.com/realHassaneBen/hsn-marketplace-nextjs-frontend.git
+  git clone https://github.com/hsn0x/hsn-marketplace-expressjs-sequelize-backend.git
 ```
 
 Go to the project directory
@@ -112,6 +112,8 @@ To run this project, you will need to add the following environment variables to
 
 ## Features
 
+-   Auth
+    -   Login, Register, Logout
 -   Stores
     -   Create, Edit, Update, Delete Store
 -   Products
@@ -124,7 +126,8 @@ To run this project, you will need to add the following environment variables to
 
 Here are some related projects
 
--   [HSN Marketplace Next.js Frontend](https://github.com/realHassaneBen/hsn-marketplace-nextjs-frontend)
+-   [HSN Marketplace Next.js Frontend](https://github.com/hsn0x/hsn-marketplace-nextjs-frontend)
+-   [HSN Todos Express.js Seuqlieze.js Backend](https://github.com/hsn0x/hsn-todos-express.js-sequelize.js-backend)
 
 ## Roadmap
 
@@ -134,11 +137,11 @@ Here are some related projects
 
 ## Support
 
-For support, twitter [@realHassaneBen](https://twitter.com/realHassaneBen)
+For support, twitter [@hsn0x](https://twitter.com/hsn0x)
 
 ## Feedback
 
-If you have any feedback, please reach out to us at [@realHassaneBen](https://twitter.com/realHassaneBen)
+If you have any feedback, please reach out to us at [@hsn0x](https://twitter.com/hsn0x)
 
 ## License
 
