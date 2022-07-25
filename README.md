@@ -9,7 +9,7 @@ I'm a full stack developer...
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/realhassaneben)
 [![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/realhassaneben)
 
-# HSN Marketplace Expressjs Sequelize Backend
+# Marketplace Express.js Sequelize.js Backend API
 
 Multiple Stores Listing Backend API
 
@@ -138,11 +138,11 @@ Here are some related projects
 
 ## Support
 
-For support, twitter [@hsn0x](https://twitter.com/hsn0x)
+For support, twitter [@hsn_0x](https://twitter.com/hsn_0x)
 
 ## Feedback
 
-If you have any feedback, please reach out to us at [@hsn0x](https://twitter.com/hsn0x)
+If you have any feedback, please reach out to us at [@hsn_0x](https://twitter.com/hsn_0x)
 
 ## License
 
