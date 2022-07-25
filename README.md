@@ -6,8 +6,8 @@ I'm a full stack developer...
 
 ## 🔗 Links
 
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/realhassaneben)
-[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/realhassaneben)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hsn0x)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/hsn_0x)
 
 # Marketplace Express Sequelize Backend API
 
@@ -128,7 +128,7 @@ Here are some related projects
 
 -   [Marketplace Next.js Express Sequelize Frontend](https://github.com/hsn0x/marketplace-next-express-sequelize-frontend)
 -   [Marketplace Next.js Express MongoDB Frontend](https://github.com/hsn0x/marketplace-next-express-mongodb-frontend)
--   [Todos Express Seuqlieze.js Backend](https://github.com/hsn0x/marketplace-express-sequelize-backend)
+-   [Todos Express Seuqlieze Backend](https://github.com/hsn0x/marketplace-express-sequelize-backend)
 
 ## Roadmap
 
