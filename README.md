@@ -34,7 +34,7 @@ on progress
 Clone the project
 
 ```bash
-  git clone https://github.com/hsn0x/hsn-marketplace-expressjs-sequelize-backend.git
+  git clone https://github.com/hsn0x/marketplace-express-sequelize-backend.git
 ```
 
 Go to the project directory
@@ -126,8 +126,9 @@ To run this project, you will need to add the following environment variables to
 
 Here are some related projects
 
--   [HSN Marketplace Next.js Frontend](https://github.com/hsn0x/hsn-marketplace-nextjs-frontend)
--   [HSN Todos Express.js Seuqlieze.js Backend](https://github.com/hsn0x/hsn-todos-express.js-sequelize.js-backend)
+-   [Marketplace Next.js Express.js Sequelize Frontend](https://github.com/hsn0x/marketplace-next-express-sequelize-frontend)
+-   [Marketplace Next.js Express.js MongoDB Frontend](https://github.com/hsn0x/marketplace-next-express-mongodb-frontend)
+-   [Todos Express.js Seuqlieze.js Backend](https://github.com/hsn0x/marketplace-express-sequelize-backend)
 
 ## Roadmap
 
