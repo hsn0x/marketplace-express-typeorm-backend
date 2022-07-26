@@ -1,12 +1,12 @@
 import { Router } from "express";
 import {
-    createProduct,
-    deleteProduct,
+    create,
+    remove,
     getProductById,
     getProductsBySearch,
     getProductBySlug,
     getProducts,
-    updateProduct,
+    update,
     getProductsBySearchWithFilters,
 } from "../controllers/Product.js";
 import { isAuth } from "../middleware/Auth.js";
@@ -19,8 +19,8 @@ router.get("/:id", getProductById);
 router.get("/title/:slug", getProductBySlug);
 router.get("/q/filters/:query", getProductsBySearchWithFilters);
 router.get("/q/:query", getProductsBySearch);
-router.post("/", isAuth, createProduct);
-router.put("/:id", isAuth, isProductOwner, updateProduct);
-router.delete("/:id", isAuth, isProductOwner, deleteProduct);
+router.post("/", isAuth, create);
+router.put("/:id", isAuth, isProductOwner, update);
+router.delete("/:id", isAuth, isProductOwner, remove);
 
 export default router;

@@ -12,54 +12,52 @@ import {
 import { findByPkProductQuery } from "../queries/products.js";
 import { validateCreateVote, validateUpdateVote } from "../validation/Vote.js";
 
-const getVotes = async (request, response) => {
+const getVotes = async (req, res) => {
     const votes = await findAllVotesQuery();
     if (votes) {
-        response.status(200).json({ votes });
+        res.status(200).json({ votes });
     } else {
-        response.status(404).json({ message: `Votes not found` });
+        res.status(404).json({ message: `Votes not found` });
     }
 };
-const getVotesBySearch = async (request, response) => {
-    const query = request.params.query;
+const getVotesBySearch = async (req, res) => {
+    const query = req.params.query;
 
     const votes = await findAllVotesBySearchQuery({ query });
     if (votes) {
-        return response.status(200).json({
+        return res.status(200).json({
             message: `Votes found with query: ${query}, `,
             length: votes.length,
             votes,
         });
     } else {
-        return response
+        return res
             .status(404)
             .json({ message: `Vote not found with Query: ${query}` });
     }
 };
 
-const getVoteById = async (request, response) => {
-    const id = parseInt(request.params.id);
+const getVoteById = async (req, res) => {
+    const id = parseInt(req.params.id);
     const vote = await findOneVoteQuery({ id });
     if (vote) {
-        response.status(200).json({ vote });
+        res.status(200).json({ vote });
     } else {
-        response.status(404).json({ message: `Vote not found with ID: ${id}` });
+        res.status(404).json({ message: `Vote not found with ID: ${id}` });
     }
 };
-const getVoteBySlug = async (request, response) => {
-    const slug = request.params.slug;
+const getVoteBySlug = async (req, res) => {
+    const slug = req.params.slug;
     const vote = await findOneVoteQuery({ slug });
     if (vote) {
-        response.status(200).json({ vote });
+        res.status(200).json({ vote });
     } else {
-        response
-            .status(404)
-            .json({ message: `Vote not found with Slug: ${slug}` });
+        res.status(404).json({ message: `Vote not found with Slug: ${slug}` });
     }
 };
-const createVote = async (request, response, next) => {
-    const { session, user } = request;
-    const { ProductId } = request.body;
+const createVote = async (req, res, next) => {
+    const { session, user } = req;
+    const { ProductId } = req.body;
     const voteData = {
         UserId: user.id,
         ProductId,
@@ -68,7 +66,7 @@ const createVote = async (request, response, next) => {
     // const isVoteValid = validateCreateVote(voteData);
 
     // if (!isVoteValid.valid) {
-    //     return response.status(400).json({
+    //     return res.status(400).json({
     //         message: "Invalid vote data",
     //         errors: isVoteValid.errors,
     //     });
@@ -78,29 +76,27 @@ const createVote = async (request, response, next) => {
     const createdVote = await createVoteQuery(voteData);
 
     if (createdVote) {
-        return response.status(201).json({
+        return res.status(201).json({
             message: `Vote created with ID: ${createdVote.id}`,
             createdVote,
         });
     } else {
-        return response.status(500).json({ message: `Faile to create a vote` });
+        return res.status(500).json({ message: `Faile to create a vote` });
     }
 };
-const updateVote = async (request, response, next) => {
-    const x = await isVoteExist(request, response, next);
+const updateVote = async (req, res, next) => {
+    const x = await isVoteExist(req, res, next);
     console.log({ x });
     if (!x) {
-        await createVote(request, response);
+        await createVote(req, res);
     } else {
-        await deleteVote(request, response);
+        await deleteVote(req, res);
     }
 };
-const deleteVote = async (request, response) => {
-    const id = parseInt(request.params.id);
+const deleteVote = async (req, res) => {
+    const id = parseInt(req.params.id);
     await deleteVoteQuery({ id });
-    return response
-        .status(200)
-        .json({ message: `Vote deleted with ID: ${id}` });
+    return res.status(200).json({ message: `Vote deleted with ID: ${id}` });
 };
 
 export {

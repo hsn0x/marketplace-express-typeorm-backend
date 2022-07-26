@@ -1,100 +1,93 @@
 import { getPagingData } from "../lib/handlePagination.js";
 import {
-    createProductQuery,
-    deleteProductQuery,
+    createQuery,
+    removeQuery,
     findAllProductsQuery,
     findOneProductQuery,
-    updateProductQuery,
+    updateQuery,
     findAllProductsBySearchQuery,
     findAllProductsBySearchQueryWithFilters,
 } from "../queries/products.js";
-import {
-    validateCreateProduct,
-    validateUpdateProduct,
-} from "../validation/Product.js";
+import { validatecreate, validateupdate } from "../validation/Product.js";
 
-const getProducts = async (request, response) => {
-    const { page, size } = request.query;
+const getProducts = async (req, res) => {
+    const { page, size } = req.query;
     const params = {
         page: parseInt(page),
         size: parseInt(size),
     };
     const products = await findAllProductsQuery(params);
     if (products) {
-        response.status(200).json(products);
+        res.status(200).json(products);
     } else {
-        response.status(404).json({ message: `Products not found` });
+        res.status(404).json({ message: `Products not found` });
     }
 };
-const getProductsBySearch = async (request, response) => {
-    const query = request.params.query;
+const getProductsBySearch = async (req, res) => {
+    const query = req.params.query;
 
     const products = await findAllProductsBySearchQuery({ query });
     if (products) {
-        return response.status(200).json({
+        return res.status(200).json({
             message: `Products found with query: ${query}, `,
             length: products.length,
             products,
         });
     } else {
-        return response
+        return res
             .status(404)
             .json({ message: `Product not found with Query: ${query}` });
     }
 };
-const getProductsBySearchWithFilters = async (request, response) => {
-    const query = request.params.query;
+const getProductsBySearchWithFilters = async (req, res) => {
+    const query = req.params.query;
     const filters = {};
-    filters.minPrice = Number(request.query.minPrice);
-    filters.maxPrice = Number(request.query.maxPrice);
-    filters.CategoriesIds = request.query.CategoriesIds?.map((ci) =>
-        Number(ci)
-    );
+    filters.minPrice = Number(req.query.minPrice);
+    filters.maxPrice = Number(req.query.maxPrice);
+    filters.CategoriesIds = req.query.CategoriesIds?.map((ci) => Number(ci));
 
     const products = await findAllProductsBySearchQueryWithFilters({
         query,
         filters,
     });
     if (products) {
-        return response.status(200).json({
+        return res.status(200).json({
             message: `Products found with query: ${query}, `,
             length: products.length,
             products,
         });
     } else {
-        return response
+        return res
             .status(404)
             .json({ message: `Product not found with Query: ${query}` });
     }
 };
-const getProductById = async (request, response) => {
-    const id = parseInt(request.params.id);
+const getProductById = async (req, res) => {
+    const id = parseInt(req.params.id);
     const product = await findOneProductQuery({ id });
     if (product) {
-        response.status(200).json({ product });
+        res.status(200).json({ product });
     } else {
-        response
-            .status(404)
-            .json({ message: `Product not found with ID: ${id}` });
+        res.status(404).json({ message: `Product not found with ID: ${id}` });
     }
 };
-const getProductBySlug = async (request, response) => {
-    const slug = request.params.slug;
+const getProductBySlug = async (req, res) => {
+    const slug = req.params.slug;
     const product = await findOneProductQuery({ slug });
     if (product) {
-        response.status(200).json({ product });
+        res.status(200).json({ product });
     } else {
-        response
-            .status(404)
-            .json({ message: `Product not found with Slug: ${slug}` });
+        res.status(404).json({
+            message: `Product not found with Slug: ${slug}`,
+        });
     }
 };
-const createProduct = async (request, response, next) => {
-    const { session, user } = request;
-    const { title, description, price, quantity, MarketId, CategoriesIds } =
-        request.body;
+const create = async (req, res, next) => {
+    const { session, user } = req;
 
-    const productData = {
+    const { title, description, price, quantity, MarketId, CategoriesIds } =
+        req.body;
+    const data = {
         title,
         description,
         price,
@@ -104,35 +97,33 @@ const createProduct = async (request, response, next) => {
         UserId: user.id,
     };
 
-    const isProductValid = validateCreateProduct(productData);
+    const isValid = validatecreate(data);
 
-    if (!isProductValid.valid) {
-        return response.status(400).json({
+    if (!isValid.valid) {
+        return res.status(400).json({
             message: "Invalid product data",
-            errors: isProductValid.errors,
+            errors: isValid.errors,
         });
     }
 
-    const createdProduct = await createProductQuery(productData);
+    const createdProduct = await createQuery(data);
 
     if (createdProduct) {
-        return response.status(201).json({
+        return res.status(201).json({
             message: `Product created with ID: ${createdProduct.id}`,
             createdProduct,
         });
     } else {
-        return response
-            .status(500)
-            .json({ message: `Faile to create a product` });
+        return res.status(500).json({ message: `Faile to create a product` });
     }
 };
-const updateProduct = async (request, response) => {
-    const id = parseInt(request.params.id);
-    const { session, user } = request;
+const update = async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { session, user } = req;
 
     const { title, description, price, quantity, MarketId, CategoriesIds } =
-        request.body;
-    const productData = {
+        req.body;
+    const data = {
         title,
         description,
         price,
@@ -142,32 +133,30 @@ const updateProduct = async (request, response) => {
         UserId: user.id,
     };
 
-    const isProductValid = validateUpdateProduct(productData);
+    const isValid = validateupdate(data);
 
-    if (!isProductValid.valid) {
-        return response.status(400).json({
+    if (!isValid.valid) {
+        return res.status(400).json({
             message: "Invalid product data",
-            errors: isProductValid.errors,
+            errors: isValid.errors,
         });
     }
 
-    const updatedProduct = await updateProductQuery(productData, { id });
+    const updatedProduct = await updateQuery(data, { id });
 
     if (updatedProduct) {
-        return response.status(200).json({
+        return res.status(200).json({
             message: `Product updated with ID: ${updatedProduct.id}`,
             updatedProduct,
         });
     } else {
-        return response
-            .status(500)
-            .json({ message: `Faile to update a product` });
+        return res.status(500).json({ message: `Faile to update a product` });
     }
 };
-const deleteProduct = async (request, response) => {
-    const id = parseInt(request.params.id);
-    await deleteProductQuery({ id });
-    response.status(200).json({ message: `Product deleted with ID: ${id}` });
+const remove = async (req, res) => {
+    const id = parseInt(req.params.id);
+    await removeQuery({ id });
+    res.status(200).json({ message: `Product deleted with ID: ${id}` });
 };
 
 export {
@@ -176,7 +165,7 @@ export {
     getProductBySlug,
     getProductsBySearch,
     getProductsBySearchWithFilters,
-    createProduct,
-    updateProduct,
-    deleteProduct,
+    create,
+    update,
+    remove,
 };

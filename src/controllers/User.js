@@ -22,50 +22,50 @@ import {
     validateUpdateUser,
 } from "../validation/User.js";
 
-const getUsers = async (request, response) => {
+const getUsers = async (req, res) => {
     const users = await findAllUsersQuery(true);
     if (users) {
-        response.status(200).json({ users });
+        res.status(200).json({ users });
     } else {
-        response.status(500).json({ message: `Faile to get users` });
+        res.status(500).json({ message: `Faile to get users` });
     }
 };
 
-const getUserById = async (request, response) => {
-    const id = parseInt(request.params.id);
+const getUserById = async (req, res) => {
+    const id = parseInt(req.params.id);
     const user = await findOneUserQuery({ id });
     if (user) {
-        response.status(200).json({ user });
+        res.status(200).json({ user });
     } else {
-        response.status(404).json({ message: `User not found with ID: ${id}` });
+        res.status(404).json({ message: `User not found with ID: ${id}` });
     }
 };
 
-const getUserByUsername = async (request, response) => {
-    const username = request.params.username;
+const getUserByUsername = async (req, res) => {
+    const username = req.params.username;
     const user = await findOneUserQuery({ username });
     if (user) {
-        response.status(200).json({ user });
+        res.status(200).json({ user });
     } else {
-        response
-            .status(404)
-            .json({ message: `User not found with ID: ${username}` });
+        res.status(404).json({
+            message: `User not found with ID: ${username}`,
+        });
     }
 };
 
-const getUserByEmail = async (request, response) => {
-    const email = parseInt(request.params.email);
+const getUserByEmail = async (req, res) => {
+    const email = parseInt(req.params.email);
     const user = await findOneUserQuery({ email });
     if (user) {
-        response.status(200).json({ user });
+        res.status(200).json({ user });
     } else {
-        response.status(404).json({
+        res.status(404).json({
             message: `User not found with email: ${email}`,
         });
     }
 };
 
-const createUser = async (request, response, next) => {
+const createUser = async (req, res, next) => {
     const {
         firstName,
         lastName,
@@ -75,7 +75,7 @@ const createUser = async (request, response, next) => {
         password,
         age,
         gender,
-    } = request.body;
+    } = req.body;
 
     const userData = {
         firstName,
@@ -95,7 +95,7 @@ const createUser = async (request, response, next) => {
     const isUserValid = validateCreateUser(userData);
 
     if (!isUserValid.valid) {
-        return response.status(401).json({
+        return res.status(401).json({
             valid: isUserValid.valid,
             errors: isUserValid.errors,
         });
@@ -104,23 +104,23 @@ const createUser = async (request, response, next) => {
     const user = await createUserQuery(userData);
 
     if (user) {
-        response.status(201).json({
+        res.status(201).json({
             message: `User created with ID: ${user.id}`,
             user,
         });
     } else {
-        response.status(500).json({
+        res.status(500).json({
             message: `Faile to create a user`,
         });
     }
 };
 
-const updateUser = async (request, response) => {
-    const id = parseInt(request.params.id);
-    const { session, user } = request;
+const updateUser = async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { session, user } = req;
 
     const { firstName, lastName, username, email, password, age, gender } =
-        request.body;
+        req.body;
     const userData = {
         firstName,
         lastName,
@@ -134,7 +134,7 @@ const updateUser = async (request, response) => {
     const isUserValid = validateUpdateUser(userData);
 
     if (!isUserValid.valid) {
-        return response.status(401).json({
+        return res.status(401).json({
             valid: isUserValid.valid,
             errors: isUserValid.errors,
         });
@@ -142,22 +142,22 @@ const updateUser = async (request, response) => {
 
     const updatedUser = await updateUserQuery(userData, { id });
     if (updatedUser) {
-        response.status(200).json({
+        res.status(200).json({
             message: `User updated with ID: ${user.id}`,
             updatedUser,
         });
     } else {
-        response.status(500).json({
+        res.status(500).json({
             message: `Faile to update a user, ${id}`,
         });
     }
 };
 
-const updateUserEmail = async (request, response) => {
-    const id = parseInt(request.params.id);
-    const { session, user } = request;
+const updateUserEmail = async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { session, user } = req;
 
-    const { email } = request.body;
+    const { email } = req.body;
     const userData = {
         email,
     };
@@ -165,41 +165,41 @@ const updateUserEmail = async (request, response) => {
     const isUserValid = validateUpdateUserEmail(userData);
 
     if (!isUserValid.valid) {
-        return response.status(401).json({
+        return res.status(401).json({
             valid: isUserValid.valid,
             errors: isUserValid.errors,
         });
     }
     const updatedUser = await updateUserQuery(userData, { id });
     if (updatedUser) {
-        response.status(200).json({
+        res.status(200).json({
             message: `User updated with ID: ${user.id}`,
             data: updatedUser,
         });
     } else {
-        response.status(500).json({
+        res.status(500).json({
             message: `Faile to update a user, ${id}`,
         });
     }
 };
 
-const updateUserPassword = async (request, response) => {
-    const id = parseInt(request.params.id);
-    const { session, user } = request;
+const updateUserPassword = async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { session, user } = req;
     if (user.id !== id) {
-        return response.status(401).json({
+        return res.status(401).json({
             message: `You are not authorized to update this user`,
         });
     }
 
     const currentUser = await findOneUserQuery({ id }, false);
     if (!currentUser) {
-        return response.status(404).json({
+        return res.status(404).json({
             message: `User not found with ID: ${id}`,
         });
     }
 
-    const { password, newPassword } = request.body;
+    const { password, newPassword } = req.body;
     const userData = {
         password,
         newPassword,
@@ -214,7 +214,7 @@ const updateUserPassword = async (request, response) => {
         passwordSalt: currentUser.passwordSalt,
     });
     if (!isUserValid.valid) {
-        return response.status(401).json({
+        return res.status(401).json({
             valid: isUserValid.valid,
             errors: isUserValid.errors,
         });
@@ -229,7 +229,7 @@ const updateUserPassword = async (request, response) => {
      */
     isUserValid = validateUpdateUserPassword(userData);
     if (!isUserValid.valid) {
-        return response.status(401).json({
+        return res.status(401).json({
             valid: isUserValid.valid,
             errors: isUserValid.errors,
         });
@@ -245,7 +245,7 @@ const updateUserPassword = async (request, response) => {
         currentUser.passwordSalt
     );
     if (!isPasswordMatch) {
-        return response.status(401).json({
+        return res.status(401).json({
             message: `Password is incorrect`,
         });
     }
@@ -253,21 +253,21 @@ const updateUserPassword = async (request, response) => {
     userData.password = userData.newPassword;
     const updatedUser = await updateUserQuery(userData, { id });
     if (updatedUser) {
-        response.status(200).json({
+        res.status(200).json({
             message: `User updated with ID: ${user.id}`,
             data: updatedUser,
         });
     } else {
-        response.status(500).json({
+        res.status(500).json({
             message: `Faile to update a user, ${id}`,
         });
     }
 };
 
-const deleteUser = async (request, response) => {
-    const id = parseInt(request.params.id);
+const deleteUser = async (req, res) => {
+    const id = parseInt(req.params.id);
     await deleteUserQuery({ id });
-    response.status(200).json({ message: `User deleted with ID: ${id}` });
+    res.status(200).json({ message: `User deleted with ID: ${id}` });
 };
 
 export {

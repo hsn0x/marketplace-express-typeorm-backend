@@ -85,7 +85,7 @@ const findAllProductsBySearchQueryWithFilters = async ({ query, filters }) => {
     });
     return products;
 };
-const createProductQuery = async (productData) => {
+const createQuery = async (productData) => {
     const createdProduct = await Product.create(productData);
     console.log(createdProduct.id);
     productData.CategoriesIds.map(
@@ -94,7 +94,7 @@ const createProductQuery = async (productData) => {
     return createdProduct;
 };
 
-const updateProductQuery = async (productData, where) => {
+const updateQuery = async (productData, where) => {
     await Product.update(productData, { where });
     const updatedProduct = await Product.scope("withAssociations").findOne({
         where,
@@ -109,7 +109,7 @@ const updateProductQuery = async (productData, where) => {
     return updatedProduct;
 };
 
-const deleteProductQuery = async (where) => {
+const removeQuery = async (where) => {
     const deletedProduct = await Product.destroy({
         where,
     });
@@ -123,7 +123,7 @@ export {
     findOneProductQuery,
     findAllProductsBySearchQuery,
     findAllProductsBySearchQueryWithFilters,
-    createProductQuery,
-    updateProductQuery,
-    deleteProductQuery,
+    createQuery,
+    updateQuery,
+    removeQuery,
 };

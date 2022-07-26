@@ -1,12 +1,12 @@
 import { Router } from "express";
 import {
-    createMarket,
-    deleteMarket,
+    create,
+    remove,
     getMarketById,
     getMarketByName,
     getMarkets,
     getMarketsBySearch,
-    updateMarket,
+    update,
 } from "../controllers/Market.js";
 import { isAuth } from "../middleware/Auth.js";
 import { isMarketOwner, isMarketUsernameTaken } from "../middleware/Market.js";
@@ -17,8 +17,8 @@ router.get("/", getMarkets);
 router.get("/:id", getMarketById);
 router.get("/q/:query", getMarketsBySearch);
 router.get("/name/:slug", getMarketByName);
-router.post("/", isAuth, isMarketUsernameTaken, createMarket);
-router.put("/:id", isAuth, isMarketUsernameTaken, isMarketOwner, updateMarket);
-router.delete("/:id", isAuth, isMarketOwner, deleteMarket);
+router.post("/", isAuth, isMarketUsernameTaken, create);
+router.put("/:id", isAuth, isMarketUsernameTaken, isMarketOwner, update);
+router.delete("/:id", isAuth, isMarketOwner, remove);
 
 export default router;

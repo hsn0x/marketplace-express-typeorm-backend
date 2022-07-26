@@ -28,7 +28,7 @@ const findOneMarketQuery = async (where) => {
     return market;
 };
 
-const createMarketQuery = async (marketData) => {
+const createQuery = async (marketData) => {
     const createdMarket = await Market.create(marketData);
     marketData.CategoriesIds.map(
         async (ci) => await createdMarket.addCategory(ci)
@@ -36,7 +36,7 @@ const createMarketQuery = async (marketData) => {
     return createdMarket;
 };
 
-const updateMarketQuery = async (marketData, where) => {
+const updateQuery = async (marketData, where) => {
     await Market.update(marketData, { where });
     const updatedMarket = await Market.scope("withAssociations").findOne({
         where,
@@ -50,7 +50,7 @@ const updateMarketQuery = async (marketData, where) => {
     return updatedMarket;
 };
 
-const deleteMarketQuery = async (where) => {
+const removeQuery = async (where) => {
     const deletedMarket = await Market.destroy({
         where,
     });
@@ -62,7 +62,7 @@ export {
     findAllMarketsBySearchQuery,
     findByPkMarketQuery,
     findOneMarketQuery,
-    createMarketQuery,
-    updateMarketQuery,
-    deleteMarketQuery,
+    createQuery,
+    updateQuery,
+    removeQuery,
 };

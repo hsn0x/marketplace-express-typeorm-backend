@@ -12,66 +12,66 @@ import {
     validateUpdateCategory,
 } from "../validation/Category.js";
 
-const getCategories = async (request, response) => {
+const getCategories = async (req, res) => {
     const categories = await findAllCategoriesQuery();
     if (categories) {
-        response.status(200).json({
+        res.status(200).json({
             message: `Categories found`,
             length: categories.length,
             categories,
         });
     } else {
-        response.status(404).json({ message: "No categories found" });
+        res.status(404).json({ message: "No categories found" });
     }
 };
-const getCategoriesByType = async (request, response) => {
-    const type = request.params.type;
+const getCategoriesByType = async (req, res) => {
+    const type = req.params.type;
     const categories = await findAllCategoriesWhereQuery({ type });
     if (categories) {
-        response.status(200).json({
+        res.status(200).json({
             message: `Categories found`,
             length: categories.length,
             categories,
         });
     } else {
-        response.status(404).json({ message: "No categories found" });
+        res.status(404).json({ message: "No categories found" });
     }
 };
-const getCategoryById = async (request, response) => {
-    const id = parseInt(request.params.id);
+const getCategoryById = async (req, res) => {
+    const id = parseInt(req.params.id);
     const category = await findOneCategoryQuery({ id });
     if (category) {
-        response.status(200).json({
+        res.status(200).json({
             message: `Category found with ID: ${id}`,
             category,
         });
     } else {
-        response.status(404).json({
+        res.status(404).json({
             message: `Category not found with ID: ${id}`,
         });
     }
 };
 
-const getCategoryByName = async (request, response) => {
-    const name = request.params.name;
+const getCategoryByName = async (req, res) => {
+    const name = req.params.name;
     const category = await findOneCategoryQuery({ name });
     if (category) {
-        response.status(200).json({
+        res.status(200).json({
             message: `Category found with ID: ${name}`,
             category,
         });
     } else {
-        response.status(404).json({
+        res.status(404).json({
             message: `Category not found with ID: ${name}`,
         });
     }
 };
 
-const createCategory = async (request, response) => {
-    const { session, user } = request;
-    const parentId = parseInt(request.body.parentId);
+const createCategory = async (req, res) => {
+    const { session, user } = req;
+    const parentId = parseInt(req.body.parentId);
 
-    const { name, description, type } = request.body;
+    const { name, description, type } = req.body;
     const categoryData = {
         name,
         description,
@@ -83,7 +83,7 @@ const createCategory = async (request, response) => {
     const isCategoryValid = validateCreateCategory(categoryData);
 
     if (!isCategoryValid.valid) {
-        return response.status(400).json({
+        return res.status(400).json({
             message: "Invalid category data",
             errors: isCategoryValid.errors,
         });
@@ -92,20 +92,18 @@ const createCategory = async (request, response) => {
     const createdCategory = await createCategoryQuery(categoryData);
 
     if (createdCategory) {
-        return response.status(201).json({
+        return res.status(201).json({
             message: `Category added with ID: ${createdCategory.id}`,
             createdCategory,
         });
     } else {
-        return response
-            .status(500)
-            .json({ message: `Faile to create a category` });
+        return res.status(500).json({ message: `Faile to create a category` });
     }
 };
 
-const updateCategory = async (request, response) => {
-    const id = parseInt(request.params.id);
-    const { name, username, about, title } = request.body;
+const updateCategory = async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { name, username, about, title } = req.body;
 
     const categoryData = {
         name,
@@ -117,27 +115,27 @@ const updateCategory = async (request, response) => {
     const isCategoryValid = validateUpdateCategory(categoryData);
 
     if (!isCategoryValid) {
-        response.status(400).json({ message: "Category not updated" });
+        res.status(400).json({ message: "Category not updated" });
     }
 
     const updatedCategory = await updateCategoryQuery(categoryData, { id });
 
     if (updatedCategory) {
-        response.status(200).json({
+        res.status(200).json({
             message: `Category updated with ID: ${updatedCategory[0]?.id}`,
             updatedCategory,
         });
     } else {
-        response.status(500).json({
+        res.status(500).json({
             message: `Faile to update a category, ${id}`,
         });
     }
 };
 
-const deleteCategory = async (request, response) => {
-    const id = parseInt(request.params.id);
+const deleteCategory = async (req, res) => {
+    const id = parseInt(req.params.id);
     await deleteCategoryQuery({ id });
-    response.status(200).json({ message: `Category deleted with ID: ${id}` });
+    res.status(200).json({ message: `Category deleted with ID: ${id}` });
 };
 
 export {

@@ -1,77 +1,77 @@
 import {
-    createMarketQuery,
-    deleteMarketQuery,
+    createQuery,
+    removeQuery,
     findAllMarketsBySearchQuery,
     findAllMarketsQuery,
     findOneMarketQuery,
-    updateMarketQuery,
+    updateQuery,
 } from "../queries/markets.js";
 import {
     validateCreateMarket,
     validateUpdateMarket,
 } from "../validation/Market.js";
 
-const getMarkets = async (request, response) => {
+const getMarkets = async (req, res) => {
     const markets = await findAllMarketsQuery();
     if (markets) {
-        response.status(200).json({
+        res.status(200).json({
             message: `Markets found`,
             markets,
         });
     } else {
-        response.status(404).json({ message: "No markets found" });
+        res.status(404).json({ message: "No markets found" });
     }
 };
-const getMarketsBySearch = async (request, response) => {
-    const query = request.params.query;
+const getMarketsBySearch = async (req, res) => {
+    const query = req.params.query;
 
     const markets = await findAllMarketsBySearchQuery({ query });
     if (markets) {
-        return response.status(200).json({
+        return res.status(200).json({
             message: `Markets found with query: ${query}, `,
             length: markets.length,
             markets,
         });
     } else {
-        return response
+        return res
             .status(404)
             .json({ message: `Market not found with Query: ${query}` });
     }
 };
-const getMarketById = async (request, response) => {
-    const id = parseInt(request.params.id);
+const getMarketById = async (req, res) => {
+    const id = parseInt(req.params.id);
     const market = await findOneMarketQuery({ id });
     if (market) {
-        response.status(200).json({
+        res.status(200).json({
             message: `Market found with ID: ${id}`,
             market,
         });
     } else {
-        response.status(404).json({
+        res.status(404).json({
             message: `Market not found with ID: ${id}`,
         });
     }
 };
-const getMarketByName = async (request, response) => {
-    const slug = request.params.slug;
+const getMarketByName = async (req, res) => {
+    const slug = req.params.slug;
     const market = await findOneMarketQuery({ slug });
     if (market) {
-        response.status(200).json({
+        res.status(200).json({
             message: `Market found with ID: ${slug}`,
             market,
         });
     } else {
-        response.status(404).json({
+        res.status(404).json({
             message: `Market not found with ID: ${slug}`,
         });
     }
 };
 
-const createMarket = async (request, response) => {
-    const { session, user } = request;
+const create = async (req, res) => {
+    const { session, user } = req;
 
     const { name, username, title, description, about, CategoriesIds } =
-        request.body;
+        req.body;
     const marketData = {
         name,
         username,
@@ -85,32 +85,30 @@ const createMarket = async (request, response) => {
     const isMarketValid = validateCreateMarket(marketData);
 
     if (!isMarketValid.valid) {
-        return response.status(400).json({
+        return res.status(400).json({
             message: "Invalid market data",
             errors: isMarketValid.errors,
         });
     }
 
-    const createdMarket = await createMarketQuery(marketData);
+    const createdMarket = await createQuery(marketData);
 
     if (createdMarket) {
-        return response.status(201).json({
+        return res.status(201).json({
             message: `Market added with ID: ${createdMarket.id}`,
             data: createdMarket,
         });
     } else {
-        return response
-            .status(500)
-            .json({ message: `Faile to create a market` });
+        return res.status(500).json({ message: `Faile to create a market` });
     }
 };
 
-const updateMarket = async (request, response) => {
-    const id = parseInt(request.params.id);
-    const { session, user } = request;
+const update = async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { session, user } = req;
 
     const { name, username, about, title, description, CategoriesIds } =
-        request.body;
+        req.body;
 
     const marketData = {
         name,
@@ -125,27 +123,27 @@ const updateMarket = async (request, response) => {
     const isMarketValid = validateUpdateMarket(marketData);
 
     if (!isMarketValid) {
-        response.status(400).json({ message: "Market not updated" });
+        res.status(400).json({ message: "Market not updated" });
     }
 
-    const updatedMarket = await updateMarketQuery(marketData, { id });
+    const updatedMarket = await updateQuery(marketData, { id });
 
     if (updatedMarket) {
-        response.status(200).json({
+        res.status(200).json({
             message: `Market updated with ID: ${updatedMarket[0]?.id}`,
             data: updatedMarket,
         });
     } else {
-        response.status(500).json({
+        res.status(500).json({
             message: `Faile to update a market, ${id}`,
         });
     }
 };
 
-const deleteMarket = async (request, response) => {
-    const id = parseInt(request.params.id);
-    await deleteMarketQuery({ id });
-    response.status(200).json({ message: `Market deleted with ID: ${id}` });
+const remove = async (req, res) => {
+    const id = parseInt(req.params.id);
+    await removeQuery({ id });
+    res.status(200).json({ message: `Market deleted with ID: ${id}` });
 };
 
 export {
@@ -153,7 +151,7 @@ export {
     getMarketById,
     getMarketsBySearch,
     getMarketByName,
-    createMarket,
-    updateMarket,
-    deleteMarket,
+    create,
+    update,
+    remove,
 };

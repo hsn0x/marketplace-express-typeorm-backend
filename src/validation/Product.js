@@ -2,7 +2,7 @@ import Ajv from "ajv";
 
 const ajv = new Ajv();
 
-const CreateProductSchema = {
+const createSchema = {
     type: "object",
     properties: {
         title: { type: "string" },
@@ -30,7 +30,7 @@ const CreateProductSchema = {
     additionalProperties: false,
 };
 
-const UpdateProductSchema = {
+const updateSchema = {
     type: "object",
     properties: {
         title: { type: "string" },
@@ -58,8 +58,8 @@ const UpdateProductSchema = {
     additionalProperties: false,
 };
 
-export const validateCreateProduct = (productData) => {
-    const valid = ajv.validate(CreateProductSchema, productData);
+export const validatecreate = (productData) => {
+    const valid = ajv.validate(createSchema, productData);
     if (!valid)
         return {
             valid,
@@ -67,8 +67,8 @@ export const validateCreateProduct = (productData) => {
         };
     return { valid };
 };
-export const validateUpdateProduct = (productData) => {
-    const valid = ajv.validate(UpdateProductSchema, productData);
+export const validateupdate = (productData) => {
+    const valid = ajv.validate(updateSchema, productData);
     if (!valid)
         return {
             valid,
