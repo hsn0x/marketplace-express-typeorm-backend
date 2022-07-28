@@ -1,13 +1,13 @@
-import Favorite from "../models/Favorite.js";
-import Product from "../models/Product.js";
-import { findOneFavoriteQuery } from "../queries/favorites.js";
+import Favorite from "../models/Favorite.js"
+import Product from "../models/Product.js"
+import { findOneQuery } from "../queries/favorites.js"
 
 const isFavoriteExist = async (req, res, next) => {
-    const { session, user } = req;
-    const { ProductId } = req.body;
+    const { session, user } = req
+    const { ProductId } = req.body
 
     if (!ProductId) {
-        return res.status(400).json({ message: "Product ID is Required" });
+        return res.status(400).json({ message: "Product ID is Required" })
     }
 
     const isFavoriteExist = await Favorite.findOne({
@@ -22,30 +22,30 @@ const isFavoriteExist = async (req, res, next) => {
                 },
             },
         ],
-    });
+    })
 
     if (isFavoriteExist) {
         return res.status(401).json({
             message: `You already favorited this product`,
-        });
+        })
     } else {
-        return next();
+        return next()
     }
-};
+}
 
 const isFavoriteOwner = async (req, res, next) => {
-    const id = parseInt(req.params.id);
-    const { session, user } = req;
+    const id = parseInt(req.params.id)
+    const { session, user } = req
 
-    const isFavoriteOwner = await findOneFavoriteQuery({ id, userId: user.id });
+    const isFavoriteOwner = await findOneQuery({ id, userId: user.id })
 
     if (isFavoriteOwner) {
-        return next();
+        return next()
     } else {
         return res.status(401).json({
             message: `You are not the owner of the favorite`,
-        });
+        })
     }
-};
+}
 
-export { isFavoriteExist, isFavoriteOwner };
+export { isFavoriteExist, isFavoriteOwner }

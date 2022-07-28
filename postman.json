@@ -235,7 +235,7 @@
             "name": "products",
             "item": [
                 {
-                    "name": "getProducts",
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -266,7 +266,7 @@
                     "response": []
                 },
                 {
-                    "name": "getProductById",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -280,7 +280,7 @@
                     "response": []
                 },
                 {
-                    "name": "getProductsBySearch",
+                    "name": "getAllBySearch",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -294,7 +294,7 @@
                     "response": []
                 },
                 {
-                    "name": "getProductsBySearchWithFilters",
+                    "name": "getAllBySearchWithFilters",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -470,7 +470,7 @@
                     "response": []
                 },
                 {
-                    "name": "getProductBySlug",
+                    "name": "getBySlug",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -633,7 +633,7 @@
                     "response": []
                 },
                 {
-                    "name": "getReviewById",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -748,7 +748,7 @@
                     "response": []
                 },
                 {
-                    "name": "getLikeById",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -762,7 +762,7 @@
                     "response": []
                 },
                 {
-                    "name": "createLike",
+                    "name": "create",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -810,7 +810,7 @@
                     "response": []
                 },
                 {
-                    "name": "deleteLike",
+                    "name": "remove",
                     "request": {
                         "method": "DELETE",
                         "header": [],
@@ -850,7 +850,7 @@
                     "response": []
                 },
                 {
-                    "name": "getVoteById",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -864,7 +864,7 @@
                     "response": []
                 },
                 {
-                    "name": "createVote",
+                    "name": "create",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -888,7 +888,7 @@
                     "response": []
                 },
                 {
-                    "name": "updateVote",
+                    "name": "update",
                     "request": {
                         "method": "PUT",
                         "header": [],
@@ -932,7 +932,7 @@
                     "response": []
                 },
                 {
-                    "name": "deleteVote",
+                    "name": "remove",
                     "request": {
                         "method": "DELETE",
                         "header": [],
@@ -972,7 +972,7 @@
                     "response": []
                 },
                 {
-                    "name": "getFavoriteById",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -986,7 +986,7 @@
                     "response": []
                 },
                 {
-                    "name": "createFavorite",
+                    "name": "create",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -1054,7 +1054,7 @@
                     "response": []
                 },
                 {
-                    "name": "deleteVote",
+                    "name": "remove",
                     "request": {
                         "method": "DELETE",
                         "header": [],
@@ -1262,7 +1262,7 @@
                     "response": []
                 },
                 {
-                    "name": "getMarketById",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],

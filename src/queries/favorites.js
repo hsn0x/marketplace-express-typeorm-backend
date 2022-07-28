@@ -38,7 +38,7 @@ export default {
     create: async (data) => {
         const product = await findByPkQuery(data.ProductId)
 
-        const recordCreated = await product.createFavorite({
+        const recordCreated = await product.create({
             UserId: data.UserId,
         })
         return recordCreated

@@ -7,13 +7,7 @@ import {
     Role,
     Student,
 } from "../models/index.js"
-import {
-    createUserQuery,
-    deleteUserQuery,
-    findAllUsersQuery,
-    findOneUserQuery,
-    updateUserQuery,
-} from "../queries/users.js"
+import { usersQueries } from "../queries/index.js"
 import {
     validateCreateUser,
     validateUpdateUserEmail,
@@ -22,7 +16,7 @@ import {
 } from "../validation/User.js"
 
 const getUsers = async (req, res) => {
-    const users = await findAllUsersQuery(true)
+    const users = await usersQueries.findAllUsersQuery(true)
     if (users) {
         res.status(200).json({ users })
     } else {
@@ -32,7 +26,7 @@ const getUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
     const id = parseInt(req.params.id)
-    const user = await findOneUserQuery({ id })
+    const user = await usersQueries.findOneUserQuery({ id })
     if (user) {
         res.status(200).json({ user })
     } else {
@@ -42,7 +36,7 @@ const getUserById = async (req, res) => {
 
 const getUserByUsername = async (req, res) => {
     const username = req.params.username
-    const user = await findOneUserQuery({ username })
+    const user = await usersQueries.findOneUserQuery({ username })
     if (user) {
         res.status(200).json({ user })
     } else {
@@ -54,7 +48,7 @@ const getUserByUsername = async (req, res) => {
 
 const getUserByEmail = async (req, res) => {
     const email = parseInt(req.params.email)
-    const user = await findOneUserQuery({ email })
+    const user = await usersQueries.findOneUserQuery({ email })
     if (user) {
         res.status(200).json({ user })
     } else {
@@ -100,7 +94,7 @@ const createUser = async (req, res, next) => {
         })
     }
 
-    const user = await createUserQuery(userData)
+    const user = await usersQueries.createUserQuery(userData)
 
     if (user) {
         res.status(201).json({
@@ -139,7 +133,7 @@ const updateUser = async (req, res) => {
         })
     }
 
-    const updatedUser = await updateUserQuery(userData, { id })
+    const updatedUser = await usersQueries.updateUserQuery(userData, { id })
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -169,7 +163,7 @@ const updateUserEmail = async (req, res) => {
             errors: isUserValid.errors,
         })
     }
-    const updatedUser = await updateUserQuery(userData, { id })
+    const updatedUser = await usersQueries.updateUserQuery(userData, { id })
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -191,7 +185,7 @@ const updateUserPassword = async (req, res) => {
         })
     }
 
-    const currentUser = await findOneUserQuery({ id }, false)
+    const currentUser = await usersQueries.findOneUserQuery({ id }, false)
     if (!currentUser) {
         return res.status(404).json({
             message: `User not found with ID: ${id}`,
@@ -250,7 +244,7 @@ const updateUserPassword = async (req, res) => {
     }
 
     userData.password = userData.newPassword
-    const updatedUser = await updateUserQuery(userData, { id })
+    const updatedUser = await usersQueries.updateUserQuery(userData, { id })
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -265,7 +259,7 @@ const updateUserPassword = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     const id = parseInt(req.params.id)
-    await deleteUserQuery({ id })
+    await usersQueries.deleteUserQuery({ id })
     res.status(200).json({ message: `User deleted with ID: ${id}` })
 }
 

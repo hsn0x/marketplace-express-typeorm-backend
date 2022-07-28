@@ -1,13 +1,13 @@
-import sequelize from "../db/sequelize.js";
+import sequelize from "../db/sequelize.js"
 
-import { INTEGER, STRING } from "../db/dataTypes.js";
-import { Model } from "sequelize";
+import { INTEGER, STRING } from "../db/dataTypes.js"
+import { Model } from "sequelize"
 
 class Favorite extends Model {
     async getFavoriteables(options) {
-        const products = await this.getProducts(options);
-        const markets = await this.getMarkets(options);
-        return products.concat(markets);
+        const products = await this.getAll(options)
+        const markets = await this.getMarkets(options)
+        return products.concat(markets)
     }
 }
 Favorite.init(
@@ -16,6 +16,6 @@ Favorite.init(
         favoriteableType: STRING,
     },
     { sequelize, modelName: "favorite" }
-);
+)
 
-export default Favorite;
+export default Favorite

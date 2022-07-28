@@ -1,19 +1,19 @@
 import { isVoteExist } from "../middleware/Vote.js"
 import Product from "../models/Product.js"
 import {
-    createVoteQuery,
-    deleteVoteQuery,
-    findAllVotesQuery,
-    findOneVoteQuery,
-    updateVoteQuery,
+    createQuery,
+    deleteQuery,
+    findAllQuery,
+    findOneQuery,
+    updateQuery,
     findAllVotesBySearchQuery,
-    findByPkVoteQuery,
+    findByPkQuery,
 } from "../queries/votes.js"
 import { findByPkQuery } from "../queries/products.js"
 import { validateCreateVote, validateUpdateVote } from "../validation/Vote.js"
 
 const getVotes = async (req, res) => {
-    const votes = await findAllVotesQuery()
+    const votes = await findAllQuery()
     if (votes) {
         res.status(200).json({ votes })
     } else {
@@ -37,25 +37,25 @@ const getVotesBySearch = async (req, res) => {
     }
 }
 
-const getVoteById = async (req, res) => {
+const getById = async (req, res) => {
     const id = parseInt(req.params.id)
-    const vote = await findOneVoteQuery({ id })
+    const vote = await findOneQuery({ id })
     if (vote) {
         res.status(200).json({ vote })
     } else {
         res.status(404).json({ message: `Vote not found with ID: ${id}` })
     }
 }
-const getVoteBySlug = async (req, res) => {
+const getBySlug = async (req, res) => {
     const slug = req.params.slug
-    const vote = await findOneVoteQuery({ slug })
+    const vote = await findOneQuery({ slug })
     if (vote) {
         res.status(200).json({ vote })
     } else {
         res.status(404).json({ message: `Vote not found with Slug: ${slug}` })
     }
 }
-const createVote = async (req, res, next) => {
+const create = async (req, res, next) => {
     const { session, user } = req
     const { ProductId } = req.body
     const voteData = {
@@ -73,7 +73,7 @@ const createVote = async (req, res, next) => {
     // }
     // const product = await findByPkQuery(voteData.ProductId);
 
-    const createdVote = await createVoteQuery(voteData)
+    const createdVote = await createQuery(voteData)
 
     if (createdVote) {
         return res.status(201).json({
@@ -84,27 +84,27 @@ const createVote = async (req, res, next) => {
         return res.status(500).json({ message: `Faile to create a vote` })
     }
 }
-const updateVote = async (req, res, next) => {
+const update = async (req, res, next) => {
     const x = await isVoteExist(req, res, next)
     console.log({ x })
     if (!x) {
-        await createVote(req, res)
+        await create(req, res)
     } else {
-        await deleteVote(req, res)
+        await remove(req, res)
     }
 }
-const deleteVote = async (req, res) => {
+const remove = async (req, res) => {
     const id = parseInt(req.params.id)
-    await deleteVoteQuery({ id })
+    await deleteQuery({ id })
     return res.status(200).json({ message: `Vote deleted with ID: ${id}` })
 }
 
 export {
     getVotes,
-    getVoteById,
-    getVoteBySlug,
+    getById,
+    getBySlug,
     getVotesBySearch,
-    createVote,
-    updateVote,
-    deleteVote,
+    create,
+    update,
+    remove,
 }

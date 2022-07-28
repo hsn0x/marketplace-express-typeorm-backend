@@ -1,26 +1,26 @@
-import { Router } from "express";
+import { Router } from "express"
 import {
     create,
     remove,
-    getProductById,
-    getProductsBySearch,
-    getProductBySlug,
-    getProducts,
+    getById,
+    getAllBySearch,
+    getBySlug,
+    getAll,
     update,
-    getProductsBySearchWithFilters,
-} from "../controllers/Product.js";
-import { isAuth } from "../middleware/Auth.js";
-import { isProductOwner } from "../middleware/Product.js";
+    getAllBySearchWithFilters,
+} from "../controllers/Product.js"
+import { isAuth } from "../middleware/Auth.js"
+import { isProductOwner } from "../middleware/Product.js"
 
-const router = Router();
+const router = Router()
 
-router.get("/", getProducts);
-router.get("/:id", getProductById);
-router.get("/title/:slug", getProductBySlug);
-router.get("/q/filters/:query", getProductsBySearchWithFilters);
-router.get("/q/:query", getProductsBySearch);
-router.post("/", isAuth, create);
-router.put("/:id", isAuth, isProductOwner, update);
-router.delete("/:id", isAuth, isProductOwner, remove);
+router.get("/", getAll)
+router.get("/:id", getById)
+router.get("/title/:slug", getBySlug)
+router.get("/q/filters/:query", getAllBySearchWithFilters)
+router.get("/q/:query", getAllBySearch)
+router.post("/", isAuth, create)
+router.put("/:id", isAuth, isProductOwner, update)
+router.delete("/:id", isAuth, isProductOwner, remove)
 
-export default router;
+export default router

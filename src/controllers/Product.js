@@ -1,36 +1,28 @@
 import { getPagingData } from "../lib/handlePagination.js"
-import {
-    create,
-    remove,
-    findAllQuery,
-    findOneQuery,
-    create,
-    findAllProductsBySearchQuery,
-    findAllProductsBySearchQueryWithFilters,
-} from "../queries/products.js"
+import { productsQueries } from "../queries/index.js"
 import { validatecreate, validateupdate } from "../validation/Product.js"
 
-const getProducts = async (req, res) => {
+const getAll = async (req, res) => {
     const { page, size } = req.query
     const params = {
         page: parseInt(page),
         size: parseInt(size),
     }
-    const products = await findAllQuery(params)
+    const products = await productsQueries.findAllQuery(params)
     if (products) {
         res.status(200).json(products)
     } else {
         res.status(404).json({ message: `Products not found` })
     }
 }
-const getProductsBySearch = async (req, res) => {
+const getAllBySearch = async (req, res) => {
     const query = req.params.query
     const queries = query
         .trim()
         .split(" ")
         .filter((q) => q !== "")
         .map((q) => ({ title: { [Op.like]: `%${q}%` } }))
-    const products = await findAllQuery({
+    const products = await productsQueries.findAllQuery({
         where: {
             [Op.or]: [...queries],
         },
@@ -47,7 +39,7 @@ const getProductsBySearch = async (req, res) => {
             .json({ message: `Product not found with Query: ${query}` })
     }
 }
-const getProductsBySearchWithFilters = async (req, res) => {
+const getAllBySearchWithFilters = async (req, res) => {
     const query = req.params.query
     const filters = {}
     filters.minPrice = Number(req.query.minPrice)
@@ -84,7 +76,7 @@ const getProductsBySearchWithFilters = async (req, res) => {
         })
     }
 
-    const products = await findAll({
+    const products = await productsQueries.findAll({
         where: {
             [Op.and]: [{ ...queryFilter }, { ...priceFilter }],
         },
@@ -102,18 +94,18 @@ const getProductsBySearchWithFilters = async (req, res) => {
             .json({ message: `Product not found with Query: ${query}` })
     }
 }
-const getProductById = async (req, res) => {
+const getById = async (req, res) => {
     const id = parseInt(req.params.id)
-    const product = await findOneQuery({ id })
+    const product = await productsQueries.findOneQuery({ id })
     if (product) {
         res.status(200).json({ product })
     } else {
         res.status(404).json({ message: `Product not found with ID: ${id}` })
     }
 }
-const getProductBySlug = async (req, res) => {
+const getBySlug = async (req, res) => {
     const slug = req.params.slug
-    const product = await findOneQuery({ slug })
+    const product = await productsQueries.findOneQuery({ slug })
     if (product) {
         res.status(200).json({ product })
     } else {
@@ -146,7 +138,7 @@ const create = async (req, res, next) => {
         })
     }
 
-    const createdProduct = await create(data)
+    const createdProduct = await productsQueries.create(data)
 
     if (createdProduct) {
         return res.status(201).json({
@@ -182,7 +174,7 @@ const update = async (req, res) => {
         })
     }
 
-    const updatedProduct = await create(data, { id })
+    const updatedProduct = await productsQueries.update(data, { id })
 
     if (updatedProduct) {
         return res.status(200).json({
@@ -195,16 +187,16 @@ const update = async (req, res) => {
 }
 const remove = async (req, res) => {
     const id = parseInt(req.params.id)
-    await remove({ id })
+    await productsQueries.remove({ id })
     res.status(200).json({ message: `Product deleted with ID: ${id}` })
 }
 
 export {
-    getProducts,
-    getProductById,
-    getProductBySlug,
-    getProductsBySearch,
-    getProductsBySearchWithFilters,
+    getAll,
+    getById,
+    getBySlug,
+    getAllBySearch,
+    getAllBySearchWithFilters,
     create,
     update,
     remove,

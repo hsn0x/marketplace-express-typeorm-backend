@@ -1,27 +1,27 @@
-import { Router } from "express";
+import { Router } from "express"
 import {
     createComment,
     deleteComment,
-    getCommentById,
-    getCommentByName,
+    getById,
+    getByName,
     getComments,
     getCommentsBySearch,
     updateComment,
-} from "../controllers/Comment.js";
-import { isAuth } from "../middleware/Auth.js";
+} from "../controllers/Comment.js"
+import { isAuth } from "../middleware/Auth.js"
 import {
     isCommentOwner,
     isCommentUsernameTaken,
-} from "../middleware/Comment.js";
+} from "../middleware/Comment.js"
 
-const router = Router();
+const router = Router()
 
-router.get("/", getComments);
-router.get("/:id", getCommentById);
-router.get("/q/:query", getCommentsBySearch);
-router.get("/name/:slug", getCommentByName);
-router.post("/", isAuth, createComment);
-router.put("/:id", isAuth, isCommentOwner, updateComment);
-router.delete("/:id", isAuth, isCommentOwner, deleteComment);
+router.get("/", getComments)
+router.get("/:id", getById)
+router.get("/q/:query", getCommentsBySearch)
+router.get("/name/:slug", getByName)
+router.post("/", isAuth, createComment)
+router.put("/:id", isAuth, isCommentOwner, updateComment)
+router.delete("/:id", isAuth, isCommentOwner, deleteComment)
 
-export default router;
+export default router

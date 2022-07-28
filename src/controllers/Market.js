@@ -1,18 +1,11 @@
-import {
-    create,
-    remove,
-    findAllMarketsBySearchQuery,
-    findAllMarketsQuery,
-    findOneMarketQuery,
-    create,
-} from "../queries/markets.js"
+import { marketsQueries } from "../queries/index.js"
 import {
     validateCreateMarket,
     validateUpdateMarket,
 } from "../validation/Market.js"
 
 const getMarkets = async (req, res) => {
-    const markets = await findAllMarketsQuery()
+    const markets = await marketsQueries.findAllQuery()
     if (markets) {
         res.status(200).json({
             message: `Markets found`,
@@ -31,7 +24,7 @@ const getMarketsBySearch = async (req, res) => {
         .filter((q) => q !== "")
         .map((q) => ({ name: { [Op.like]: `%${q}%` } }))
 
-    const markets = await findAllMarketsBySearchQuery({
+    const markets = await marketsQueries.findAllQuery({
         where: {
             [Op.or]: [...queries],
         },
@@ -48,9 +41,9 @@ const getMarketsBySearch = async (req, res) => {
             .json({ message: `Market not found with Query: ${query}` })
     }
 }
-const getMarketById = async (req, res) => {
+const getById = async (req, res) => {
     const id = parseInt(req.params.id)
-    const market = await findOneMarketQuery({ id })
+    const market = await marketsQueries.findOneQuery({ id })
     if (market) {
         res.status(200).json({
             message: `Market found with ID: ${id}`,
@@ -62,9 +55,9 @@ const getMarketById = async (req, res) => {
         })
     }
 }
-const getMarketByName = async (req, res) => {
+const getByName = async (req, res) => {
     const slug = req.params.slug
-    const market = await findOneMarketQuery({ slug })
+    const market = await marketsQueries.findOneQuery({ slug })
     if (market) {
         res.status(200).json({
             message: `Market found with ID: ${slug}`,
@@ -101,7 +94,7 @@ const create = async (req, res) => {
         })
     }
 
-    const createdMarket = await create(marketData)
+    const createdMarket = await marketsQueries.create(marketData)
 
     if (createdMarket) {
         return res.status(201).json({
@@ -136,7 +129,7 @@ const update = async (req, res) => {
         res.status(400).json({ message: "Market not updated" })
     }
 
-    const updatedMarket = await create(marketData, { id })
+    const updatedMarket = await marketsQueries.create(marketData, { id })
 
     if (updatedMarket) {
         res.status(200).json({
@@ -152,15 +145,15 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
     const id = parseInt(req.params.id)
-    await remove({ id })
+    await marketsQueries.remove({ id })
     res.status(200).json({ message: `Market deleted with ID: ${id}` })
 }
 
 export {
     getMarkets,
-    getMarketById,
+    getById,
     getMarketsBySearch,
-    getMarketByName,
+    getByName,
     create,
     update,
     remove,

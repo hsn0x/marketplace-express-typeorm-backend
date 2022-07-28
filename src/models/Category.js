@@ -1,15 +1,15 @@
-import sequelize from "../db/sequelize.js";
-import SequelizeSlugify from "sequelize-slugify";
+import sequelize from "../db/sequelize.js"
+import SequelizeSlugify from "sequelize-slugify"
 
-import { INTEGER, STRING } from "../db/dataTypes.js";
-import { Model } from "sequelize";
+import { INTEGER, STRING } from "../db/dataTypes.js"
+import { Model } from "sequelize"
 
 class Category extends Model {
     async getCategoryables(options) {
-        const markets = await this.getMarkets(options);
-        const products = await this.getProducts(options);
+        const markets = await this.getMarkets(options)
+        const products = await this.getAll(options)
 
-        return markets.concat(products);
+        return markets.concat(products)
     }
 }
 
@@ -33,8 +33,8 @@ Category.init(
         },
     },
     { sequelize, modelName: "category" }
-);
+)
 
-SequelizeSlugify.slugifyModel(Category, { source: ["name"] });
+SequelizeSlugify.slugifyModel(Category, { source: ["name"] })
 
-export default Category;
+export default Category

@@ -1,10 +1,10 @@
 import {
-    createCategoryQuery,
-    deleteCategoryQuery,
+    createQuery,
+    deleteQuery,
     findAllQuery,
     findAllWhereQuery,
-    findOneCategoryQuery,
-    updateCategoryQuery,
+    findOneQuery,
+    updateQuery,
 } from "../queries/categories.js"
 
 import {
@@ -39,7 +39,7 @@ const getCategoriesByType = async (req, res) => {
 }
 const getCategoryById = async (req, res) => {
     const id = parseInt(req.params.id)
-    const category = await findOneCategoryQuery({ id })
+    const category = await findOneQuery({ id })
     if (category) {
         res.status(200).json({
             message: `Category found with ID: ${id}`,
@@ -54,7 +54,7 @@ const getCategoryById = async (req, res) => {
 
 const getCategoryByName = async (req, res) => {
     const name = req.params.name
-    const category = await findOneCategoryQuery({ name })
+    const category = await findOneQuery({ name })
     if (category) {
         res.status(200).json({
             message: `Category found with ID: ${name}`,
@@ -89,7 +89,7 @@ const createCategory = async (req, res) => {
         })
     }
 
-    const createdCategory = await createCategoryQuery(categoryData)
+    const createdCategory = await createQuery(categoryData)
 
     if (createdCategory) {
         return res.status(201).json({
@@ -118,7 +118,7 @@ const updateCategory = async (req, res) => {
         res.status(400).json({ message: "Category not updated" })
     }
 
-    const updatedCategory = await updateCategoryQuery(categoryData, { id })
+    const updatedCategory = await updateQuery(categoryData, { id })
 
     if (updatedCategory) {
         res.status(200).json({
@@ -134,7 +134,7 @@ const updateCategory = async (req, res) => {
 
 const deleteCategory = async (req, res) => {
     const id = parseInt(req.params.id)
-    await deleteCategoryQuery({ id })
+    await deleteQuery({ id })
     res.status(200).json({ message: `Category deleted with ID: ${id}` })
 }
 

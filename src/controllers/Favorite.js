@@ -1,13 +1,13 @@
 import { isFavoriteExist } from "../middleware/Favorite.js"
 import Product from "../models/Product.js"
 import {
-    createFavoriteQuery,
-    deleteFavoriteQuery,
-    findAllFavoritesQuery,
-    findOneFavoriteQuery,
-    updateFavoriteQuery,
+    createQuery,
+    deleteQuery,
+    findAllQuery,
+    findOneQuery,
+    updateQuery,
     findAllFavoritesBySearchQuery,
-    findByPkFavoriteQuery,
+    findByPkQuery,
 } from "../queries/favorites.js"
 import { findByPkQuery } from "../queries/products.js"
 import {
@@ -16,7 +16,7 @@ import {
 } from "../validation/Favorite.js"
 
 const getFavorites = async (req, res) => {
-    const favorites = await findAllFavoritesQuery()
+    const favorites = await findAllQuery()
     if (favorites) {
         res.status(200).json({ favorites })
     } else {
@@ -40,18 +40,18 @@ const getFavoritesBySearch = async (req, res) => {
     }
 }
 
-const getFavoriteById = async (req, res) => {
+const getById = async (req, res) => {
     const id = parseInt(req.params.id)
-    const favorite = await findOneFavoriteQuery({ id })
+    const favorite = await findOneQuery({ id })
     if (favorite) {
         res.status(200).json({ favorite })
     } else {
         res.status(404).json({ message: `Favorite not found with ID: ${id}` })
     }
 }
-const getFavoriteBySlug = async (req, res) => {
+const getBySlug = async (req, res) => {
     const slug = req.params.slug
-    const favorite = await findOneFavoriteQuery({ slug })
+    const favorite = await findOneQuery({ slug })
     if (favorite) {
         res.status(200).json({ favorite })
     } else {
@@ -60,7 +60,7 @@ const getFavoriteBySlug = async (req, res) => {
         })
     }
 }
-const createFavorite = async (req, res, next) => {
+const create = async (req, res, next) => {
     const { session, user } = req
     const { ProductId } = req.body
     const favoriteData = {
@@ -78,7 +78,7 @@ const createFavorite = async (req, res, next) => {
     // }
     // const product = await findByPkQuery(favoriteData.ProductId);
 
-    const createdFavorite = await createFavoriteQuery(favoriteData)
+    const createdFavorite = await createQuery(favoriteData)
 
     if (createdFavorite) {
         return res.status(201).json({
@@ -89,27 +89,27 @@ const createFavorite = async (req, res, next) => {
         return res.status(500).json({ message: `Faile to create a favorite` })
     }
 }
-const updateFavorite = async (req, res, next) => {
+const update = async (req, res, next) => {
     const x = await isFavoriteExist(req, res, next)
     console.log({ x })
     if (!x) {
-        await createFavorite(req, res)
+        await create(req, res)
     } else {
-        await deleteFavorite(req, res)
+        await remove(req, res)
     }
 }
-const deleteFavorite = async (req, res) => {
+const remove = async (req, res) => {
     const id = parseInt(req.params.id)
-    await deleteFavoriteQuery({ id })
+    await deleteQuery({ id })
     return res.status(200).json({ message: `Favorite deleted with ID: ${id}` })
 }
 
 export {
     getFavorites,
-    getFavoriteById,
-    getFavoriteBySlug,
+    getById,
+    getBySlug,
     getFavoritesBySearch,
-    createFavorite,
-    updateFavorite,
-    deleteFavorite,
+    create,
+    update,
+    remove,
 }
