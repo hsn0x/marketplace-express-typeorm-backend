@@ -1,4 +1,4 @@
-import UserSensitiveData from "../constants/SensitiveData.js";
+import { SENSITIVE_DATA_CONSTANTS } from "../constants/index.js"
 import {
     Market,
     Product,
@@ -9,7 +9,7 @@ import {
     Like,
     Vote,
     Favorite,
-} from "../models/index.js";
+} from "../models/index.js"
 
 Market.addScope("withAssociations", {
     include: [
@@ -19,7 +19,9 @@ Market.addScope("withAssociations", {
         {
             model: User,
             attributes: {
-                exclude: [...UserSensitiveData],
+                exclude: [
+                    ...SENSITIVE_DATA_CONSTANTS.USER_SENSITIVE_DATA_CONSTANTS,
+                ],
             },
         },
         {
@@ -46,6 +48,6 @@ Market.addScope("withAssociations", {
         },
         { model: Avatar, separate: true },
     ],
-});
+})
 
-export default Market;
+export default Market

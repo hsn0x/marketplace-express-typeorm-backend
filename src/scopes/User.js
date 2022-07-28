@@ -1,4 +1,4 @@
-import UserSensitiveData from "../constants/SensitiveData.js";
+import { SENSITIVE_DATA_CONSTANTS } from "../constants/index.js"
 
 import {
     Image,
@@ -13,15 +13,15 @@ import {
     Favorite,
     Review,
     Comment,
-} from "../models/index.js";
+} from "../models/index.js"
 
-import {} from "./index.js";
+import {} from "./index.js"
 
 User.addScope("withoutPassword", {
     attributes: {
-        exclude: [...UserSensitiveData],
+        exclude: [...SENSITIVE_DATA_CONSTANTS.USER_SENSITIVE_DATA_CONSTANTS],
     },
-});
+})
 
 User.addScope("withAssociations", {
     include: [
@@ -106,6 +106,6 @@ User.addScope("withAssociations", {
             separate: true,
         },
     ],
-});
+})
 
-export default User;
+export default User

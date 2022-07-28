@@ -1,6 +1,6 @@
-import { Role } from "../models/index.js";
-import { ROLES } from "../constants/index.js";
+import { Role } from "../models/index.js"
+import { ROLES_CONSTANTS } from "../constants/index.js"
 
 export const createRoles = async () => {
-    await Role.bulkCreate(ROLES);
-};
+    await Role.bulkCreate(ROLES_CONSTANTS)
+}

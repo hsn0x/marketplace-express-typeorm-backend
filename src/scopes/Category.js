@@ -1,12 +1,14 @@
-import UserSensitiveData from "../constants/SensitiveData.js";
-import { Market, Category, Image, User } from "../models/index.js";
+import { SENSITIVE_DATA_CONSTANTS } from "../constants/index.js"
+import { Market, Category, Image, User } from "../models/index.js"
 
 Category.addScope("withAssociations", {
     include: [
         {
             model: User,
             attributes: {
-                exclude: [...UserSensitiveData],
+                exclude: [
+                    ...SENSITIVE_DATA_CONSTANTS.USER_SENSITIVE_DATA_CONSTANTS,
+                ],
             },
         },
         {
@@ -17,6 +19,6 @@ Category.addScope("withAssociations", {
             separate: true,
         },
     ],
-});
+})
 
-export default Category;
+export default Category

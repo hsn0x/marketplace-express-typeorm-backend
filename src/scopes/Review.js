@@ -1,4 +1,4 @@
-import UserSensitiveData from "../constants/SensitiveData.js";
+import { SENSITIVE_DATA_CONSTANTS } from "../constants/index.js"
 import {
     Review,
     Product,
@@ -6,14 +6,16 @@ import {
     Avatar,
     User,
     Category,
-} from "../models/index.js";
+} from "../models/index.js"
 
 Review.addScope("withAssociations", {
     include: [
         {
             model: User,
             attributes: {
-                exclude: [...UserSensitiveData],
+                exclude: [
+                    ...SENSITIVE_DATA_CONSTANTS.USER_SENSITIVE_DATA_CONSTANTS,
+                ],
             },
         },
         {
@@ -21,6 +23,6 @@ Review.addScope("withAssociations", {
             include: [{ model: Image }],
         },
     ],
-});
+})
 
-export default Review;
+export default Review

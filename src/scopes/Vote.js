@@ -1,12 +1,14 @@
-import UserSensitiveData from "../constants/SensitiveData.js";
-import { Vote, Product, Image, User } from "../models/index.js";
+import { SENSITIVE_DATA_CONSTANTS } from "../constants/index.js"
+import { Vote, Product, Image, User } from "../models/index.js"
 
 Vote.addScope("withAssociations", {
     include: [
         {
             model: User,
             attributes: {
-                exclude: [...UserSensitiveData],
+                exclude: [
+                    ...SENSITIVE_DATA_CONSTANTS.USER_SENSITIVE_DATA_CONSTANTS,
+                ],
             },
         },
         {
@@ -14,6 +16,6 @@ Vote.addScope("withAssociations", {
             include: [{ model: Image }],
         },
     ],
-});
+})
 
-export default Vote;
+export default Vote
