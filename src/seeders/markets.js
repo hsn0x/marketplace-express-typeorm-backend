@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker"
 import { Market } from "../models/index.js"
 import slugify from "slugify"
 import { randomNumber } from "../utils/index.js"
-import { findAllQuery } from "../queries/markets.js"
+import { marketsQueries } from "../queries/index.js"
 
 export const createFakeMarkets = async (record) => {
     const fakeMarkets = []

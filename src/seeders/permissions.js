@@ -1,7 +1,6 @@
 import { Permission, Role } from "../models/index.js"
 import { PERMISSIONS_CONSTANTS, ROLES_CONSTANTS } from "../constants/index.js"
-import { findAllRolesQuery, findOneRoleQuery } from "../queries/roles.js"
-import { findOnePermissionQuery } from "../queries/permissions.js"
+import { rolesQueries, permissionsQueries } from "../queries/index.js"
 
 export const createPermissions = async () => {
     await Permission.bulkCreate(PERMISSIONS_CONSTANTS)

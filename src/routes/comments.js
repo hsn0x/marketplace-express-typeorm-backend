@@ -4,9 +4,9 @@ import { AuthMiddleware, CommentMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", getComments)
+router.get("/", getAll)
 router.get("/:id", getById)
-router.get("/q/:query", getCommentsBySearch)
+router.get("/q/:query", getAllBySearch)
 router.get("/name/:slug", getByName)
 router.post("/", isAuth, createComment)
 router.put("/:id", isAuth, isOwner, updateComment)

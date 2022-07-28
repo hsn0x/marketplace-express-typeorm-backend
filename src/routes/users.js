@@ -4,7 +4,7 @@ import { AuthMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", getUsers)
+router.get("/", getAll)
 router.get("/:id", getById)
 router.get("/username/:username", getByUsername)
 router.post("/", isAuth, isAdmin, isEmailExist, isUsernameTaken, createUser)

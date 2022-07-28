@@ -4,9 +4,9 @@ import { AuthMiddleware, ReviewMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", getReviews)
+router.get("/", getAll)
 router.get("/:id", getById)
-router.get("/q/:query", getReviewsBySearch)
+router.get("/q/:query", getAllBySearch)
 router.get("/name/:slug", getByName)
 router.post("/", isAuth, createReview)
 router.put("/:id", isAuth, isOwner, updateReview)

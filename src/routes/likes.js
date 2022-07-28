@@ -4,7 +4,7 @@ import { AuthMiddleware, LikeMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", getLikes)
+router.get("/", getAll)
 router.get("/:id", getById)
 router.post("/", isAuth, create)
 router.put("/", isAuth, update)

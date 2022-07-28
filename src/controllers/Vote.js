@@ -4,7 +4,7 @@ import { productsQueries, votesQueries } from "../queries/index.js"
 import { validateCreateVote, validateUpdateVote } from "../validation/Vote.js"
 
 export default {
-    getVotes: async (req, res) => {
+    getAll: async (req, res) => {
         const votes = await votesQueries.findAllQuery()
         if (votes) {
             res.status(200).json({ votes })
@@ -12,7 +12,7 @@ export default {
             res.status(404).json({ message: `Votes not found` })
         }
     },
-    getVotesBySearch: async (req, res) => {
+    getAllBySearch: async (req, res) => {
         const query = req.params.query
 
         const votes = await votesQueries.findAllVotesBySearchQuery({ query })

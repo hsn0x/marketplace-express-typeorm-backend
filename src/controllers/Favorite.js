@@ -7,7 +7,7 @@ import {
 } from "../validation/Favorite.js"
 
 export default {
-    getFavorites: async (req, res) => {
+    getAll: async (req, res) => {
         const favorites = await productsQueries.findAllQuery()
         if (favorites) {
             res.status(200).json({ favorites })
@@ -15,7 +15,7 @@ export default {
             res.status(404).json({ message: `Favorites not found` })
         }
     },
-    getFavoritesBySearch: async (req, res) => {
+    getAllBySearch: async (req, res) => {
         const query = req.params.query
 
         const favorites = await productsQueries.findAllFavoritesBySearchQuery({

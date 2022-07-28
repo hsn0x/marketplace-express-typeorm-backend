@@ -1,7 +1,6 @@
 import { Resource } from "../models/index.js"
 import { RESOURCES_CONSTANTS } from "../constants/index.js"
-import { findAllPermissionsQuery } from "../queries/permissions.js"
-import { findAllResourcesQuery } from "../queries/resources.js"
+import { resourcesQueries, permissionsQueries } from "../queries/index.js"
 
 export const createResources = async () => {
     await Resource.bulkCreate(RESOURCES_CONSTANTS)

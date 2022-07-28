@@ -4,7 +4,7 @@ import { likesQueries, productsQueries } from "../queries/index.js"
 import { validateCreateLike, validateUpdateLike } from "../validation/Like.js"
 
 export default {
-    getLikes: async (req, res) => {
+    getAll: async (req, res) => {
         const likes = await likes.findAllQuery()
         if (likes) {
             res.status(200).json({ likes })

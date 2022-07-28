@@ -16,7 +16,7 @@ import {
 } from "../validation/User.js"
 
 export default {
-    getUsers: async (req, res) => {
+    getAll: async (req, res) => {
         const users = await usersQueries.findAllUsersQuery(true)
         if (users) {
             res.status(200).json({ users })

@@ -10,7 +10,7 @@
             "name": "users",
             "item": [
                 {
-                    "name": "getUsers",
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -495,7 +495,7 @@
             "name": "comments",
             "item": [
                 {
-                    "name": "getComments",
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -516,7 +516,7 @@
                     "response": []
                 },
                 {
-                    "name": "getCommentsById",
+                    "name": "getAllById",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -612,7 +612,7 @@
             "name": "reviews",
             "item": [
                 {
-                    "name": "getReviews",
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -727,7 +727,7 @@
             "name": "likes",
             "item": [
                 {
-                    "name": "getLikes",
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -829,7 +829,7 @@
             "name": "votes",
             "item": [
                 {
-                    "name": "getVotes",
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -951,7 +951,7 @@
             "name": "favorites",
             "item": [
                 {
-                    "name": "getFavorites",
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },

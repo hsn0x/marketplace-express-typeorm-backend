@@ -4,7 +4,7 @@ import {
     validateUpdateReview,
 } from "../validation/Review.js"
 export default {
-    getReviews: async (req, res) => {
+    getAll: async (req, res) => {
         const reviews = await reviewsQueries.findAllQuery()
         if (reviews) {
             res.status(200).json({
@@ -15,7 +15,7 @@ export default {
             res.status(404).json({ message: "No reviews found" })
         }
     },
-    getReviewsBySearch: async (req, res) => {
+    getAllBySearch: async (req, res) => {
         const query = req.params.query
 
         const reviews = await reviewsQueries.findAllReviewsBySearchQuery({

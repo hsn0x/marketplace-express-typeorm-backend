@@ -4,7 +4,7 @@ import {
     validateUpdateComment,
 } from "../validation/Comment.js"
 export default {
-    getComments: async (req, res) => {
+    getAll: async (req, res) => {
         const comments = await commentsQueries.findAllQuery()
         if (comments) {
             res.status(200).json({
@@ -15,7 +15,7 @@ export default {
             res.status(404).json({ message: "No comments found" })
         }
     },
-    getCommentsBySearch: async (req, res) => {
+    getAllBySearch: async (req, res) => {
         const query = req.params.query
 
         const comments = await commentsQueries.findAllCommentsBySearchQuery({

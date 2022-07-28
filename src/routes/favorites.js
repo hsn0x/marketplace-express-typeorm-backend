@@ -4,7 +4,7 @@ import { AuthMiddleware, FavoriteMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", getFavorites)
+router.get("/", getAll)
 router.get("/:id", getById)
 router.post("/", isAuth, create)
 router.put("/", isAuth, update)
