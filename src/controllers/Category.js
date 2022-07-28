@@ -49,6 +49,7 @@ export default {
     },
     getAllByType: async (req, res) => {
         const type = req.params.type
+        const { page, size } = req.query
         const params = {
             page: parseInt(page),
             size: parseInt(size),
