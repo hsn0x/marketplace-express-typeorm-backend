@@ -62,7 +62,7 @@ export default {
         }
     },
 
-    createReview: async (req, res) => {
+    create: async (req, res) => {
         const { session, user } = req
 
         const { rate, title, content, productId } = req.body
@@ -95,7 +95,7 @@ export default {
         }
     },
 
-    updateReview: async (req, res) => {
+    update: async (req, res) => {
         const id = parseInt(req.params.id)
         const { session, user } = req
 
@@ -128,7 +128,7 @@ export default {
         }
     },
 
-    deleteReview: async (req, res) => {
+    remove: async (req, res) => {
         const id = parseInt(req.params.id)
         await reviewsQueries.deleteQuery({ id })
         res.status(200).json({ message: `Review deleted with ID: ${id}` })

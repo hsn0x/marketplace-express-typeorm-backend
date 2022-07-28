@@ -33,6 +33,20 @@ export default {
             })
         })(req, res, next)
     },
+    loginFailure: (req, res, next) => {
+        {
+            return res.status(401).json({
+                message: "Invalid username or password",
+            })
+        }
+    },
+    loginSuccess: (req, res, next) => {
+        {
+            return res.status(200).json({
+                message: "Login successful",
+            })
+        }
+    },
 
     register: async (req, res, next) => {
         const { firstName, lastName, username, email, password } = req.body
@@ -71,7 +85,6 @@ export default {
             })
         }
     },
-
     profile: async (req, res, next) => {
         return res.status(200).json({
             isAuthenticated: req.isAuthenticated(),
@@ -97,7 +110,6 @@ export default {
             return next()
         })
     },
-
     logoutSession: async (req, res, next) => {
         return req.session.destroy(function (err) {
             if (err) {

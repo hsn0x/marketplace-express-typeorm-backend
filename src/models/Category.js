@@ -6,7 +6,7 @@ import { Model } from "sequelize"
 
 class Category extends Model {
     async getCategoryables(options) {
-        const markets = await this.getMarkets(options)
+        const markets = await this.getAll(options)
         const products = await this.getAll(options)
 
         return markets.concat(products)

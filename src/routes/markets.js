@@ -4,12 +4,30 @@ import { AuthMiddleware, MarketMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", getMarkets)
-router.get("/:id", getById)
-router.get("/q/:query", getMarketsBySearch)
-router.get("/name/:slug", getByName)
-router.post("/", isAuth, isUsernameTaken, create)
-router.put("/:id", isAuth, isUsernameTaken, isOwner, update)
-router.delete("/:id", isAuth, isOwner, remove)
+router.get("/", MarketController.getAll)
+router.post(
+    "/",
+    AuthMiddleware.isAuth,
+    MarketMiddleware.isUsernameTaken,
+    MarketController.create
+)
+
+router.get("/q/:query", MarketController.getAllBySearch)
+router.get("/name/:slug", MarketController.getByName)
+
+router.get("/:id", MarketController.getById)
+router.put(
+    "/:id",
+    AuthMiddleware.isAuth,
+    MarketMiddleware.isUsernameTaken,
+    MarketMiddleware.isOwner,
+    MarketController.update
+)
+router.delete(
+    "/:id",
+    AuthMiddleware.isAuth,
+    MarketMiddleware.isOwner,
+    MarketController.remove
+)
 
 export default router

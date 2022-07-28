@@ -4,10 +4,16 @@ import { AuthMiddleware, FavoriteMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", getAll)
-router.get("/:id", getById)
-router.post("/", isAuth, create)
-router.put("/", isAuth, update)
-router.delete("/:id", isAuth, isOwner, remove)
+router.get("/", FavoriteController.getAll)
+router.post("/", AuthMiddleware.isAuth, FavoriteController.create)
+
+router.get("/:id", FavoriteController.getById)
+router.put("/:id", AuthMiddleware.isAuth, FavoriteController.update)
+router.delete(
+    "/:id",
+    AuthMiddleware.isAuth,
+    FavoriteMiddleware.isOwner,
+    FavoriteController.remove
+)
 
 export default router

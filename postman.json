@@ -65,7 +65,7 @@
                     "response": []
                 },
                 {
-                    "name": "createUser",
+                    "name": "create",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -163,7 +163,7 @@
                     "response": []
                 },
                 {
-                    "name": "updateUserEmail",
+                    "name": "updateEmail",
                     "request": {
                         "method": "PUT",
                         "header": [],
@@ -187,7 +187,7 @@
                     "response": []
                 },
                 {
-                    "name": "deleteUser",
+                    "name": "remove",
                     "request": {
                         "method": "DELETE",
                         "header": [],
@@ -201,7 +201,7 @@
                     "response": []
                 },
                 {
-                    "name": "updateUserPassword",
+                    "name": "updatePassword",
                     "request": {
                         "method": "PUT",
                         "header": [],
@@ -537,7 +537,7 @@
                     "response": []
                 },
                 {
-                    "name": "createComment",
+                    "name": "create",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -571,7 +571,7 @@
                     "response": []
                 },
                 {
-                    "name": "updateComment",
+                    "name": "remove",
                     "request": {
                         "method": "PUT",
                         "header": [],
@@ -589,7 +589,7 @@
                     "response": []
                 },
                 {
-                    "name": "deleteComment",
+                    "name": "remove",
                     "request": {
                         "method": "DELETE",
                         "header": [],
@@ -647,7 +647,7 @@
                     "response": []
                 },
                 {
-                    "name": "createReview",
+                    "name": "create",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -686,7 +686,7 @@
                     "response": []
                 },
                 {
-                    "name": "updateReview",
+                    "name": "update",
                     "request": {
                         "method": "PUT",
                         "header": [],
@@ -704,7 +704,7 @@
                     "response": []
                 },
                 {
-                    "name": "deleteReview",
+                    "name": "remove",
                     "request": {
                         "method": "DELETE",
                         "header": [],
@@ -1241,7 +1241,7 @@
             "name": "markets",
             "item": [
                 {
-                    "name": "getMarkets",
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -1276,7 +1276,7 @@
                     "response": []
                 },
                 {
-                    "name": "getMarketsBySearch",
+                    "name": "getAllBySearch",
                     "request": {
                         "method": "GET",
                         "header": [],

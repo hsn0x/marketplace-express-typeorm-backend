@@ -5,7 +5,7 @@ import {
 } from "../validation/Market.js"
 
 export default {
-    getMarkets: async (req, res) => {
+    getAll: async (req, res) => {
         const markets = await marketsQueries.findAllQuery()
         if (markets) {
             res.status(200).json({
@@ -16,7 +16,7 @@ export default {
             res.status(404).json({ message: "No markets found" })
         }
     },
-    getMarketsBySearch: async (req, res) => {
+    getAllBySearch: async (req, res) => {
         const query = req.params.query
 
         const queries = query

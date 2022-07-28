@@ -61,7 +61,7 @@ export default {
             })
         }
     },
-    createComment: async (req, res) => {
+    create: async (req, res) => {
         const { session, user } = req
 
         const { title, content, productId } = req.body
@@ -95,7 +95,7 @@ export default {
         }
     },
 
-    updateComment: async (req, res) => {
+    remove: async (req, res) => {
         const id = parseInt(req.params.id)
         const { session, user } = req
 
@@ -134,7 +134,7 @@ export default {
         }
     },
 
-    deleteComment: async (req, res) => {
+    remove: async (req, res) => {
         const id = parseInt(req.params.id)
         await commentsQueries.deleteQuery({ id })
         res.status(200).json({ message: `Comment deleted with ID: ${id}` })

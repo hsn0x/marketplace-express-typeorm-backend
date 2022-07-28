@@ -4,22 +4,24 @@ import { AuthMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.post("/login", isGuest, login)
-router.get("/me", isAuth, profile)
+router.post("/login", AuthMiddleware.isGuest, AuthController.login)
+router.get(
+    "/login/failure",
+    AuthMiddleware.isGuest,
+    AuthController.loginFailure
+)
+router.get("/login/success", AuthMiddleware.isAuth, AuthController.loginSuccess)
 
-router.post("/register", isGuest, isEmailExist, isUsernameTaken, register)
+router.get("/me", AuthMiddleware.isAuth, AuthController.profile)
 
-router.get("/login/failure", isGuest, (req, res, next) => {
-    return res.status(401).json({
-        message: "Invalid username or password",
-    })
-})
-router.get("/login/success", isAuth, (req, res, next) => {
-    return res.status(200).json({
-        message: "Login successful",
-    })
-})
+router.post(
+    "/register",
+    AuthMiddleware.isGuest,
+    AuthMiddleware.isEmailExist,
+    AuthMiddleware.isUsernameTaken,
+    AuthController.register
+)
 
-router.get("/logout", logout, logoutSession)
+router.get("/logout", AuthController.logout, AuthController.logoutSession)
 
 export default router

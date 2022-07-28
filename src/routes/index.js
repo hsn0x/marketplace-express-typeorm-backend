@@ -44,7 +44,7 @@ router.use("/auth", auth)
 router.use("/users", users)
 router.use("/products", products)
 router.use("/markets", markets)
-router.use("/admin", isAuth, isAdmin, admin)
+router.use("/admin", AuthMiddleware.isAuth, AuthMiddleware.isAdmin, admin)
 router.use("/categories", categories)
 
 router.use("/comments", comments)

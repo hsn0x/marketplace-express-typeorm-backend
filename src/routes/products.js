@@ -4,13 +4,26 @@ import { AuthMiddleware, ProductMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", getAll)
-router.get("/:id", getById)
-router.get("/title/:slug", getBySlug)
-router.get("/q/filters/:query", getAllByFilters)
-router.get("/q/:query", getAllBySearch)
-router.post("/", isAuth, create)
-router.put("/:id", isAuth, isOwner, update)
-router.delete("/:id", isAuth, isOwner, remove)
+router.get("/", ProductController.getAll)
+router.post("/", AuthMiddleware.isAuth, ProductController.create)
+
+router.get("/title/:slug", ProductController.getBySlug)
+
+router.get("/q/filters/:query", ProductController.getAllByFilters)
+router.get("/q/:query", ProductController.getAllBySearch)
+
+router.get("/:id", ProductController.getById)
+router.put(
+    "/:id",
+    AuthMiddleware.isAuth,
+    ProductMiddleware.isOwner,
+    ProductController.update
+)
+router.delete(
+    "/:id",
+    AuthMiddleware.isAuth,
+    ProductMiddleware.isOwner,
+    ProductController.remove
+)
 
 export default router

@@ -59,7 +59,7 @@ export default {
         }
     },
 
-    createUser: async (req, res, next) => {
+    create: async (req, res, next) => {
         const {
             firstName,
             lastName,
@@ -109,7 +109,7 @@ export default {
         }
     },
 
-    updateUser: async (req, res) => {
+    update: async (req, res) => {
         const id = parseInt(req.params.id)
         const { session, user } = req
 
@@ -147,7 +147,7 @@ export default {
         }
     },
 
-    updateUserEmail: async (req, res) => {
+    updateEmail: async (req, res) => {
         const id = parseInt(req.params.id)
         const { session, user } = req
 
@@ -177,7 +177,7 @@ export default {
         }
     },
 
-    updateUserPassword: async (req, res) => {
+    updatePassword: async (req, res) => {
         const id = parseInt(req.params.id)
         const { session, user } = req
         if (user.id !== id) {
@@ -257,7 +257,7 @@ export default {
             })
         }
     },
-    deleteUser: async (req, res) => {
+    remove: async (req, res) => {
         const id = parseInt(req.params.id)
         await usersQueries.deleteQuery({ id })
         res.status(200).json({ message: `User deleted with ID: ${id}` })

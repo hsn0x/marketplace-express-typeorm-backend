@@ -6,7 +6,7 @@ import { Model } from "sequelize"
 class Like extends Model {
     async getLikeables(options) {
         const products = await this.getAll(options)
-        const markets = await this.getMarkets(options)
+        const markets = await this.getAll(options)
         return products.concat(markets)
     }
 }

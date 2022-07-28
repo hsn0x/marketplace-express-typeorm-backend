@@ -5,7 +5,7 @@ import { genPassword } from "../lib/passwordUtils.js"
 
 import { ownerConfig } from "../config/index.js"
 
-const createUsers = async () => {
+const creates = async () => {
     const hashedPassword = genPassword(ownerConfig.password)
     const passwordHash = hashedPassword.hash
     const passwordSalt = hashedPassword.salt
@@ -78,4 +78,4 @@ const createFakeUsers = async (record) => {
     }
 }
 
-export { createUsers, createFakeUsers }
+export { creates, createFakeUsers }

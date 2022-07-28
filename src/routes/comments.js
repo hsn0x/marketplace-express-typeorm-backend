@@ -4,12 +4,24 @@ import { AuthMiddleware, CommentMiddleware } from "../middleware/index.js"
 
 const router = Router()
 
-router.get("/", getAll)
-router.get("/:id", getById)
-router.get("/q/:query", getAllBySearch)
-router.get("/name/:slug", getByName)
-router.post("/", isAuth, createComment)
-router.put("/:id", isAuth, isOwner, updateComment)
-router.delete("/:id", isAuth, isOwner, deleteComment)
+router.get("/", CommentController.getAll)
+router.post("/", AuthMiddleware.isAuth, CommentController.create)
+
+router.get("/q/:query", CommentController.getAllBySearch)
+router.get("/name/:slug", CommentController.getByName)
+
+router.get("/:id", CommentController.getById)
+router.put(
+    "/:id",
+    AuthMiddleware.isAuth,
+    CommentMiddleware.isOwner,
+    CommentController.remove
+)
+router.delete(
+    "/:id",
+    AuthMiddleware.isAuth,
+    CommentMiddleware.isOwner,
+    CommentController.remove
+)
 
 export default router
