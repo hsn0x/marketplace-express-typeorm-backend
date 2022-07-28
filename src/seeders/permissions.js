@@ -10,8 +10,12 @@ export const createPermissions = async () => {
         const permissions = ROLE.permissions
         for (let index = 0; index < permissions.length; index++) {
             const permission = permissions[index]
-            const perm = await findOnePermissionQuery({ name: permission })
-            const Role = await findOneRoleQuery({ name: ROLE.name })
+            const perm = await permissionsQueries.findOneQuery({
+                name: permission,
+            })
+            const Role = await rolesQueries.findOneQuery({
+                name: ROLE.name,
+            })
             await Role.addPermission(perm.id)
         }
     }

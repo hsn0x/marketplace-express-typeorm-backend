@@ -5,7 +5,7 @@ import { validateCreateLike, validateUpdateLike } from "../validation/Like.js"
 
 export default {
     getAll: async (req, res) => {
-        const likes = await likes.findAllQuery()
+        const likes = await likes.findAllQuery({}, ["withAssociations"], params)
         if (likes) {
             res.status(200).json({ likes })
         } else {

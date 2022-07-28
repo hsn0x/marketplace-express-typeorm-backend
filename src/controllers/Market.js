@@ -6,7 +6,11 @@ import {
 
 export default {
     getAll: async (req, res) => {
-        const markets = await marketsQueries.findAllQuery()
+        const markets = await marketsQueries.findAllQuery(
+            {},
+            ["withAssociations"],
+            params
+        )
         if (markets) {
             res.status(200).json({
                 message: `Markets found`,

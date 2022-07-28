@@ -4,8 +4,8 @@ import { Category } from "../models/index.js"
 import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
 export default {
-    findAllQuery: async (filter, scope, { page, size }) => {
-        const { limit, offset } = getPagination(page, size)
+    findAllQuery: async (filter, scope, params) => {
+        const { limit, offset } = getPagination(params.page, params.size)
 
         const rows = await PermissionScope.scope(scope).findAll({
             limit,

@@ -3,17 +3,44 @@ import { productsQueries } from "../queries/index.js"
 import { validatecreate, validateupdate } from "../validation/Product.js"
 
 export default {
+    getById: async (req, res) => {
+        const id = parseInt(req.params.id)
+        const data = await productsQueries.findOneQuery({ id })
+        if (data) {
+            res.status(200).json(data)
+        } else {
+            res.status(404).json({
+                message: `Record not found with ID: ${id}`,
+            })
+        }
+    },
+    getBySlug: async (req, res) => {
+        const slug = req.params.slug
+        const record = await productsQueries.findOneQuery({ slug })
+        if (record) {
+            res.status(200).json(record)
+        } else {
+            res.status(404).json({
+                message: `Record not found with Slug: ${slug}`,
+            })
+        }
+    },
+
     getAll: async (req, res) => {
         const { page, size } = req.query
         const params = {
             page: parseInt(page),
             size: parseInt(size),
         }
-        const products = await productsQueries.findAllQuery(params)
-        if (products) {
-            res.status(200).json(products)
+        const data = await productsQueries.findAllQuery(
+            {},
+            ["withAssociations"],
+            params
+        )
+        if (data) {
+            res.status(200).json(data)
         } else {
-            res.status(404).json({ message: `Products not found` })
+            res.status(404).json({ message: `Records not found` })
         }
     },
     getAllBySearch: async (req, res) => {
@@ -23,21 +50,17 @@ export default {
             .split(" ")
             .filter((q) => q !== "")
             .map((q) => ({ title: { [Op.like]: `%${q}%` } }))
-        const products = await productsQueries.findAllQuery({
+        const rows = await productsQueries.findAllQuery({
             where: {
                 [Op.or]: [...queries],
             },
         })
-        if (products) {
-            return res.status(200).json({
-                message: `Products found with query: ${query}, `,
-                length: products.length,
-                products,
-            })
+        if (rows) {
+            return res.status(200).json(rows)
         } else {
             return res
                 .status(404)
-                .json({ message: `Product not found with Query: ${query}` })
+                .json({ message: `Record not found with Query: ${query}` })
         }
     },
     getAllByFilters: async (req, res) => {
@@ -77,46 +100,21 @@ export default {
             })
         }
 
-        const products = await productsQueries.findAll({
+        const rows = await productsQueries.findAll({
             where: {
                 [Op.and]: [{ ...queryFilter }, { ...priceFilter }],
             },
             include: [...categoryFilter],
         })
-        if (products) {
-            return res.status(200).json({
-                message: `Products found with query: ${query}, `,
-                length: products.length,
-                products,
-            })
+        if (rows) {
+            return res.status(200).json(rows)
         } else {
             return res
                 .status(404)
-                .json({ message: `Product not found with Query: ${query}` })
+                .json({ message: `Record not found with Query: ${query}` })
         }
     },
-    getById: async (req, res) => {
-        const id = parseInt(req.params.id)
-        const product = await productsQueries.findOneQuery({ id })
-        if (product) {
-            res.status(200).json({ product })
-        } else {
-            res.status(404).json({
-                message: `Product not found with ID: ${id}`,
-            })
-        }
-    },
-    getBySlug: async (req, res) => {
-        const slug = req.params.slug
-        const product = await productsQueries.findOneQuery({ slug })
-        if (product) {
-            res.status(200).json({ product })
-        } else {
-            res.status(404).json({
-                message: `Product not found with Slug: ${slug}`,
-            })
-        }
-    },
+
     create: async (req, res, next) => {
         const { session, user } = req
 
@@ -136,22 +134,17 @@ export default {
 
         if (!isValid.valid) {
             return res.status(400).json({
-                message: "Invalid product data",
+                message: "Invalid record data",
                 errors: isValid.errors,
             })
         }
 
-        const createdProduct = await productsQueries.create(data)
+        const recordCreated = await productsQueries.create(data)
 
-        if (createdProduct) {
-            return res.status(201).json({
-                message: `Product created with ID: ${createdProduct.id}`,
-                createdProduct,
-            })
+        if (recordCreated) {
+            return res.status(201).json(recordCreated)
         } else {
-            return res
-                .status(500)
-                .json({ message: `Faile to create a product` })
+            return res.status(500).json({ message: `Faile to create a record` })
         }
     },
     update: async (req, res) => {
@@ -174,27 +167,22 @@ export default {
 
         if (!isValid.valid) {
             return res.status(400).json({
-                message: "Invalid product data",
+                message: "Invalid record data",
                 errors: isValid.errors,
             })
         }
 
-        const updatedProduct = await productsQueries.update(data, { id })
+        const recordUpdated = await productsQueries.update(data, { id })
 
-        if (updatedProduct) {
-            return res.status(200).json({
-                message: `Product updated with ID: ${updatedProduct.id}`,
-                updatedProduct,
-            })
+        if (recordUpdated) {
+            return res.status(200).json(recordUpdated)
         } else {
-            return res
-                .status(500)
-                .json({ message: `Faile to update a product` })
+            return res.status(500).json({ message: `Faile to update a record` })
         }
     },
     remove: async (req, res) => {
         const id = parseInt(req.params.id)
-        await productsQueries.remove({ id })
-        res.status(200).json({ message: `Product deleted with ID: ${id}` })
+        const recordDeleted = await productsQueries.remove({ id })
+        res.status(200).json(recordDeleted)
     },
 }

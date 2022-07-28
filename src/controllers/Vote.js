@@ -5,7 +5,11 @@ import { validateCreateVote, validateUpdateVote } from "../validation/Vote.js"
 
 export default {
     getAll: async (req, res) => {
-        const votes = await votesQueries.findAllQuery()
+        const votes = await votesQueries.findAllQuery(
+            {},
+            ["withAssociations"],
+            params
+        )
         if (votes) {
             res.status(200).json({ votes })
         } else {

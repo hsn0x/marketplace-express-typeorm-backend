@@ -6,31 +6,6 @@ import {
 } from "../validation/Category.js"
 
 export default {
-    getAll: async (req, res) => {
-        const categories = await categoriesQueries.findAllQuery()
-        if (categories) {
-            res.status(200).json({
-                message: `Categories found`,
-                length: categories.length,
-                categories,
-            })
-        } else {
-            res.status(404).json({ message: "No categories found" })
-        }
-    },
-    getAllByType: async (req, res) => {
-        const type = req.params.type
-        const categories = await categoriesQueries.findAllWhereQuery({ type })
-        if (categories) {
-            res.status(200).json({
-                message: `Categories found`,
-                length: categories.length,
-                categories,
-            })
-        } else {
-            res.status(404).json({ message: "No categories found" })
-        }
-    },
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
         const category = await categoriesQueries.findOneQuery({ id })
@@ -48,16 +23,48 @@ export default {
 
     getByName: async (req, res) => {
         const name = req.params.name
-        const category = await categoriesQueries.findOneQuery({ name })
-        if (category) {
-            res.status(200).json({
-                message: `Category found with ID: ${name}`,
-                category,
-            })
+        const record = await productsQueries.findOneQuery({ name })
+        if (record) {
+            res.status(200).json(record)
         } else {
             res.status(404).json({
-                message: `Category not found with ID: ${name}`,
+                message: `Record not found with Slug: ${name}`,
             })
+        }
+    },
+
+    getAll: async (req, res) => {
+        const { page, size } = req.query
+        const params = {
+            page: parseInt(page),
+            size: parseInt(size),
+        }
+        const data = await categoriesQueries.findAllQuery(
+            {},
+            ["withAssociations"],
+            params
+        )
+        if (data) {
+            res.status(200).json(data)
+        } else {
+            res.status(404).json({ message: `Records not found` })
+        }
+    },
+    getAllByType: async (req, res) => {
+        const type = req.params.type
+        const params = {
+            page: parseInt(page),
+            size: parseInt(size),
+        }
+        const data = await categoriesQueries.findAllQuery(
+            { type },
+            ["withAssociations"],
+            params
+        )
+        if (data) {
+            res.status(200).json(data)
+        } else {
+            res.status(404).json({ message: `Records not found` })
         }
     },
 

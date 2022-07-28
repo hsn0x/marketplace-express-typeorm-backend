@@ -5,7 +5,11 @@ import {
 } from "../validation/Comment.js"
 export default {
     getAll: async (req, res) => {
-        const comments = await commentsQueries.findAllQuery()
+        const comments = await commentsQueries.findAllQuery(
+            {},
+            ["withAssociations"],
+            params
+        )
         if (comments) {
             res.status(200).json({
                 message: `Comments found`,

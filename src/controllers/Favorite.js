@@ -8,7 +8,11 @@ import {
 
 export default {
     getAll: async (req, res) => {
-        const favorites = await productsQueries.findAllQuery()
+        const favorites = await productsQueries.findAllQuery(
+            {},
+            ["withAssociations"],
+            params
+        )
         if (favorites) {
             res.status(200).json({ favorites })
         } else {

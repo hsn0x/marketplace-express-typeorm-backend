@@ -5,7 +5,11 @@ import {
 } from "../validation/Review.js"
 export default {
     getAll: async (req, res) => {
-        const reviews = await reviewsQueries.findAllQuery()
+        const reviews = await reviewsQueries.findAllQuery(
+            {},
+            ["withAssociations"],
+            params
+        )
         if (reviews) {
             res.status(200).json({
                 message: `Reviews found`,
