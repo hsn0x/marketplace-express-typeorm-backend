@@ -1,51 +1,51 @@
 import Like from "../models/Like.js"
 import Product from "../models/Product.js"
-import { findOneQuery } from "../queries/likes.js"
+import { likesQueries } from "../queries/index.js"
 
-const isExist = async (req, res, next) => {
-    const { session, user } = req
-    const { ProductId } = req.body
+export default {
+    isExist: async (req, res, next) => {
+        const { session, user } = req
+        const { ProductId } = req.body
 
-    if (!ProductId) {
-        return res.status(400).json({ message: "Product ID is Required" })
-    }
+        if (!ProductId) {
+            return res.status(400).json({ message: "Product ID is Required" })
+        }
 
-    const isExist = await Like.findOne({
-        where: {
-            UserId: user.id,
-        },
-        include: [
-            {
-                model: Product,
-                where: {
-                    id: ProductId,
-                },
+        const isExist = await Like.findOne({
+            where: {
+                UserId: user.id,
             },
-        ],
-    })
-
-    if (isExist) {
-        return res.status(401).json({
-            message: `You already liked this product`,
+            include: [
+                {
+                    model: Product,
+                    where: {
+                        id: ProductId,
+                    },
+                },
+            ],
         })
-    } else {
-        return next()
-    }
+
+        if (isExist) {
+            return res.status(401).json({
+                message: `You already liked this product`,
+            })
+        } else {
+            return next()
+        }
+    },
+
+    isOwner: async (req, res, next) => {
+        const id = parseInt(req.params.id)
+        const { session, user } = req
+
+        const isOwner = await findOneQuery({ id, userId: user.id })
+
+        if (isOwner) {
+            return next()
+        } else {
+            return res.status(401).json({
+                message: `You are not the owner of the like`,
+            })
+        }
+    },
 }
-
-const isOwner = async (req, res, next) => {
-    const id = parseInt(req.params.id)
-    const { session, user } = req
-
-    const isOwner = await findOneQuery({ id, userId: user.id })
-
-    if (isOwner) {
-        return next()
-    } else {
-        return res.status(401).json({
-            message: `You are not the owner of the like`,
-        })
-    }
-}
-
-export { isExist, isOwner }

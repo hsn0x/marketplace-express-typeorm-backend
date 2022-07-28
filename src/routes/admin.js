@@ -1,9 +1,6 @@
-import { Router } from "express";
-import { getDashboard } from "../controllers/Dashboard.js";
-import { isAuth } from "../middleware/Auth.js";
+import { Router } from "express"
+import { AuthMiddleware } from "../middleware/index.js"
 
-const router = Router();
+const router = Router()
 
-router.get("/dashboard", getDashboard);
-
-export default router;
+export default router

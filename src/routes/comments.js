@@ -1,15 +1,6 @@
 import { Router } from "express"
-import {
-    createComment,
-    deleteComment,
-    getById,
-    getByName,
-    getComments,
-    getCommentsBySearch,
-    updateComment,
-} from "../controllers/Comment.js"
-import { isAuth } from "../middleware/Auth.js"
-import { isOwner, isCommentUsernameTaken } from "../middleware/Comment.js"
+import { CommentController } from "../controllers/index.js"
+import { AuthMiddleware, CommentMiddleware } from "../middleware/index.js"
 
 const router = Router()
 

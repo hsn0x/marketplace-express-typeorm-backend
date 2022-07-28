@@ -1,15 +1,6 @@
 import { Router } from "express"
-import {
-    create,
-    remove,
-    getById,
-    getAll,
-    update,
-    getByName,
-    getAllByType,
-} from "../controllers/Category.js"
-import { isAdmin, isAuth } from "../middleware/Auth.js"
-import { isExist, isNameExist } from "../middleware/Category.js"
+import { CategoryController } from "../controllers/index.js"
+import { AuthMiddleware, CategoryMiddleware } from "../middleware/index.js"
 
 const router = Router()
 

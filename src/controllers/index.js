@@ -1,4 +1,5 @@
 export { default as AuthController } from "./Auth.js"
+export { default as DashboardController } from "./Dashboard.js"
 export { default as UserController } from "./User.js"
 
 export { default as CategoryController } from "./Category.js"

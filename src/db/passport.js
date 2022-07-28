@@ -1,6 +1,6 @@
 import passport from "passport"
 
-import { findByPkQuery } from "../queries/users.js"
+import { usersQueries } from "../queries/index.js"
 import { localStrategy } from "./strategies/Local.js"
 
 passport.use(localStrategy)

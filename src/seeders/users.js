@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker"
 import { User } from "../models/index.js"
-import { findAllUsersQuery, findOneQuery } from "../queries/users.js"
+import { usersQueries, rolesQueries } from "../queries/index.js"
 import { genPassword } from "../lib/passwordUtils.js"
-import { findOneRoleQuery } from "../queries/roles.js"
+
 import { ownerConfig } from "../config/index.js"
 
 const createUsers = async () => {

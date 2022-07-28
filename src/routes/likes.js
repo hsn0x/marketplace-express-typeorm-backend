@@ -1,13 +1,6 @@
 import { Router } from "express"
-import {
-    create,
-    remove,
-    getById,
-    getLikes,
-    update,
-} from "../controllers/Like.js"
-import { isAuth } from "../middleware/Auth.js"
-import { isExist, isOwner } from "../middleware/Like.js"
+import { LikeController } from "../controllers/index.js"
+import { AuthMiddleware, LikeMiddleware } from "../middleware/index.js"
 
 const router = Router()
 

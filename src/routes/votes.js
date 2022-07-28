@@ -1,13 +1,6 @@
 import { Router } from "express"
-import {
-    create,
-    remove,
-    getById,
-    getVotes,
-    update,
-} from "../controllers/Vote.js"
-import { isAuth } from "../middleware/Auth.js"
-import { isExist, isOwner } from "../middleware/Vote.js"
+import { VoteController } from "../controllers/index.js"
+import { AuthMiddleware, VoteMiddleware } from "../middleware/index.js"
 
 const router = Router()
 

@@ -1,15 +1,6 @@
 import { Router } from "express"
-import {
-    createReview,
-    deleteReview,
-    getById,
-    getByName,
-    getReviews,
-    getReviewsBySearch,
-    updateReview,
-} from "../controllers/Review.js"
-import { isAuth } from "../middleware/Auth.js"
-import { isOwner, isReviewUsernameTaken } from "../middleware/Review.js"
+import { ReviewController } from "../controllers/index.js"
+import { AuthMiddleware, ReviewMiddleware } from "../middleware/index.js"
 
 const router = Router()
 

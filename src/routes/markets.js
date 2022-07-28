@@ -1,15 +1,6 @@
 import { Router } from "express"
-import {
-    create,
-    remove,
-    getById,
-    getByName,
-    getMarkets,
-    getMarketsBySearch,
-    update,
-} from "../controllers/Market.js"
-import { isAuth } from "../middleware/Auth.js"
-import { isOwner, isUsernameTaken } from "../middleware/Market.js"
+import { MarketController } from "../controllers/index.js"
+import { AuthMiddleware, MarketMiddleware } from "../middleware/index.js"
 
 const router = Router()
 

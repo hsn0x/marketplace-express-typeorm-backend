@@ -1,6 +1,6 @@
 import Favorite from "../models/Favorite.js"
 import Product from "../models/Product.js"
-import { findOneQuery } from "../queries/favorites.js"
+import { favoritesQueries } from "../queries/index.js"
 
 export default {
     isExist: async (req, res, next) => {

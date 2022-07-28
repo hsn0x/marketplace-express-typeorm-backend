@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker"
 import { Image, Product } from "../models/index.js"
 import { randomNumber } from "../utils/index.js"
 import slugify from "slugify"
-import { findAllQuery } from "../queries/products.js"
+import { productsQueries } from "../queries/index.js"
 import axios from "axios"
 
 export const createFakeProducts = async (record) => {

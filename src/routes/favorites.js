@@ -1,13 +1,6 @@
 import { Router } from "express"
-import {
-    create,
-    remove,
-    getById,
-    getFavorites,
-    update,
-} from "../controllers/Favorite.js"
-import { isAuth } from "../middleware/Auth.js"
-import { isExist, isOwner } from "../middleware/Favorite.js"
+import { FavoriteController } from "../controllers/index.js"
+import { AuthMiddleware, FavoriteMiddleware } from "../middleware/index.js"
 
 const router = Router()
 

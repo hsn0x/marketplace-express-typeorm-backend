@@ -1,24 +1,24 @@
 import { productsQueries } from "../queries/index.js"
 
-const isOwner = async (req, res, next) => {
-    const id = parseInt(req.params.id)
-    const { session, user } = req
+export default {
+    isOwner: async (req, res, next) => {
+        const id = parseInt(req.params.id)
+        const { session, user } = req
 
-    if (!user.Products || !user.Products.length > 0) {
-        return res.status(401).json({
-            message: `You dont have any products`,
-        })
-    }
+        if (!user.Products || !user.Products.length > 0) {
+            return res.status(401).json({
+                message: `You dont have any products`,
+            })
+        }
 
-    const isOwner = user.Products.find((product) => product.id === id)
+        const isOwner = user.Products.find((product) => product.id === id)
 
-    if (isOwner) {
-        return next()
-    } else {
-        return res.status(401).json({
-            message: `You are not the owner of the product`,
-        })
-    }
+        if (isOwner) {
+            return next()
+        } else {
+            return res.status(401).json({
+                message: `You are not the owner of the product`,
+            })
+        }
+    },
 }
-
-export { isOwner }
