@@ -1,5 +1,5 @@
 import { Op } from "sequelize"
-import { Comment } from "../scopes/index.js"
+import { CommentScope } from "../scopes/index.js"
 import { Category } from "../models/index.js"
 import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
@@ -7,12 +7,12 @@ export default {
     findAllQuery: async (filter, scope, { page, size }) => {
         const { limit, offset } = getPagination(page, size)
 
-        const rows = await Comment.scope(scope).findAll({
+        const rows = await CommentScope.scope(scope).findAll({
             limit,
             offset,
             filter,
         })
-        const count = await Comment.count()
+        const count = await CommentScope.count()
         const { totalItems, totalPages, currentPage } = getPagingData(
             count,
             page,
@@ -27,16 +27,16 @@ export default {
         }
     },
     findByPkQuery: async (id, scope) => {
-        const record = await Comment.scope(scope).findByPk(id)
+        const record = await CommentScope.scope(scope).findByPk(id)
         return record
     },
     findOneQuery: async (filter, scope) => {
-        const record = await Comment.scope(scope).findOne(filter)
+        const record = await CommentScope.scope(scope).findOne(filter)
         return record
     },
 
     create: async (data) => {
-        const recordCreated = await Comment.create(data)
+        const recordCreated = await CommentScope.create(data)
         console.log(recordCreated.id)
         data.CategoriesIds.map(
             async (ci) => await recordCreated.addCategory(ci)
@@ -45,8 +45,8 @@ export default {
     },
 
     update: async (data, where) => {
-        await Comment.update(data, { where })
-        const recordUpdated = await Comment.scope(scope).findOne(filter)
+        await CommentScope.update(data, { where })
+        const recordUpdated = await CommentScope.scope(scope).findOne(filter)
         recordUpdated.categories.map(
             async (c) => await recordUpdated.removeCategory(c.id)
         )
@@ -58,7 +58,7 @@ export default {
     },
 
     remove: async (filter, scope) => {
-        const recordDeleted = await Comment.destroy(filter)
+        const recordDeleted = await CommentScope.destroy(filter)
 
         return recordDeleted
     },

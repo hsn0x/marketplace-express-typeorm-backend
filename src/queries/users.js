@@ -1,30 +1,25 @@
-import { User } from "../scopes/index.js"
+import { UserScope } from "../scopes/index.js"
 
 export default {
     findAllUsersQuery: async (filter, scope) => {
-        return await User.scope(scope).findAll(filter)
+        return await UserScope.scope(scope).findAll(filter)
     },
-    findByPkUserQuery: async (id, scope) => {
-        return await User.scope(scope).findByPk(id)
+    findByPkQuery: async (id, scope) => {
+        return await UserScope.scope(scope).findByPk(id)
     },
-    findOneUserQuery: async (filter, scope) => {
-        return await User.scope(scope).findOne(filter)
+    findOneQuery: async (filter, scope) => {
+        return await UserScope.scope(scope).findOne(filter)
     },
-    createUserQuery: async (user) => {
-        const createdUser = await User.create(user)
-
-        delete createdUser.dataValues.password
-        delete createdUser.dataValues.passwordHash
-        delete createdUser.dataValues.passwordSalt
-
+    createQuery: async (user) => {
+        const createdUser = await UserScope.create(user)
         return createdUser
     },
-    updateUserQuery: async (user, filter) => {
-        const updatedUser = await User.update(user, filter)
+    updateQuery: async (user, filter) => {
+        const updatedUser = await UserScope.update(user, filter)
         return updatedUser
     },
-    deleteUserQuery: async (filter) => {
-        const deletedUser = await User.destroy(filter)
+    deleteQuery: async (filter) => {
+        const deletedUser = await UserScope.destroy(filter)
         return deletedUser
     },
 }

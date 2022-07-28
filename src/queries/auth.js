@@ -1,7 +1,7 @@
 import { User } from "../models/index.js"
 
 export default {
-    registerUserQuery: async (user) => {
+    registerQuery: async (user) => {
         const registerdUser = await User.create(user)
 
         delete registerdUser.dataValues.password

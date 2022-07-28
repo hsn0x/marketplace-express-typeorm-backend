@@ -1,5 +1,5 @@
 import { Op } from "sequelize"
-import { Product } from "../scopes/index.js"
+import { ProductScope } from "../scopes/index.js"
 import { Category } from "../models/index.js"
 import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
@@ -7,12 +7,12 @@ export default {
     findAllQuery: async (filter, scope, { page, size }) => {
         const { limit, offset } = getPagination(page, size)
 
-        const rows = await Product.scope(scope).findAll({
+        const rows = await ProductScope.scope(scope).findAll({
             limit,
             offset,
             filter,
         })
-        const count = await Product.count()
+        const count = await ProductScope.count()
         const { totalItems, totalPages, currentPage } = getPagingData(
             count,
             page,
@@ -27,16 +27,16 @@ export default {
         }
     },
     findByPkQuery: async (id, scope) => {
-        const record = await Product.scope(scope).findByPk(id)
+        const record = await ProductScope.scope(scope).findByPk(id)
         return record
     },
     findOneQuery: async (filter, scope) => {
-        const record = await Product.scope(scope).findOne(filter)
+        const record = await ProductScope.scope(scope).findOne(filter)
         return record
     },
 
     create: async (data) => {
-        const recordCreated = await Product.create(data)
+        const recordCreated = await ProductScope.create(data)
         console.log(recordCreated.id)
         data.CategoriesIds.map(
             async (ci) => await recordCreated.addCategory(ci)
@@ -45,8 +45,8 @@ export default {
     },
 
     update: async (data, where) => {
-        await Product.update(data, { where })
-        const recordUpdated = await Product.scope(scope).findOne(filter)
+        await ProductScope.update(data, { where })
+        const recordUpdated = await ProductScope.scope(scope).findOne(filter)
         recordUpdated.categories.map(
             async (c) => await recordUpdated.removeCategory(c.id)
         )
@@ -58,7 +58,7 @@ export default {
     },
 
     remove: async (filter, scope) => {
-        const recordDeleted = await Product.destroy(filter)
+        const recordDeleted = await ProductScope.destroy(filter)
 
         return recordDeleted
     },

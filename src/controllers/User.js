@@ -26,7 +26,7 @@ const getUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
     const id = parseInt(req.params.id)
-    const user = await usersQueries.findOneUserQuery({ id })
+    const user = await usersQueries.findOneQuery({ id })
     if (user) {
         res.status(200).json({ user })
     } else {
@@ -36,7 +36,7 @@ const getUserById = async (req, res) => {
 
 const getUserByUsername = async (req, res) => {
     const username = req.params.username
-    const user = await usersQueries.findOneUserQuery({ username })
+    const user = await usersQueries.findOneQuery({ username })
     if (user) {
         res.status(200).json({ user })
     } else {
@@ -48,7 +48,7 @@ const getUserByUsername = async (req, res) => {
 
 const getUserByEmail = async (req, res) => {
     const email = parseInt(req.params.email)
-    const user = await usersQueries.findOneUserQuery({ email })
+    const user = await usersQueries.findOneQuery({ email })
     if (user) {
         res.status(200).json({ user })
     } else {
@@ -94,7 +94,7 @@ const createUser = async (req, res, next) => {
         })
     }
 
-    const user = await usersQueries.createUserQuery(userData)
+    const user = await usersQueries.createQuery(userData)
 
     if (user) {
         res.status(201).json({
@@ -133,7 +133,7 @@ const updateUser = async (req, res) => {
         })
     }
 
-    const updatedUser = await usersQueries.updateUserQuery(userData, { id })
+    const updatedUser = await usersQueries.updateQuery(userData, { id })
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -163,7 +163,7 @@ const updateUserEmail = async (req, res) => {
             errors: isUserValid.errors,
         })
     }
-    const updatedUser = await usersQueries.updateUserQuery(userData, { id })
+    const updatedUser = await usersQueries.updateQuery(userData, { id })
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -185,7 +185,7 @@ const updateUserPassword = async (req, res) => {
         })
     }
 
-    const currentUser = await usersQueries.findOneUserQuery({ id }, false)
+    const currentUser = await usersQueries.findOneQuery({ id }, false)
     if (!currentUser) {
         return res.status(404).json({
             message: `User not found with ID: ${id}`,
@@ -244,7 +244,7 @@ const updateUserPassword = async (req, res) => {
     }
 
     userData.password = userData.newPassword
-    const updatedUser = await usersQueries.updateUserQuery(userData, { id })
+    const updatedUser = await usersQueries.updateQuery(userData, { id })
     if (updatedUser) {
         res.status(200).json({
             message: `User updated with ID: ${user.id}`,
@@ -259,7 +259,7 @@ const updateUserPassword = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     const id = parseInt(req.params.id)
-    await usersQueries.deleteUserQuery({ id })
+    await usersQueries.deleteQuery({ id })
     res.status(200).json({ message: `User deleted with ID: ${id}` })
 }
 
