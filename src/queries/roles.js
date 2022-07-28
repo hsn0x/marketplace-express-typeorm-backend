@@ -1,50 +1,65 @@
-import { Role } from "../models/index.js"
+import { Op } from "sequelize"
+import { Role } from "../scopes/index.js"
+import { Category } from "../models/index.js"
+import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
-const findAllRolesQuery = async (include = []) => {
-    const roles = await Role.findAll({ include: [...include] })
-    return roles
-}
+export default {
+    findAllQuery: async (filter, scope, { page, size }) => {
+        const { limit, offset } = getPagination(page, size)
 
-const findByPkRoleQuery = (id) => {
-    const role = Role.findByPk(id)
-    return role
-}
-const findOneRoleQuery = (filter, scope) => {
-    const role = Role.findOne({ where })
-    return role
-}
+        const rows = await Role.scope(scope).findAll({
+            limit,
+            offset,
+            filter,
+        })
+        const count = await Role.count()
+        const { totalItems, totalPages, currentPage } = getPagingData(
+            count,
+            page,
+            limit
+        )
+        return {
+            totalItems,
+            totalPages,
+            currentPage,
+            count,
+            rows,
+        }
+    },
+    findByPkQuery: async (id, scope) => {
+        const record = await Role.scope(scope).findByPk(id)
+        return record
+    },
+    findOneQuery: async (filter, scope) => {
+        const record = await Role.scope(scope).findOne(filter)
+        return record
+    },
 
-const createRoleQuery = async (role) => {
-    const { title, description, price, UserId, RoleId, CategoryId } = role
+    create: async (data) => {
+        const recordCreated = await Role.create(data)
+        console.log(recordCreated.id)
+        data.CategoriesIds.map(
+            async (ci) => await recordCreated.addCategory(ci)
+        )
+        return recordCreated
+    },
 
-    const createdRole = await Role.create({
-        title,
-        description,
-        price,
-        UserId,
-        RoleId,
-        CategoryId,
-    })
-    await createdRole.setUser(UserId)
-    await createdRole.setRole(RoleId)
-    return createdRole
-}
+    update: async (data, where) => {
+        await Role.update(data, { where })
+        const recordUpdated = await Role.scope(scope).findOne(filter)
+        recordUpdated.categories.map(
+            async (c) => await recordUpdated.removeCategory(c.id)
+        )
+        data.CategoriesIds.map(
+            async (ci) => await recordUpdated.addCategory(ci)
+        )
 
-const updateRoleQuery = async (id, role) => {
-    await Role.update(role, { where: { ...id } })
-}
+        return recordUpdated
+    },
 
-const deleteRoleQuery = async (id) => {
-    await Role.destroy({
-        where: id,
-    })
-}
+    remove: async (filter, scope) => {
+        const recordDeleted = await Role.destroy(filter)
 
-export {
-    findAllRolesQuery,
-    findByPkRoleQuery,
-    findOneRoleQuery,
-    createRoleQuery,
-    updateRoleQuery,
-    deleteRoleQuery,
+        return recordDeleted
+    },
 }

@@ -39,7 +39,7 @@ const getAllBySearch = async (req, res) => {
             .json({ message: `Product not found with Query: ${query}` })
     }
 }
-const getAllBySearchWithFilters = async (req, res) => {
+const getAllByFilters = async (req, res) => {
     const query = req.params.query
     const filters = {}
     filters.minPrice = Number(req.query.minPrice)
@@ -196,7 +196,7 @@ export {
     getById,
     getBySlug,
     getAllBySearch,
-    getAllBySearchWithFilters,
+    getAllByFilters,
     create,
     update,
     remove,

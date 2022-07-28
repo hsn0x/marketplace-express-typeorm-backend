@@ -1,51 +1,65 @@
-import { Permission } from "../models/index.js"
+import { Op } from "sequelize"
+import { Permission } from "../scopes/index.js"
+import { Category } from "../models/index.js"
+import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
-const findAllPermissionsQuery = async (include = []) => {
-    const permissions = await Permission.findAll({ include: [...include] })
-    return permissions
-}
+export default {
+    findAllQuery: async (filter, scope, { page, size }) => {
+        const { limit, offset } = getPagination(page, size)
 
-const findByPkPermissionQuery = (id) => {
-    const permission = Permission.findByPk(id)
-    return permission
-}
-const findOnePermissionQuery = (filter, scope) => {
-    const permission = Permission.findOne({ where })
-    return permission
-}
+        const rows = await Permission.scope(scope).findAll({
+            limit,
+            offset,
+            filter,
+        })
+        const count = await Permission.count()
+        const { totalItems, totalPages, currentPage } = getPagingData(
+            count,
+            page,
+            limit
+        )
+        return {
+            totalItems,
+            totalPages,
+            currentPage,
+            count,
+            rows,
+        }
+    },
+    findByPkQuery: async (id, scope) => {
+        const record = await Permission.scope(scope).findByPk(id)
+        return record
+    },
+    findOneQuery: async (filter, scope) => {
+        const record = await Permission.scope(scope).findOne(filter)
+        return record
+    },
 
-const createPermissionQuery = async (permission) => {
-    const { title, description, price, UserId, PermissionId, CategoryId } =
-        permission
+    create: async (data) => {
+        const recordCreated = await Permission.create(data)
+        console.log(recordCreated.id)
+        data.CategoriesIds.map(
+            async (ci) => await recordCreated.addCategory(ci)
+        )
+        return recordCreated
+    },
 
-    const createdPermission = await Permission.create({
-        title,
-        description,
-        price,
-        UserId,
-        PermissionId,
-        CategoryId,
-    })
-    await createdPermission.setUser(UserId)
-    await createdPermission.setPermission(PermissionId)
-    return createdPermission
-}
+    update: async (data, where) => {
+        await Permission.update(data, { where })
+        const recordUpdated = await Permission.scope(scope).findOne(filter)
+        recordUpdated.categories.map(
+            async (c) => await recordUpdated.removeCategory(c.id)
+        )
+        data.CategoriesIds.map(
+            async (ci) => await recordUpdated.addCategory(ci)
+        )
 
-const updatePermissionQuery = async (id, permission) => {
-    await Permission.update(permission, { where: { ...id } })
-}
+        return recordUpdated
+    },
 
-const deletePermissionQuery = async (id) => {
-    await Permission.destroy({
-        where: id,
-    })
-}
+    remove: async (filter, scope) => {
+        const recordDeleted = await Permission.destroy(filter)
 
-export {
-    findAllPermissionsQuery,
-    findByPkPermissionQuery,
-    findOnePermissionQuery,
-    createPermissionQuery,
-    updatePermissionQuery,
-    deletePermissionQuery,
+        return recordDeleted
+    },
 }

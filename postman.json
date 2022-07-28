@@ -294,7 +294,7 @@
                     "response": []
                 },
                 {
-                    "name": "getAllBySearchWithFilters",
+                    "name": "getAllByFilters",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },

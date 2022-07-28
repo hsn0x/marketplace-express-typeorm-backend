@@ -1,51 +1,65 @@
-import { Resource } from "../models/index.js";
+import { Op } from "sequelize"
+import { Resource } from "../scopes/index.js"
+import { Category } from "../models/index.js"
+import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
-const findAllResourcesQuery = async (include = []) => {
-    const resources = await Resource.findAll({ include: [...include] });
-    return resources;
-};
+export default {
+    findAllQuery: async (filter, scope, { page, size }) => {
+        const { limit, offset } = getPagination(page, size)
 
-const findByPkResourceQuery = (id) => {
-    const resource = Resource.findByPk(id);
-    return resource;
-};
-const findOneResourceQuery = (id) => {
-    const resource = Resource.findOne({ where: id });
-    return resource;
-};
+        const rows = await Resource.scope(scope).findAll({
+            limit,
+            offset,
+            filter,
+        })
+        const count = await Resource.count()
+        const { totalItems, totalPages, currentPage } = getPagingData(
+            count,
+            page,
+            limit
+        )
+        return {
+            totalItems,
+            totalPages,
+            currentPage,
+            count,
+            rows,
+        }
+    },
+    findByPkQuery: async (id, scope) => {
+        const record = await Resource.scope(scope).findByPk(id)
+        return record
+    },
+    findOneQuery: async (filter, scope) => {
+        const record = await Resource.scope(scope).findOne(filter)
+        return record
+    },
 
-const createResourceQuery = async (resource) => {
-    const { title, description, price, UserId, ResourceId, CategoryId } =
-        resource;
+    create: async (data) => {
+        const recordCreated = await Resource.create(data)
+        console.log(recordCreated.id)
+        data.CategoriesIds.map(
+            async (ci) => await recordCreated.addCategory(ci)
+        )
+        return recordCreated
+    },
 
-    const createdResource = await Resource.create({
-        title,
-        description,
-        price,
-        UserId,
-        ResourceId,
-        CategoryId,
-    });
-    await createdResource.setUser(UserId);
-    await createdResource.setResource(ResourceId);
-    return createdResource;
-};
+    update: async (data, where) => {
+        await Resource.update(data, { where })
+        const recordUpdated = await Resource.scope(scope).findOne(filter)
+        recordUpdated.categories.map(
+            async (c) => await recordUpdated.removeCategory(c.id)
+        )
+        data.CategoriesIds.map(
+            async (ci) => await recordUpdated.addCategory(ci)
+        )
 
-const updateResourceQuery = async (id, resource) => {
-    await Resource.update(resource, { where: { ...id } });
-};
+        return recordUpdated
+    },
 
-const deleteResourceQuery = async (id) => {
-    await Resource.destroy({
-        where: id,
-    });
-};
+    remove: async (filter, scope) => {
+        const recordDeleted = await Resource.destroy(filter)
 
-export {
-    findAllResourcesQuery,
-    findByPkResourceQuery,
-    findOneResourceQuery,
-    createResourceQuery,
-    updateResourceQuery,
-    deleteResourceQuery,
-};
+        return recordDeleted
+    },
+}

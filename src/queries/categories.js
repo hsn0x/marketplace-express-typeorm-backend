@@ -1,6 +1,5 @@
 import { Op } from "sequelize"
 import { Category } from "../scopes/index.js"
-import { Category } from "../models/index.js"
 import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
 export default {
