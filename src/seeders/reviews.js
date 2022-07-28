@@ -1,19 +1,18 @@
 import { faker } from "@faker-js/faker"
-import { Comment } from "../models/index.js"
+import { Review } from "../models/index.js"
 import slugify from "slugify"
 import { randomNumber } from "../utils/index.js"
 
 export default {
     createFake: async (record) => {
-        const fakeComments = []
+        const fakeReviews = []
         for (let index = 0; index < record; index++) {
-            fakeComments.push({
-                title: faker.lorem.sentence(),
-                content: faker.lorem.paragraph(),
+            fakeReviews.push({
+                rate: randomNumber(0, 5),
                 UserId: randomNumber(1, record),
             })
         }
 
-        // await Comment.bulkCreate(fakeComments);
+        // await Review.bulkCreate(fakeReviews);
     },
 }
