@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker";
 import { Image, Product } from "../models/index.js";
-import { cloudinary } from "../db/cloudinary.js";
 
 export const createFakeImages = async (record) => {
     const fakeImages = [];

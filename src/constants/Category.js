@@ -1,8 +1,10 @@
-const ProductCategories = [
-    {
-        name: "",
-        description: "",
-        children: [],
-    },
-];
-const MarketCategories = [{ name: "", description: "", children: [] }];
+export default {
+    ProductCategories: [
+        {
+            name: "",
+            description: "",
+            children: [],
+        },
+    ],
+    MarketCategories: [{ name: "", description: "", children: [] }],
+}

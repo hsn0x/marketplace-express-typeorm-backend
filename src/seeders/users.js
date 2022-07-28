@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker";
 import { User } from "../models/index.js";
-import { cloudinary } from "../db/cloudinary.js";
 import { findAllUsersQuery, findOneUserQuery } from "../queries/users.js";
 import { genPassword } from "../lib/passwordUtils.js";
 import { findOneRoleQuery } from "../queries/roles.js";
