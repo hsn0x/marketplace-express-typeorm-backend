@@ -1,60 +1,53 @@
 import { Op } from "sequelize"
-import { Favorite, Product } from "../scopes/index.js"
-import { findByPkQuery } from "./products.js"
+import { Product } from "../scopes/index.js"
+import { Category } from "../models/index.js"
+import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
-const findAllFavoritesQuery = async () => {
-    const favorites = await Favorite.scope("withAssociations").findAll()
-    return favorites
-}
-const findAllFavoritesBySearchQuery = async ({ query }) => {
-    const queries = query
-        .trim()
-        .split(" ")
-        .filter((q) => q !== "")
-        .map((q) => ({ name: { [Op.favorite]: `%${q}%` } }))
+export default {
+    findAllQuery: async (filter, scope, { page, size }) => {
+        const { limit, offset } = getPagination(page, size)
 
-    const favorite = await Favorite.scope("withAssociations").findAll({
-        where: {
-            [Op.or]: [...queries],
-        },
-    })
-    return favorite
-}
-const findByPkFavoriteQuery = async (id) => {
-    const favorite = await Favorite.scope("withAssociations").findByPk(id)
-    return favorite
-}
-const findOneFavoriteQuery = async (where) => {
-    const favorite = await Favorite.scope("withAssociations").findOne({
-        where,
-    })
-    return favorite
-}
+        const rows = await Product.scope(scope).findAll({
+            limit,
+            offset,
+            filter,
+        })
+        const count = await Product.count()
+        const { totalItems, totalPages, currentPage } = getPagingData(
+            count,
+            page,
+            limit
+        )
+        return {
+            totalItems,
+            totalPages,
+            currentPage,
+            count,
+            rows,
+        }
+    },
+    findByPkQuery: async (id, scope) => {
+        const record = await Product.scope(scope).findByPk(id)
+        return record
+    },
+    findOneQuery: async (filter, scope) => {
+        const record = await Product.scope(scope).findOne(filter)
+        return record
+    },
 
-const createFavoriteQuery = async (favoriteData) => {
-    const product = await findByPkQuery(favoriteData.ProductId)
+    create: async (data) => {
+        const product = await findByPkQuery(data.ProductId)
 
-    const createdFavorite = await product.createFavorite({
-        UserId: favoriteData.UserId,
-    })
-    return createdFavorite
-}
+        const recordCreated = await product.createFavorite({
+            UserId: data.UserId,
+        })
+        return recordCreated
+    },
 
-const updateFavoriteQuery = async (favoriteData, where) => {}
+    update: async (data, where) => {},
 
-const deleteFavoriteQuery = async (where) => {
-    const deletedFavorite = await Favorite.destroy({
-        where,
-    })
-    return deletedFavorite
-}
-
-export {
-    findAllFavoritesQuery,
-    findAllFavoritesBySearchQuery,
-    findByPkFavoriteQuery,
-    findOneFavoriteQuery,
-    createFavoriteQuery,
-    updateFavoriteQuery,
-    deleteFavoriteQuery,
+    remove: async (filter) => {
+        const recordDeleted = await Favorite.destroy(filter)
+        return recordDeleted
+    },
 }

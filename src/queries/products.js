@@ -27,43 +27,39 @@ export default {
         }
     },
     findByPkQuery: async (id, scope) => {
-        const product = await Product.scope(scope).findByPk(id)
-        return product
+        const record = await Product.scope(scope).findByPk(id)
+        return record
     },
     findOneQuery: async (filter, scope) => {
-        const product = await Product.scope(scope).findOne(filter)
-        return product
+        const record = await Product.scope(scope).findOne(filter)
+        return record
     },
 
-    create: async (productData) => {
-        const createdProduct = await Product.create(productData)
-        console.log(createdProduct.id)
-        productData.CategoriesIds.map(
-            async (ci) => await createdProduct.addCategory(ci)
+    create: async (data) => {
+        const recordCreated = await Product.create(data)
+        console.log(recordCreated.id)
+        data.CategoriesIds.map(
+            async (ci) => await recordCreated.addCategory(ci)
         )
-        return createdProduct
+        return recordCreated
     },
 
-    create: async (productData, where) => {
-        await Product.update(productData, { where })
-        const updatedProduct = await Product.scope(scope).findOne({
-            where,
-        })
-        updatedProduct.categories.map(
-            async (c) => await updatedProduct.removeCategory(c.id)
+    create: async (data, where) => {
+        await Product.update(data, { where })
+        const recordUpdated = await Product.scope(scope).findOne(filter)
+        recordUpdated.categories.map(
+            async (c) => await recordUpdated.removeCategory(c.id)
         )
-        productData.CategoriesIds.map(
-            async (ci) => await updatedProduct.addCategory(ci)
+        data.CategoriesIds.map(
+            async (ci) => await recordUpdated.addCategory(ci)
         )
 
-        return updatedProduct
+        return recordUpdated
     },
 
-    remove: async (where) => {
-        const deletedProduct = await Product.destroy({
-            where,
-        })
+    remove: async (filter, scope) => {
+        const recordDeleted = await Product.destroy(filter)
 
-        return deletedProduct
+        return recordDeleted
     },
 }

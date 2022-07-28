@@ -25,7 +25,17 @@ const getMarkets = async (req, res) => {
 const getMarketsBySearch = async (req, res) => {
     const query = req.params.query
 
-    const markets = await findAllMarketsBySearchQuery({ query })
+    const queries = query
+        .trim()
+        .split(" ")
+        .filter((q) => q !== "")
+        .map((q) => ({ name: { [Op.like]: `%${q}%` } }))
+
+    const markets = await findAllMarketsBySearchQuery({
+        where: {
+            [Op.or]: [...queries],
+        },
+    })
     if (markets) {
         return res.status(200).json({
             message: `Markets found with query: ${query}, `,

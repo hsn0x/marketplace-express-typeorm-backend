@@ -1,62 +1,65 @@
 import { Op } from "sequelize"
 import { Review } from "../scopes/index.js"
-import { findByPkQuery } from "./products.js"
+import { Category } from "../models/index.js"
+import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
-const findAllReviewsQuery = async () => {
-    const reviews = await Review.scope("withAssociations").findAll()
-    return reviews
-}
-const findAllReviewsBySearchQuery = async ({ query }) => {
-    const queries = query
-        .trim()
-        .split(" ")
-        .filter((q) => q !== "")
-        .map((q) => ({ name: { [Op.like]: `%${q}%` } }))
+export default {
+    findAllQuery: async (filter, scope, { page, size }) => {
+        const { limit, offset } = getPagination(page, size)
 
-    const review = await Review.scope("withAssociations").findAll({
-        where: {
-            [Op.or]: [...queries],
-        },
-    })
-    return review
-}
-const findByPkReviewQuery = async (id) => {
-    const review = await Review.scope("withAssociations").findByPk(id)
-    return review
-}
-const findOneReviewQuery = async (where) => {
-    const review = await Review.scope("withAssociations").findOne({ where })
-    return review
-}
+        const rows = await Review.scope(scope).findAll({
+            limit,
+            offset,
+            filter,
+        })
+        const count = await Review.count()
+        const { totalItems, totalPages, currentPage } = getPagingData(
+            count,
+            page,
+            limit
+        )
+        return {
+            totalItems,
+            totalPages,
+            currentPage,
+            count,
+            rows,
+        }
+    },
+    findByPkQuery: async (id, scope) => {
+        const record = await Review.scope(scope).findByPk(id)
+        return record
+    },
+    findOneQuery: async (filter, scope) => {
+        const record = await Review.scope(scope).findOne(filter)
+        return record
+    },
 
-const createReviewQuery = async (reviewData) => {
-    const product = await findByPkQuery(reviewData.productId)
-    const createdReview = await product.createReview(reviewData)
-    const review = await findByPkReviewQuery(createdReview.id)
-    return review
-}
+    create: async (data) => {
+        const recordCreated = await Review.create(data)
+        console.log(recordCreated.id)
+        data.CategoriesIds.map(
+            async (ci) => await recordCreated.addCategory(ci)
+        )
+        return recordCreated
+    },
 
-const updateReviewQuery = async (reviewData, where) => {
-    await Review.update(reviewData, { where })
-    const updatedReview = await Review.scope("withAssociations").findOne({
-        where,
-    })
-    return updatedReview
-}
+    create: async (data, where) => {
+        await Review.update(data, { where })
+        const recordUpdated = await Review.scope(scope).findOne(filter)
+        recordUpdated.categories.map(
+            async (c) => await recordUpdated.removeCategory(c.id)
+        )
+        data.CategoriesIds.map(
+            async (ci) => await recordUpdated.addCategory(ci)
+        )
 
-const deleteReviewQuery = async (where) => {
-    const deletedReview = await Review.destroy({
-        where,
-    })
-    return deletedReview
-}
+        return recordUpdated
+    },
 
-export {
-    findAllReviewsQuery,
-    findAllReviewsBySearchQuery,
-    findByPkReviewQuery,
-    findOneReviewQuery,
-    createReviewQuery,
-    updateReviewQuery,
-    deleteReviewQuery,
+    remove: async (filter, scope) => {
+        const recordDeleted = await Review.destroy(filter)
+
+        return recordDeleted
+    },
 }

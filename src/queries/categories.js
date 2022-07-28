@@ -1,42 +1,65 @@
+import { Op } from "sequelize"
 import { Category } from "../scopes/index.js"
+import { Category } from "../models/index.js"
+import { getPagination, getPagingData } from "../lib/handlePagination.js"
+
 export default {
-    findAllQuery: async (filter, scope) => {
-        const categories = await Category.scope(filter).findAll(filter)
-        return categories
-    },
-    findAllWhereQuery: async (where) => {
-        const categories = await Category.scope("withAssociations").findAll({
-            where,
+    findAllQuery: async (filter, scope, { page, size }) => {
+        const { limit, offset } = getPagination(page, size)
+
+        const rows = await Category.scope(scope).findAll({
+            limit,
+            offset,
+            filter,
         })
-        return categories
+        const count = await Category.count()
+        const { totalItems, totalPages, currentPage } = getPagingData(
+            count,
+            page,
+            limit
+        )
+        return {
+            totalItems,
+            totalPages,
+            currentPage,
+            count,
+            rows,
+        }
+    },
+    findByPkQuery: async (id, scope) => {
+        const record = await Category.scope(scope).findByPk(id)
+        return record
+    },
+    findOneQuery: async (filter, scope) => {
+        const record = await Category.scope(scope).findOne(filter)
+        return record
     },
 
-    findByPkCategoryQuery: async (id) => {
-        const category = await Category.scope("withAssociations").findByPk(id)
-        return category
-    },
-    findOneCategoryQuery: async (where) => {
-        const category = await Category.scope("withAssociations").findOne({
-            where,
-        })
-        return category
+    create: async (data) => {
+        const recordCreated = await Category.create(data)
+        console.log(recordCreated.id)
+        data.CategoriesIds.map(
+            async (ci) => await recordCreated.addCategory(ci)
+        )
+        return recordCreated
     },
 
-    createCategoryQuery: async (categoryData) => {
-        const createdCategory = await Category.create(categoryData)
-        return createdCategory
+    update: async (data, where) => {
+        await Category.update(data, { where })
+        const recordUpdated = await Category.scope(scope).findOne(filter)
+        recordUpdated.categories.map(
+            async (c) => await recordUpdated.removeCategory(c.id)
+        )
+        data.CategoriesIds.map(
+            async (ci) => await recordUpdated.addCategory(ci)
+        )
+
+        return recordUpdated
     },
 
-    updateCategoryQuery: async (categoryData, where) => {
-        const updatedCategory = await Category.update(categoryData, { where })
-        return updatedCategory
-    },
+    remove: async (filter, scope) => {
+        const recordDeleted = await Category.destroy(filter)
 
-    deleteCategoryQuery: async (id) => {
-        const deletedCategory = await Category.destroy({
-            where: id,
-        })
-
-        return deletedCategory
+        return recordDeleted
     },
 }

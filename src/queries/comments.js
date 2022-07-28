@@ -1,61 +1,65 @@
 import { Op } from "sequelize"
-import { Comment, Product } from "../scopes/index.js"
-import { findByPkQuery } from "./products.js"
-const findAllCommentsQuery = async () => {
-    const comments = await Comment.scope("withAssociations").findAll()
-    return comments
-}
-const findAllCommentsBySearchQuery = async ({ query }) => {
-    const queries = query
-        .trim()
-        .split(" ")
-        .filter((q) => q !== "")
-        .map((q) => ({ name: { [Op.like]: `%${q}%` } }))
+import { Comment } from "../scopes/index.js"
+import { Category } from "../models/index.js"
+import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
-    const comment = await Comment.scope("withAssociations").findAll({
-        where: {
-            [Op.or]: [...queries],
-        },
-    })
-    return comment
-}
-const findByPkCommentQuery = async (id) => {
-    const comment = await Comment.scope("withAssociations").findByPk(id)
-    return comment
-}
-const findOneCommentQuery = async (where) => {
-    const comment = await Comment.scope("withAssociations").findOne({ where })
-    return comment
-}
+export default {
+    findAllQuery: async (filter, scope, { page, size }) => {
+        const { limit, offset } = getPagination(page, size)
 
-const createCommentQuery = async (commentData) => {
-    const product = await findByPkQuery(commentData.productId)
-    const createdComment = await product.createComment(commentData)
-    const comment = await findByPkCommentQuery(createdComment.id)
-    return comment
-}
+        const rows = await Comment.scope(scope).findAll({
+            limit,
+            offset,
+            filter,
+        })
+        const count = await Comment.count()
+        const { totalItems, totalPages, currentPage } = getPagingData(
+            count,
+            page,
+            limit
+        )
+        return {
+            totalItems,
+            totalPages,
+            currentPage,
+            count,
+            rows,
+        }
+    },
+    findByPkQuery: async (id, scope) => {
+        const record = await Comment.scope(scope).findByPk(id)
+        return record
+    },
+    findOneQuery: async (filter, scope) => {
+        const record = await Comment.scope(scope).findOne(filter)
+        return record
+    },
 
-const updateCommentQuery = async (commentData, where) => {
-    await Comment.update(commentData, { where })
-    const updatedComment = await Comment.scope("withAssociations").findOne({
-        where,
-    })
-    return updatedComment
-}
+    create: async (data) => {
+        const recordCreated = await Comment.create(data)
+        console.log(recordCreated.id)
+        data.CategoriesIds.map(
+            async (ci) => await recordCreated.addCategory(ci)
+        )
+        return recordCreated
+    },
 
-const deleteCommentQuery = async (where) => {
-    const deletedComment = await Comment.destroy({
-        where,
-    })
-    return deletedComment
-}
+    update: async (data, where) => {
+        await Comment.update(data, { where })
+        const recordUpdated = await Comment.scope(scope).findOne(filter)
+        recordUpdated.categories.map(
+            async (c) => await recordUpdated.removeCategory(c.id)
+        )
+        data.CategoriesIds.map(
+            async (ci) => await recordUpdated.addCategory(ci)
+        )
 
-export {
-    findAllCommentsQuery,
-    findAllCommentsBySearchQuery,
-    findByPkCommentQuery,
-    findOneCommentQuery,
-    createCommentQuery,
-    updateCommentQuery,
-    deleteCommentQuery,
+        return recordUpdated
+    },
+
+    remove: async (filter, scope) => {
+        const recordDeleted = await Comment.destroy(filter)
+
+        return recordDeleted
+    },
 }
