@@ -4,65 +4,33 @@ import {
     validateUpdateReview,
 } from "../validation/Review.js"
 export default {
+    getById: async (req, res) => {
+        const id = parseInt(req.params.id)
+        const data = await reviewsQueries.findOneQuery({ id })
+        if (data) {
+            res.status(200).json(data)
+        } else {
+            res.status(404).json({
+                message: `Record not found with ID: ${id}`,
+            })
+        }
+    },
+
     getAll: async (req, res) => {
-        const reviews = await reviewsQueries.findAllQuery(
+        const { page, size } = req.query
+        const params = {
+            page: parseInt(page),
+            size: parseInt(size),
+        }
+        const data = await reviewsQueries.findAllQuery(
             {},
             ["withAssociations"],
             params
         )
-        if (reviews) {
-            res.status(200).json({
-                message: `Reviews found`,
-                reviews,
-            })
+        if (data) {
+            res.status(200).json(data)
         } else {
-            res.status(404).json({ message: "No reviews found" })
-        }
-    },
-    getAllBySearch: async (req, res) => {
-        const query = req.params.query
-
-        const reviews = await reviewsQueries.findAllReviewsBySearchQuery({
-            query,
-        })
-        if (reviews) {
-            return res.status(200).json({
-                message: `Reviews found with query: ${query}, `,
-                length: reviews.length,
-                reviews,
-            })
-        } else {
-            return res
-                .status(404)
-                .json({ message: `Review not found with Query: ${query}` })
-        }
-    },
-    getById: async (req, res) => {
-        const id = parseInt(req.params.id)
-        const review = await reviewsQueries.findOneQuery({ id })
-        if (review) {
-            res.status(200).json({
-                message: `Review found with ID: ${id}`,
-                review,
-            })
-        } else {
-            res.status(404).json({
-                message: `Review not found with ID: ${id}`,
-            })
-        }
-    },
-    getByName: async (req, res) => {
-        const slug = req.params.slug
-        const review = await reviewsQueries.findOneQuery({ slug })
-        if (review) {
-            res.status(200).json({
-                message: `Review found with ID: ${slug}`,
-                review,
-            })
-        } else {
-            res.status(404).json({
-                message: `Review not found with ID: ${slug}`,
-            })
+            res.status(404).json({ message: `Records not found` })
         }
     },
 

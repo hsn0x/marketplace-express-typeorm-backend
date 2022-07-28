@@ -4,67 +4,36 @@ import {
     validateUpdateComment,
 } from "../validation/Comment.js"
 export default {
+    getById: async (req, res) => {
+        const id = parseInt(req.params.id)
+        const data = await commentsQueries.findOneQuery({ id })
+        if (data) {
+            res.status(200).json(data)
+        } else {
+            res.status(404).json({
+                message: `Record not found with ID: ${id}`,
+            })
+        }
+    },
+
     getAll: async (req, res) => {
-        const comments = await commentsQueries.findAllQuery(
+        const { page, size } = req.query
+        const params = {
+            page: parseInt(page),
+            size: parseInt(size),
+        }
+        const data = await commentsQueries.findAllQuery(
             {},
             ["withAssociations"],
             params
         )
-        if (comments) {
-            res.status(200).json({
-                message: `Comments found`,
-                comments,
-            })
+        if (data) {
+            res.status(200).json(data)
         } else {
-            res.status(404).json({ message: "No comments found" })
+            res.status(404).json({ message: `Records not found` })
         }
     },
-    getAllBySearch: async (req, res) => {
-        const query = req.params.query
 
-        const comments = await commentsQueries.findAllCommentsBySearchQuery({
-            query,
-        })
-        if (comments) {
-            return res.status(200).json({
-                message: `Comments found with query: ${query}, `,
-                length: comments.length,
-                comments,
-            })
-        } else {
-            return res
-                .status(404)
-                .json({ message: `Comment not found with Query: ${query}` })
-        }
-    },
-    getById: async (req, res) => {
-        const id = parseInt(req.params.id)
-        const comment = await commentsQueries.findOneQuery({ id })
-        if (comment) {
-            res.status(200).json({
-                message: `Comment found with ID: ${id}`,
-                comment,
-            })
-        } else {
-            res.status(404).json({
-                message: `Comment not found with ID: ${id}`,
-            })
-        }
-    },
-    getByName: async (req, res) => {
-        const slug = req.params.slug
-        const comment = await commentsQueries.findOneQuery({ slug })
-        if (comment) {
-            res.status(200).json({
-                message: `Comment found with ID: ${slug}`,
-                comment,
-            })
-        } else {
-            res.status(404).json({
-                message: `Comment not found with ID: ${slug}`,
-            })
-        }
-    },
     create: async (req, res) => {
         const { session, user } = req
 

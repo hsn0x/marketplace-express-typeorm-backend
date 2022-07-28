@@ -7,9 +7,6 @@ const router = Router()
 router.get("/", CommentController.getAll)
 router.post("/", AuthMiddleware.isAuth, CommentController.create)
 
-router.get("/q/:query", CommentController.getAllBySearch)
-router.get("/name/:slug", CommentController.getByName)
-
 router.get("/:id", CommentController.getById)
 router.put(
     "/:id",

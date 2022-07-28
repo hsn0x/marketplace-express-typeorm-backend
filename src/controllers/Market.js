@@ -5,73 +5,64 @@ import {
 } from "../validation/Market.js"
 
 export default {
-    getAll: async (req, res) => {
-        const markets = await marketsQueries.findAllQuery(
-            {},
-            ["withAssociations"],
-            params
-        )
-        if (markets) {
-            res.status(200).json({
-                message: `Markets found`,
-                markets,
-            })
-        } else {
-            res.status(404).json({ message: "No markets found" })
-        }
-    },
-    getAllBySearch: async (req, res) => {
-        const query = req.params.query
-
-        const queries = query
-            .trim()
-            .split(" ")
-            .filter((q) => q !== "")
-            .map((q) => ({ name: { [Op.like]: `%${q}%` } }))
-
-        const markets = await marketsQueries.findAllQuery({
-            where: {
-                [Op.or]: [...queries],
-            },
-        })
-        if (markets) {
-            return res.status(200).json({
-                message: `Markets found with query: ${query}, `,
-                length: markets.length,
-                markets,
-            })
-        } else {
-            return res
-                .status(404)
-                .json({ message: `Market not found with Query: ${query}` })
-        }
-    },
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
-        const market = await marketsQueries.findOneQuery({ id })
-        if (market) {
-            res.status(200).json({
-                message: `Market found with ID: ${id}`,
-                market,
-            })
+        const data = await marketsQueries.findOneQuery({ id })
+        if (data) {
+            res.status(200).json(data)
         } else {
             res.status(404).json({
-                message: `Market not found with ID: ${id}`,
+                message: `Record not found with ID: ${id}`,
             })
         }
     },
     getByName: async (req, res) => {
-        const slug = req.params.slug
-        const market = await marketsQueries.findOneQuery({ slug })
-        if (market) {
-            res.status(200).json({
-                message: `Market found with ID: ${slug}`,
-                market,
-            })
+        const name = req.params.name
+        const record = await marketsQueries.findOneQuery({ name })
+        if (record) {
+            res.status(200).json(record)
         } else {
             res.status(404).json({
-                message: `Market not found with ID: ${slug}`,
+                message: `Record not found with Slug: ${name}`,
             })
+        }
+    },
+
+    getAll: async (req, res) => {
+        const { page, size } = req.query
+        const params = {
+            page: parseInt(page),
+            size: parseInt(size),
+        }
+        const data = await marketsQueries.findAllQuery(
+            {},
+            ["withAssociations"],
+            params
+        )
+        if (data) {
+            res.status(200).json(data)
+        } else {
+            res.status(404).json({ message: `Records not found` })
+        }
+    },
+    getAllBySearch: async (req, res) => {
+        const query = req.params.query
+        const queries = query
+            .trim()
+            .split(" ")
+            .filter((q) => q !== "")
+            .map((q) => ({ title: { [Op.like]: `%${q}%` } }))
+        const rows = await marketsQueries.findAllQuery({
+            where: {
+                [Op.or]: [...queries],
+            },
+        })
+        if (rows) {
+            return res.status(200).json(rows)
+        } else {
+            return res
+                .status(404)
+                .json({ message: `Record not found with Query: ${query}` })
         }
     },
 
@@ -110,7 +101,6 @@ export default {
             return res.status(500).json({ message: `Faile to create a market` })
         }
     },
-
     update: async (req, res) => {
         const id = parseInt(req.params.id)
         const { session, user } = req
@@ -147,10 +137,9 @@ export default {
             })
         }
     },
-
     remove: async (req, res) => {
         const id = parseInt(req.params.id)
-        await marketsQueries.remove({ id })
-        res.status(200).json({ message: `Market deleted with ID: ${id}` })
+        const recordDeleted = await marketsQueries.remove({ id })
+        res.status(200).json(recordDeleted)
     },
 }

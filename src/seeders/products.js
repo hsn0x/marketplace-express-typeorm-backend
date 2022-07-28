@@ -37,13 +37,13 @@ export const createFakeProducts = async (record) => {
         }
 
         for (let index = 0; index < randomNumber(10, 30); index++) {
-            await product.create({
+            await product.createReview({
                 rate: randomNumber(1, 5),
                 title: faker.lorem.sentence(),
                 content: faker.lorem.paragraph(10),
                 UserId: randomNumber(1, record),
             })
-            await product.create({
+            await product.createComment({
                 title: faker.lorem.sentence(),
                 content: faker.lorem.paragraph(10),
                 UserId: randomNumber(1, record),

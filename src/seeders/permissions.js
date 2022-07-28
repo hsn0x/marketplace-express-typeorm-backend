@@ -3,7 +3,7 @@ import { PERMISSIONS_CONSTANTS, ROLES_CONSTANTS } from "../constants/index.js"
 import { rolesQueries, permissionsQueries } from "../queries/index.js"
 
 export const createPermissions = async () => {
-    await Permission.bulkCreate(PERMISSIONS_CONSTANTS)
+    await Permission.bulkCreate(PERMISSIONS_CONSTANTS.PERMISSIONS)
 
     for (let index = 0; index < ROLES_CONSTANTS.length; index++) {
         const ROLE = ROLES_CONSTANTS[index]

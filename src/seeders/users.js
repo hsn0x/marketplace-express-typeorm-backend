@@ -22,9 +22,11 @@ const creates = async () => {
         gender: ownerConfig.gender,
     })
 
-    const ADMIN_ROLE = await findOneQuery({ name: "ADMIN" })
-    const MODERATOR_ROLE = await findOneQuery({ name: "MODERATOR" })
-    const EDITOR_ROLE = await findOneQuery({ name: "EDITOR" })
+    const ADMIN_ROLE = await rolesQueries.findOneQuery({ name: "ADMIN" })
+    const MODERATOR_ROLE = await rolesQueries.findOneQuery({
+        name: "MODERATOR",
+    })
+    const EDITOR_ROLE = await rolesQueries.findOneQuery({ name: "EDITOR" })
 
     await ADMIN_USER.addRole(ADMIN_ROLE.id)
     await ADMIN_USER.addRole(MODERATOR_ROLE.id)

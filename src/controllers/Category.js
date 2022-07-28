@@ -8,22 +8,19 @@ import {
 export default {
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
-        const category = await categoriesQueries.findOneQuery({ id })
-        if (category) {
-            res.status(200).json({
-                message: `Category found with ID: ${id}`,
-                category,
-            })
+        const data = await categoriesQueries.findOneQuery({ id })
+        if (data) {
+            res.status(200).json(data)
         } else {
             res.status(404).json({
-                message: `Category not found with ID: ${id}`,
+                message: `Record not found with ID: ${id}`,
             })
         }
     },
 
     getByName: async (req, res) => {
         const name = req.params.name
-        const record = await productsQueries.findOneQuery({ name })
+        const record = await categoriesQueries.findOneQuery({ name })
         if (record) {
             res.status(200).json(record)
         } else {
