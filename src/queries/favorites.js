@@ -1,53 +1,53 @@
-import { Op } from "sequelize";
-import { Favorite, Product } from "../scopes/index.js";
-import { findByPkProductQuery } from "./products.js";
+import { Op } from "sequelize"
+import { Favorite, Product } from "../scopes/index.js"
+import { findByPkQuery } from "./products.js"
 
 const findAllFavoritesQuery = async () => {
-    const favorites = await Favorite.scope("withAssociations").findAll();
-    return favorites;
-};
+    const favorites = await Favorite.scope("withAssociations").findAll()
+    return favorites
+}
 const findAllFavoritesBySearchQuery = async ({ query }) => {
     const queries = query
         .trim()
         .split(" ")
         .filter((q) => q !== "")
-        .map((q) => ({ name: { [Op.favorite]: `%${q}%` } }));
+        .map((q) => ({ name: { [Op.favorite]: `%${q}%` } }))
 
     const favorite = await Favorite.scope("withAssociations").findAll({
         where: {
             [Op.or]: [...queries],
         },
-    });
-    return favorite;
-};
+    })
+    return favorite
+}
 const findByPkFavoriteQuery = async (id) => {
-    const favorite = await Favorite.scope("withAssociations").findByPk(id);
-    return favorite;
-};
+    const favorite = await Favorite.scope("withAssociations").findByPk(id)
+    return favorite
+}
 const findOneFavoriteQuery = async (where) => {
     const favorite = await Favorite.scope("withAssociations").findOne({
         where,
-    });
-    return favorite;
-};
+    })
+    return favorite
+}
 
 const createFavoriteQuery = async (favoriteData) => {
-    const product = await findByPkProductQuery(favoriteData.ProductId);
+    const product = await findByPkQuery(favoriteData.ProductId)
 
     const createdFavorite = await product.createFavorite({
         UserId: favoriteData.UserId,
-    });
-    return createdFavorite;
-};
+    })
+    return createdFavorite
+}
 
-const updateFavoriteQuery = async (favoriteData, where) => {};
+const updateFavoriteQuery = async (favoriteData, where) => {}
 
 const deleteFavoriteQuery = async (where) => {
     const deletedFavorite = await Favorite.destroy({
         where,
-    });
-    return deletedFavorite;
-};
+    })
+    return deletedFavorite
+}
 
 export {
     findAllFavoritesQuery,
@@ -57,4 +57,4 @@ export {
     createFavoriteQuery,
     updateFavoriteQuery,
     deleteFavoriteQuery,
-};
+}

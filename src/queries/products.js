@@ -1,129 +1,69 @@
-import { Op } from "sequelize";
-import { Product } from "../scopes/index.js";
-import { Category } from "../models/index.js";
-import { getPagination, getPagingData } from "../lib/handlePagination.js";
+import { Op } from "sequelize"
+import { Product } from "../scopes/index.js"
+import { Category } from "../models/index.js"
+import { getPagination, getPagingData } from "../lib/handlePagination.js"
 
-const findAllProductsQuery = async ({ page, size }) => {
-    const { limit, offset } = getPagination(page, size);
+export default {
+    findAllQuery: async (filter, scope, { page, size }) => {
+        const { limit, offset } = getPagination(page, size)
 
-    const products = await Product.scope("withAssociations").findAll({
-        limit,
-        offset,
-    });
-    const count = await Product.count();
-    const { totalItems, totalPages, currentPage } = getPagingData(
-        count,
-        page,
-        limit
-    );
-    return {
-        totalItems,
-        totalPages,
-        currentPage,
-        count,
-        rows: products,
-    };
-};
-const findByPkProductQuery = async (id) => {
-    const product = await Product.scope("withAssociations").findByPk(id);
-    return product;
-};
-const findOneProductQuery = async (where) => {
-    const product = await Product.scope("withAssociations").findOne({ where });
-    return product;
-};
-const findAllProductsBySearchQuery = async ({ query }) => {
-    const queries = query
-        .trim()
-        .split(" ")
-        .filter((q) => q !== "")
-        .map((q) => ({ title: { [Op.like]: `%${q}%` } }));
+        const rows = await Product.scope(scope).findAll({
+            limit,
+            offset,
+            filter,
+        })
+        const count = await Product.count()
+        const { totalItems, totalPages, currentPage } = getPagingData(
+            count,
+            page,
+            limit
+        )
+        return {
+            totalItems,
+            totalPages,
+            currentPage,
+            count,
+            rows,
+        }
+    },
+    findByPkQuery: async (id, scope) => {
+        const product = await Product.scope(scope).findByPk(id)
+        return product
+    },
+    findOneQuery: async (filter, scope) => {
+        const product = await Product.scope(scope).findOne(filter)
+        return product
+    },
 
-    const product = await Product.scope("withAssociations").findAll({
-        where: {
-            [Op.or]: [...queries],
-        },
-    });
-    return product;
-};
-const findAllProductsBySearchQueryWithFilters = async ({ query, filters }) => {
-    const queries = query
-        .trim()
-        .split(" ")
-        .filter((q) => q !== "")
-        .map((q) => ({ title: { [Op.like]: `%${q}%` } }));
+    create: async (productData) => {
+        const createdProduct = await Product.create(productData)
+        console.log(createdProduct.id)
+        productData.CategoriesIds.map(
+            async (ci) => await createdProduct.addCategory(ci)
+        )
+        return createdProduct
+    },
 
-    console.log(query, filters);
-    const queryFilter = {
-        [Op.or]: [...queries],
-    };
-    const priceFilter = {
-        [Op.and]: [],
-    };
-    if (filters.minPrice) {
-        priceFilter[Op.and].push({ price: { [Op.gte]: filters.minPrice } });
-    }
-    if (filters.maxPrice) {
-        priceFilter[Op.and].push({ price: { [Op.lte]: filters.maxPrice } });
-    }
+    create: async (productData, where) => {
+        await Product.update(productData, { where })
+        const updatedProduct = await Product.scope(scope).findOne({
+            where,
+        })
+        updatedProduct.categories.map(
+            async (c) => await updatedProduct.removeCategory(c.id)
+        )
+        productData.CategoriesIds.map(
+            async (ci) => await updatedProduct.addCategory(ci)
+        )
 
-    const categoryFilter = [];
-    if (filters.CategoriesIds) {
-        categoryFilter.push({
-            model: Category,
-            where: {
-                id: filters.CategoriesIds,
-            },
-        });
-    }
+        return updatedProduct
+    },
 
-    const products = await Product.scope("withAssociations").findAll({
-        where: {
-            [Op.and]: [{ ...queryFilter }, { ...priceFilter }],
-        },
-        include: [...categoryFilter],
-    });
-    return products;
-};
-const createQuery = async (productData) => {
-    const createdProduct = await Product.create(productData);
-    console.log(createdProduct.id);
-    productData.CategoriesIds.map(
-        async (ci) => await createdProduct.addCategory(ci)
-    );
-    return createdProduct;
-};
+    remove: async (where) => {
+        const deletedProduct = await Product.destroy({
+            where,
+        })
 
-const updateQuery = async (productData, where) => {
-    await Product.update(productData, { where });
-    const updatedProduct = await Product.scope("withAssociations").findOne({
-        where,
-    });
-    updatedProduct.categories.map(
-        async (c) => await updatedProduct.removeCategory(c.id)
-    );
-    productData.CategoriesIds.map(
-        async (ci) => await updatedProduct.addCategory(ci)
-    );
-
-    return updatedProduct;
-};
-
-const removeQuery = async (where) => {
-    const deletedProduct = await Product.destroy({
-        where,
-    });
-
-    return deletedProduct;
-};
-
-export {
-    findAllProductsQuery,
-    findByPkProductQuery,
-    findOneProductQuery,
-    findAllProductsBySearchQuery,
-    findAllProductsBySearchQueryWithFilters,
-    createQuery,
-    updateQuery,
-    removeQuery,
-};
+        return deletedProduct
+    },
+}
