@@ -7,7 +7,7 @@ import {
     update,
 } from "../controllers/Vote.js"
 import { isAuth } from "../middleware/Auth.js"
-import { isVoteExist, isVoteOwner } from "../middleware/Vote.js"
+import { isExist, isOwner } from "../middleware/Vote.js"
 
 const router = Router()
 
@@ -15,6 +15,6 @@ router.get("/", getVotes)
 router.get("/:id", getById)
 router.post("/", isAuth, create)
 router.put("/", isAuth, update)
-router.delete("/:id", isAuth, isVoteOwner, remove)
+router.delete("/:id", isAuth, isOwner, remove)
 
 export default router

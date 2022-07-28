@@ -1,19 +1,12 @@
-import {
-    createQuery,
-    deleteQuery,
-    findAllQuery,
-    findAllWhereQuery,
-    findOneQuery,
-    updateQuery,
-} from "../queries/categories.js"
+import { categoriesQueries } from "../queries/index.js"
 
 import {
     validateCreateCategory,
     validateUpdateCategory,
 } from "../validation/Category.js"
 
-const getCategories = async (req, res) => {
-    const categories = await findAllQuery()
+const getAll = async (req, res) => {
+    const categories = await categoriesQueries.findAllQuery()
     if (categories) {
         res.status(200).json({
             message: `Categories found`,
@@ -24,9 +17,9 @@ const getCategories = async (req, res) => {
         res.status(404).json({ message: "No categories found" })
     }
 }
-const getCategoriesByType = async (req, res) => {
+const getAllByType = async (req, res) => {
     const type = req.params.type
-    const categories = await findAllWhereQuery({ type })
+    const categories = await categoriesQueries.findAllWhereQuery({ type })
     if (categories) {
         res.status(200).json({
             message: `Categories found`,
@@ -37,9 +30,9 @@ const getCategoriesByType = async (req, res) => {
         res.status(404).json({ message: "No categories found" })
     }
 }
-const getCategoryById = async (req, res) => {
+const getById = async (req, res) => {
     const id = parseInt(req.params.id)
-    const category = await findOneQuery({ id })
+    const category = await categoriesQueries.findOneQuery({ id })
     if (category) {
         res.status(200).json({
             message: `Category found with ID: ${id}`,
@@ -52,9 +45,9 @@ const getCategoryById = async (req, res) => {
     }
 }
 
-const getCategoryByName = async (req, res) => {
+const getByName = async (req, res) => {
     const name = req.params.name
-    const category = await findOneQuery({ name })
+    const category = await categoriesQueries.findOneQuery({ name })
     if (category) {
         res.status(200).json({
             message: `Category found with ID: ${name}`,
@@ -67,7 +60,7 @@ const getCategoryByName = async (req, res) => {
     }
 }
 
-const createCategory = async (req, res) => {
+const create = async (req, res) => {
     const { session, user } = req
     const parentId = parseInt(req.body.parentId)
 
@@ -80,16 +73,16 @@ const createCategory = async (req, res) => {
         type,
     }
 
-    const isCategoryValid = validateCreateCategory(categoryData)
+    const isValid = validateCreateCategory(categoryData)
 
-    if (!isCategoryValid.valid) {
+    if (!isValid.valid) {
         return res.status(400).json({
             message: "Invalid category data",
-            errors: isCategoryValid.errors,
+            errors: isValid.errors,
         })
     }
 
-    const createdCategory = await createQuery(categoryData)
+    const createdCategory = await categoriesQueries.createQuery(categoryData)
 
     if (createdCategory) {
         return res.status(201).json({
@@ -101,7 +94,7 @@ const createCategory = async (req, res) => {
     }
 }
 
-const updateCategory = async (req, res) => {
+const update = async (req, res) => {
     const id = parseInt(req.params.id)
     const { name, username, about, title } = req.body
 
@@ -112,13 +105,15 @@ const updateCategory = async (req, res) => {
         title,
     }
 
-    const isCategoryValid = validateUpdateCategory(categoryData)
+    const isValid = validateUpdateCategory(categoryData)
 
-    if (!isCategoryValid) {
+    if (!isValid) {
         res.status(400).json({ message: "Category not updated" })
     }
 
-    const updatedCategory = await updateQuery(categoryData, { id })
+    const updatedCategory = await categoriesQueries.updateQuery(categoryData, {
+        id,
+    })
 
     if (updatedCategory) {
         res.status(200).json({
@@ -132,18 +127,10 @@ const updateCategory = async (req, res) => {
     }
 }
 
-const deleteCategory = async (req, res) => {
+const remove = async (req, res) => {
     const id = parseInt(req.params.id)
-    await deleteQuery({ id })
+    await categoriesQueries.deleteQuery({ id })
     res.status(200).json({ message: `Category deleted with ID: ${id}` })
 }
 
-export {
-    getCategories,
-    getCategoryById,
-    getCategoriesByType,
-    getCategoryByName,
-    createCategory,
-    updateCategory,
-    deleteCategory,
-}
+export { getAll, getById, getAllByType, getByName, create, update, remove }

@@ -1,4 +1,4 @@
-import { isFavoriteExist } from "../middleware/Favorite.js"
+import { isExist } from "../middleware/Favorite.js"
 import Product from "../models/Product.js"
 import {
     createQuery,
@@ -70,12 +70,12 @@ const create = async (req, res, next) => {
         ProductId,
     }
 
-    // const isFavoriteValid = validateCreateFavorite(favoriteData);
+    // const isValid = validateCreateFavorite(favoriteData);
 
-    // if (!isFavoriteValid.valid) {
+    // if (!isValid.valid) {
     //     return res.status(400).json({
     //         message: "Invalid favorite data",
-    //         errors: isFavoriteValid.errors,
+    //         errors: isValid.errors,
     //     });
     // }
     // const product = await productsQueries.findByPkQuery(favoriteData.ProductId);
@@ -92,7 +92,7 @@ const create = async (req, res, next) => {
     }
 }
 const update = async (req, res, next) => {
-    const x = await productsQueries.isFavoriteExist(req, res, next)
+    const x = await productsQueries.isExist(req, res, next)
     console.log({ x })
     if (!x) {
         await productsQueries.create(req, res)

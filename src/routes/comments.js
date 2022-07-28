@@ -9,10 +9,7 @@ import {
     updateComment,
 } from "../controllers/Comment.js"
 import { isAuth } from "../middleware/Auth.js"
-import {
-    isCommentOwner,
-    isCommentUsernameTaken,
-} from "../middleware/Comment.js"
+import { isOwner, isCommentUsernameTaken } from "../middleware/Comment.js"
 
 const router = Router()
 
@@ -21,7 +18,7 @@ router.get("/:id", getById)
 router.get("/q/:query", getCommentsBySearch)
 router.get("/name/:slug", getByName)
 router.post("/", isAuth, createComment)
-router.put("/:id", isAuth, isCommentOwner, updateComment)
-router.delete("/:id", isAuth, isCommentOwner, deleteComment)
+router.put("/:id", isAuth, isOwner, updateComment)
+router.delete("/:id", isAuth, isOwner, deleteComment)
 
 export default router

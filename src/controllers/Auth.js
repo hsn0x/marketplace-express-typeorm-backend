@@ -1,7 +1,7 @@
 import { createUser } from "./User.js"
 import passport from "passport"
 import { validateRegister } from "../validation/Auth.js"
-import { registerQuery } from "../queries/auth.js"
+import { authQueries } from "../queries/index.js"
 import { genPassword } from "../lib/passwordUtils.js"
 
 const login = (req, res, next) => {
@@ -36,7 +36,7 @@ const login = (req, res, next) => {
 const register = async (req, res, next) => {
     const { firstName, lastName, username, email, password } = req.body
 
-    const userData = {
+    const data = {
         firstName,
         lastName,
         username,
@@ -44,11 +44,11 @@ const register = async (req, res, next) => {
         password,
     }
 
-    const hashedPassword = genPassword(userData.password)
-    userData.passwordHash = hashedPassword.hash
-    userData.passwordSalt = hashedPassword.salt
+    const hashedPassword = genPassword(data.password)
+    data.passwordHash = hashedPassword.hash
+    data.passwordSalt = hashedPassword.salt
 
-    const isRegisterValid = validateRegister(userData)
+    const isRegisterValid = validateRegister(data)
 
     if (!isRegisterValid.valid) {
         return res.status(401).json({
@@ -57,7 +57,7 @@ const register = async (req, res, next) => {
         })
     }
 
-    const user = await registerQuery(userData)
+    const user = await authQueries.registerQuery(data)
 
     if (user) {
         res.status(201).json({

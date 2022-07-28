@@ -1,4 +1,4 @@
-import { isLikeExist } from "../middleware/Like.js"
+import { isExist } from "../middleware/Like.js"
 import Product from "../models/Product.js"
 import { likes } from "../queries/index.js"
 import { findByPkQuery } from "../queries/products.js"
@@ -31,12 +31,12 @@ const create = async (req, res, next) => {
         ProductId,
     }
 
-    // const isLikeValid = validateCreateLike(likeData);
+    // const isValid = validateCreateLike(likeData);
 
-    // if (!isLikeValid.valid) {
+    // if (!isValid.valid) {
     //     return res.status(400).json({
     //         message: "Invalid like data",
-    //         errors: isLikeValid.errors,
+    //         errors: isValid.errors,
     //     });
     // }
     // const product = await likes.findByPkQuery(likeData.ProductId);
@@ -53,7 +53,7 @@ const create = async (req, res, next) => {
     }
 }
 const update = async (req, res, next) => {
-    const x = await likes.isLikeExist(req, res, next)
+    const x = await likes.isExist(req, res, next)
     console.log({ x })
     if (!x) {
         await likes.create(req, res)

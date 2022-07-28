@@ -24,7 +24,7 @@ const getUsers = async (req, res) => {
     }
 }
 
-const getUserById = async (req, res) => {
+const getById = async (req, res) => {
     const id = parseInt(req.params.id)
     const user = await usersQueries.findOneQuery({ id })
     if (user) {
@@ -34,7 +34,7 @@ const getUserById = async (req, res) => {
     }
 }
 
-const getUserByUsername = async (req, res) => {
+const getByUsername = async (req, res) => {
     const username = req.params.username
     const user = await usersQueries.findOneQuery({ username })
     if (user) {
@@ -46,7 +46,7 @@ const getUserByUsername = async (req, res) => {
     }
 }
 
-const getUserByEmail = async (req, res) => {
+const getByEmail = async (req, res) => {
     const email = parseInt(req.params.email)
     const user = await usersQueries.findOneQuery({ email })
     if (user) {
@@ -265,9 +265,9 @@ const deleteUser = async (req, res) => {
 
 export {
     getUsers,
-    getUserById,
-    getUserByUsername,
-    getUserByEmail,
+    getById,
+    getByUsername,
+    getByEmail,
     createUser,
     updateUser,
     updateUserEmail,

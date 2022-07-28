@@ -1,4 +1,4 @@
-import { isVoteExist } from "../middleware/Vote.js"
+import { isExist } from "../middleware/Vote.js"
 import Product from "../models/Product.js"
 import { productsQueries, votesQueries } from "../queries/index.js"
 import { validateCreateVote, validateUpdateVote } from "../validation/Vote.js"
@@ -54,12 +54,12 @@ const create = async (req, res, next) => {
         ProductId,
     }
 
-    // const isVoteValid = validateCreateVote(voteData);
+    // const isValid = validateCreateVote(voteData);
 
-    // if (!isVoteValid.valid) {
+    // if (!isValid.valid) {
     //     return res.status(400).json({
     //         message: "Invalid vote data",
-    //         errors: isVoteValid.errors,
+    //         errors: isValid.errors,
     //     });
     // }
     // const product = await votesQueries.findByPkQuery(voteData.ProductId);
@@ -76,7 +76,7 @@ const create = async (req, res, next) => {
     }
 }
 const update = async (req, res, next) => {
-    const x = await votesQueries.isVoteExist(req, res, next)
+    const x = await votesQueries.isExist(req, res, next)
     console.log({ x })
     if (!x) {
         await votesQueries.create(req, res)

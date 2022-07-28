@@ -1,14 +1,14 @@
-import { findOneQuery } from "../queries/markets.js"
+import { marketsQueries } from "../queries/index.js"
 
-const isMarketUsernameTaken = async (req, res, next) => {
+const isUsernameTaken = async (req, res, next) => {
     const { username } = req.body
 
     if (!username) {
         return res.status(400).json({ message: "Username is required" })
     }
 
-    const isMarketUsernameTaken = await findOneQuery({ username })
-    if (isMarketUsernameTaken) {
+    const isUsernameTaken = await marketsQueries.findOneQuery({ username })
+    if (isUsernameTaken) {
         return res.status(401).json({
             message: `Username ${username} is already taken`,
         })
@@ -17,7 +17,7 @@ const isMarketUsernameTaken = async (req, res, next) => {
     }
 }
 
-const isMarketOwner = async (req, res, next) => {
+const isOwner = async (req, res, next) => {
     const id = parseInt(req.params.id)
     const { session, user } = req
 
@@ -27,9 +27,9 @@ const isMarketOwner = async (req, res, next) => {
         })
     }
 
-    const isMarketOwner = user.Markets.find((market) => market.id === id)
+    const isOwner = user.Markets.find((market) => market.id === id)
 
-    if (isMarketOwner) {
+    if (isOwner) {
         return next()
     } else {
         return res.status(401).json({
@@ -38,4 +38,4 @@ const isMarketOwner = async (req, res, next) => {
     }
 }
 
-export { isMarketUsernameTaken, isMarketOwner }
+export { isUsernameTaken, isOwner }

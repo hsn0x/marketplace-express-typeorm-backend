@@ -31,7 +31,7 @@
                     "response": []
                 },
                 {
-                    "name": "getUserById",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -45,7 +45,7 @@
                     "response": []
                 },
                 {
-                    "name": "getUserByUsername",
+                    "name": "getByUsername",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -1073,7 +1073,7 @@
             "name": "categories",
             "item": [
                 {
-                    "name": "getCategories",
+                    "name": "getAll",
                     "protocolProfileBehavior": {
                         "disableBodyPruning": true
                     },
@@ -1110,7 +1110,7 @@
                     "response": []
                 },
                 {
-                    "name": "getCategoryById",
+                    "name": "getById",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -1124,7 +1124,7 @@
                     "response": []
                 },
                 {
-                    "name": "getCategoryByName",
+                    "name": "getByName",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -1138,7 +1138,7 @@
                     "response": []
                 },
                 {
-                    "name": "getCategoryByType",
+                    "name": "getByType",
                     "request": {
                         "method": "GET",
                         "header": [],
@@ -1158,7 +1158,7 @@
                     "response": []
                 },
                 {
-                    "name": "createCategory",
+                    "name": "create",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -1193,7 +1193,7 @@
                     "response": []
                 },
                 {
-                    "name": "updateCategory",
+                    "name": "update",
                     "request": {
                         "method": "POST",
                         "header": [],
@@ -1222,7 +1222,7 @@
                     "response": []
                 },
                 {
-                    "name": "deleteCategory",
+                    "name": "remove",
                     "request": {
                         "method": "DELETE",
                         "header": [],

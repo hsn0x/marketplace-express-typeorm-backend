@@ -9,7 +9,7 @@ import {
     updateReview,
 } from "../controllers/Review.js"
 import { isAuth } from "../middleware/Auth.js"
-import { isReviewOwner, isReviewUsernameTaken } from "../middleware/Review.js"
+import { isOwner, isReviewUsernameTaken } from "../middleware/Review.js"
 
 const router = Router()
 
@@ -18,7 +18,7 @@ router.get("/:id", getById)
 router.get("/q/:query", getReviewsBySearch)
 router.get("/name/:slug", getByName)
 router.post("/", isAuth, createReview)
-router.put("/:id", isAuth, isReviewOwner, updateReview)
-router.delete("/:id", isAuth, isReviewOwner, deleteReview)
+router.put("/:id", isAuth, isOwner, updateReview)
+router.delete("/:id", isAuth, isOwner, deleteReview)
 
 export default router

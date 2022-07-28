@@ -1,8 +1,8 @@
-import { findOneQuery } from "../queries/categories.js"
+import { categoriesQueries } from "../queries/index.js"
 
-const isCategoryExist = async (req, res, next) => {
+const isExist = async (req, res, next) => {
     const id = parseInt(req.params.id)
-    const category = await findOneQuery({ id })
+    const category = await categoriesQueries.findOneQuery({ id })
     if (category) {
         return next()
     } else {
@@ -12,9 +12,9 @@ const isCategoryExist = async (req, res, next) => {
     }
 }
 
-const isCategoryNameExist = async (req, res, next) => {
+const isNameExist = async (req, res, next) => {
     const name = req.params.name
-    const category = await findOneQuery({ name })
+    const category = await categoriesQueries.findOneQuery({ name })
     if (category) {
         return next()
     } else {
@@ -24,4 +24,4 @@ const isCategoryNameExist = async (req, res, next) => {
     }
 }
 
-export { isCategoryNameExist, isCategoryExist }
+export { isNameExist, isExist }

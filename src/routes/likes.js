@@ -7,7 +7,7 @@ import {
     update,
 } from "../controllers/Like.js"
 import { isAuth } from "../middleware/Auth.js"
-import { isLikeExist, isLikeOwner } from "../middleware/Like.js"
+import { isExist, isOwner } from "../middleware/Like.js"
 
 const router = Router()
 
@@ -15,6 +15,6 @@ router.get("/", getLikes)
 router.get("/:id", getById)
 router.post("/", isAuth, create)
 router.put("/", isAuth, update)
-router.delete("/:id", isAuth, isLikeOwner, remove)
+router.delete("/:id", isAuth, isOwner, remove)
 
 export default router

@@ -17,7 +17,7 @@ const isReviewUsernameTaken = async (req, res, next) => {
     }
 }
 
-const isReviewOwner = async (req, res, next) => {
+const isOwner = async (req, res, next) => {
     const id = parseInt(req.params.id)
     const { session, user } = req
 
@@ -27,9 +27,9 @@ const isReviewOwner = async (req, res, next) => {
         })
     }
 
-    const isReviewOwner = user.Reviews.find((review) => review.id === id)
+    const isOwner = user.Reviews.find((review) => review.id === id)
 
-    if (isReviewOwner) {
+    if (isOwner) {
         return next()
     } else {
         return res.status(401).json({
@@ -38,4 +38,4 @@ const isReviewOwner = async (req, res, next) => {
     }
 }
 
-export { isReviewUsernameTaken, isReviewOwner }
+export { isReviewUsernameTaken, isOwner }

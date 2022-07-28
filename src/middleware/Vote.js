@@ -2,7 +2,7 @@ import Vote from "../models/Vote.js"
 import Product from "../models/Product.js"
 import { findOneQuery } from "../queries/votes.js"
 
-const isVoteExist = async (req, res, next) => {
+const isExist = async (req, res, next) => {
     const { session, user } = req
     const { ProductId } = req.body
 
@@ -10,7 +10,7 @@ const isVoteExist = async (req, res, next) => {
         return res.status(400).json({ message: "Product ID is Required" })
     }
 
-    const isVoteExist = await Vote.findOne({
+    const isExist = await Vote.findOne({
         where: {
             UserId: user.id,
         },
@@ -24,7 +24,7 @@ const isVoteExist = async (req, res, next) => {
         ],
     })
 
-    if (isVoteExist) {
+    if (isExist) {
         return res.status(401).json({
             message: `You already voted this product`,
         })
@@ -33,13 +33,13 @@ const isVoteExist = async (req, res, next) => {
     }
 }
 
-const isVoteOwner = async (req, res, next) => {
+const isOwner = async (req, res, next) => {
     const id = parseInt(req.params.id)
     const { session, user } = req
 
-    const isVoteOwner = await findOneQuery({ id, userId: user.id })
+    const isOwner = await findOneQuery({ id, userId: user.id })
 
-    if (isVoteOwner) {
+    if (isOwner) {
         return next()
     } else {
         return res.status(401).json({
@@ -48,4 +48,4 @@ const isVoteOwner = async (req, res, next) => {
     }
 }
 
-export { isVoteExist, isVoteOwner }
+export { isExist, isOwner }

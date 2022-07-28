@@ -1,18 +1,11 @@
-import {
-    createQuery,
-    deleteQuery,
-    findAllCommentsBySearchQuery,
-    findAllQuery,
-    findOneQuery,
-    updateQuery,
-} from "../queries/comments.js"
+import { commentsQueries } from "../queries/index.js"
 import {
     validateCreateComment,
     validateUpdateComment,
 } from "../validation/Comment.js"
 
 const getComments = async (req, res) => {
-    const comments = await findAllQuery()
+    const comments = await commentsQueries.findAllQuery()
     if (comments) {
         res.status(200).json({
             message: `Comments found`,
@@ -25,7 +18,9 @@ const getComments = async (req, res) => {
 const getCommentsBySearch = async (req, res) => {
     const query = req.params.query
 
-    const comments = await findAllCommentsBySearchQuery({ query })
+    const comments = await commentsQueries.findAllCommentsBySearchQuery({
+        query,
+    })
     if (comments) {
         return res.status(200).json({
             message: `Comments found with query: ${query}, `,
@@ -40,7 +35,7 @@ const getCommentsBySearch = async (req, res) => {
 }
 const getById = async (req, res) => {
     const id = parseInt(req.params.id)
-    const comment = await findOneQuery({ id })
+    const comment = await commentsQueries.findOneQuery({ id })
     if (comment) {
         res.status(200).json({
             message: `Comment found with ID: ${id}`,
@@ -54,7 +49,7 @@ const getById = async (req, res) => {
 }
 const getByName = async (req, res) => {
     const slug = req.params.slug
-    const comment = await findOneQuery({ slug })
+    const comment = await commentsQueries.findOneQuery({ slug })
     if (comment) {
         res.status(200).json({
             message: `Comment found with ID: ${slug}`,
@@ -86,7 +81,7 @@ const createComment = async (req, res) => {
         })
     }
 
-    const createdComment = await createQuery(commentData)
+    const createdComment = await commentsQueries.createQuery(commentData)
 
     if (createdComment) {
         return res.status(201).json({
@@ -121,7 +116,9 @@ const updateComment = async (req, res) => {
         res.status(400).json({ message: "Comment not updated" })
     }
 
-    const updatedComment = await updateQuery(commentData, { id })
+    const updatedComment = await commentsQueries.updateQuery(commentData, {
+        id,
+    })
 
     if (updatedComment) {
         res.status(200).json({
@@ -137,7 +134,7 @@ const updateComment = async (req, res) => {
 
 const deleteComment = async (req, res) => {
     const id = parseInt(req.params.id)
-    await deleteQuery({ id })
+    await commentsQueries.deleteQuery({ id })
     res.status(200).json({ message: `Comment deleted with ID: ${id}` })
 }
 

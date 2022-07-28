@@ -1,27 +1,24 @@
-import { Router } from "express";
+import { Router } from "express"
 import {
-    createCategory,
-    deleteCategory,
-    getCategoryById,
-    getCategories,
-    updateCategory,
-    getCategoryByName,
-    getCategoriesByType,
-} from "../controllers/Category.js";
-import { isAdmin, isAuth } from "../middleware/Auth.js";
-import {
-    isCategoryExist,
-    isCategoryNameExist,
-} from "../middleware/Category.js";
+    create,
+    remove,
+    getById,
+    getAll,
+    update,
+    getByName,
+    getAllByType,
+} from "../controllers/Category.js"
+import { isAdmin, isAuth } from "../middleware/Auth.js"
+import { isExist, isNameExist } from "../middleware/Category.js"
 
-const router = Router();
+const router = Router()
 
-router.get("/", getCategories);
-router.get("/type/:type", getCategoriesByType);
-router.get("/name/:name", isCategoryNameExist, getCategoryByName);
-router.get("/:id", isCategoryExist, getCategoryById);
-router.post("/", isAuth, isAdmin, createCategory);
-router.put("/:id", isAuth, isAdmin, isCategoryExist, updateCategory);
-router.delete("/:id", isAuth, isAdmin, deleteCategory);
+router.get("/", getAll)
+router.get("/type/:type", getAllByType)
+router.get("/name/:name", isNameExist, getByName)
+router.get("/:id", isExist, getById)
+router.post("/", isAuth, isAdmin, create)
+router.put("/:id", isAuth, isAdmin, isExist, update)
+router.delete("/:id", isAuth, isAdmin, remove)
 
-export default router;
+export default router
