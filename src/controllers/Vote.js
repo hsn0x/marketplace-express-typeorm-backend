@@ -1,7 +1,7 @@
 import { VoteMiddleware } from "../middleware/index.js"
 import Product from "../models/Product.js"
 import { productsQueries, votesQueries } from "../queries/index.js"
-import { validateCreateVote, validateUpdateVote } from "../validation/Vote.js"
+import { validateCreate, validateUpdateVote } from "../validation/Vote.js"
 
 export default {
     getAll: async (req, res) => {
@@ -61,7 +61,7 @@ export default {
             ProductId,
         }
 
-        // const isValid = validateCreateVote(voteData);
+        // const isValid = validateCreate(voteData);
 
         // if (!isValid.valid) {
         //     return res.status(400).json({

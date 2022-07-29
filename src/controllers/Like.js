@@ -1,7 +1,7 @@
 import { LikeMiddleware } from "../middleware/index.js"
 import Product from "../models/Product.js"
 import { likesQueries, productsQueries } from "../queries/index.js"
-import { validateCreateLike, validateUpdateLike } from "../validation/Like.js"
+import { validateCreate, validateUpdateLike } from "../validation/Like.js"
 
 export default {
     getAll: async (req, res) => {
@@ -34,7 +34,7 @@ export default {
             ProductId,
         }
 
-        // const isValid = validateCreateLike(likeData);
+        // const isValid = validateCreate(likeData);
 
         // if (!isValid.valid) {
         //     return res.status(400).json({

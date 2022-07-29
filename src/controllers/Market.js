@@ -1,9 +1,6 @@
 import { Op } from "sequelize"
 import { marketsQueries } from "../queries/index.js"
-import {
-    validateCreateMarket,
-    validateUpdateMarket,
-} from "../validation/Market.js"
+import { validateCreate, validateUpdateMarket } from "../validation/Market.js"
 
 export default {
     getById: async (req, res) => {
@@ -89,7 +86,7 @@ export default {
             CategoriesIds: CategoriesIds.map((id) => parseInt(id)),
         }
 
-        const isMarketValid = validateCreateMarket(marketData)
+        const isMarketValid = validateCreate(marketData)
 
         if (!isMarketValid.valid) {
             return res.status(400).json({

@@ -1,8 +1,5 @@
 import { commentsQueries } from "../queries/index.js"
-import {
-    validateCreateComment,
-    validateUpdateComment,
-} from "../validation/Comment.js"
+import { validateCreate, validateUpdateComment } from "../validation/Comment.js"
 export default {
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
@@ -45,7 +42,7 @@ export default {
             UserId: user.id,
         }
 
-        const isCommentValid = validateCreateComment(commentData)
+        const isCommentValid = validateCreate(commentData)
 
         if (!isCommentValid.valid) {
             return res.status(400).json({

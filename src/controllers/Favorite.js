@@ -2,7 +2,7 @@ import { FavoriteMiddleware } from "../middleware/index.js"
 import Product from "../models/Product.js"
 import { favoritesQueries, productsQueries } from "../queries/index.js"
 import {
-    validateCreateFavorite,
+    validateCreate,
     validateUpdateFavorite,
 } from "../validation/Favorite.js"
 
@@ -68,7 +68,7 @@ export default {
             ProductId,
         }
 
-        // const isValid = validateCreateFavorite(favoriteData);
+        // const isValid = validateCreate(favoriteData);
 
         // if (!isValid.valid) {
         //     return res.status(400).json({

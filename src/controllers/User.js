@@ -9,7 +9,7 @@ import {
 } from "../models/index.js"
 import { usersQueries } from "../queries/index.js"
 import {
-    validateCreateUser,
+    validateCreate,
     validateUpdateUserEmail,
     validateUpdateUserPassword,
     validateUpdateUser,
@@ -86,7 +86,7 @@ export default {
         userData.passwordHash = hashedPassword.hash
         userData.passwordSalt = hashedPassword.salt
 
-        const isUserValid = validateCreateUser(userData)
+        const isUserValid = validateCreate(userData)
 
         if (!isUserValid.valid) {
             return res.status(401).json({

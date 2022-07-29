@@ -1,8 +1,5 @@
 import { reviewsQueries } from "../queries/index.js"
-import {
-    validateCreateReview,
-    validateUpdateReview,
-} from "../validation/Review.js"
+import { validateCreate, validateUpdateReview } from "../validation/Review.js"
 export default {
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
@@ -46,7 +43,7 @@ export default {
             UserId: user.id,
         }
 
-        const isReviewValid = validateCreateReview(reviewData)
+        const isReviewValid = validateCreate(reviewData)
 
         if (!isReviewValid.valid) {
             return res.status(400).json({
