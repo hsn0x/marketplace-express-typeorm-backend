@@ -92,9 +92,8 @@ export default {
         }
     },
     update: async (req, res, next) => {
-        const x = await productsQueries.isExist(req, res, next)
-        console.log({ x })
-        if (!x) {
+        const isExist = await productsQueries.isExist(req, res, next)
+        if (!isExist) {
             await productsQueries.create(req, res)
         } else {
             await productsQueries.remove(req, res)

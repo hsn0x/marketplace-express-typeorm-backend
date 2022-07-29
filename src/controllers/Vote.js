@@ -83,9 +83,9 @@ export default {
         }
     },
     update: async (req, res, next) => {
-        const x = await votesQueries.isExist(req, res, next)
-        console.log({ x })
-        if (!x) {
+        const isExist = await votesQueries.isExist(req, res, next)
+
+        if (!isExist) {
             await votesQueries.create(req, res)
         } else {
             await votesQueries.remove(req, res)

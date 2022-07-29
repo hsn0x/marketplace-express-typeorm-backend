@@ -56,9 +56,8 @@ export default {
         }
     },
     update: async (req, res, next) => {
-        const x = await likes.isExist(req, res, next)
-        console.log({ x })
-        if (!x) {
+        const isExist = await likes.isExist(req, res, next)
+        if (!isExist) {
             await likes.create(req, res)
         } else {
             await likes.remove(req, res)
