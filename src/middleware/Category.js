@@ -3,7 +3,7 @@ import { categoriesQueries } from "../queries/index.js"
 export default {
     isExist: async (req, res, next) => {
         const id = parseInt(req.params.id)
-        const category = await categoriesQueries.findOneQuery({ id })
+        const category = await categoriesQueries.findOneQuery({ where: { id } })
         if (category) {
             return next()
         } else {
@@ -15,7 +15,9 @@ export default {
 
     isNameExist: async (req, res, next) => {
         const name = req.params.name
-        const category = await categoriesQueries.findOneQuery({ name })
+        const category = await categoriesQueries.findOneQuery({
+            where: { name },
+        })
         if (category) {
             return next()
         } else {

@@ -9,8 +9,8 @@ router.post("/", AuthMiddleware.isAuth, ProductController.create)
 
 router.get("/title/:slug", ProductController.getBySlug)
 
-router.get("/q/filters/:query", ProductController.getAllByFilters)
 router.get("/q/:query", ProductController.getAllBySearch)
+router.get("/q/filters/:query", ProductController.getAllByFilters)
 
 router.get("/:id", ProductController.getById)
 router.put(

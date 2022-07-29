@@ -40,7 +40,7 @@ export default {
 
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
-        const favorite = await productsQueries.findOneQuery({ id })
+        const favorite = await productsQueries.findOneQuery({ where: { id } })
         if (favorite) {
             res.status(200).json({ favorite })
         } else {
@@ -51,7 +51,7 @@ export default {
     },
     getBySlug: async (req, res) => {
         const slug = req.params.slug
-        const favorite = await productsQueries.findOneQuery({ slug })
+        const favorite = await productsQueries.findOneQuery({ where: { slug } })
         if (favorite) {
             res.status(200).json({ favorite })
         } else {

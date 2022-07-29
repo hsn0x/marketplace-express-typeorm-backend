@@ -12,10 +12,12 @@ export default {
             for (let index = 0; index < permissions.length; index++) {
                 const permission = permissions[index]
                 const perm = await permissionsQueries.findOneQuery({
-                    name: permission,
+                    where: { name: permission },
                 })
                 const Role = await rolesQueries.findOneQuery({
-                    name: ROLE.name,
+                    where: {
+                        name: ROLE.name,
+                    },
                 })
                 await Role.addPermission(perm.id)
             }

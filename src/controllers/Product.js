@@ -1,3 +1,4 @@
+import { Op } from "sequelize"
 import { getPagingData } from "../lib/handlePagination.js"
 import { productsQueries } from "../queries/index.js"
 import { validatecreate, validateupdate } from "../validation/Product.js"
@@ -5,7 +6,9 @@ import { validatecreate, validateupdate } from "../validation/Product.js"
 export default {
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
-        const data = await productsQueries.findOneQuery({ id })
+        const data = await productsQueries.findOneQuery({ where: { id } }, [
+            "withAssociations",
+        ])
         if (data) {
             res.status(200).json(data)
         } else {
@@ -16,7 +19,9 @@ export default {
     },
     getBySlug: async (req, res) => {
         const slug = req.params.slug
-        const record = await productsQueries.findOneQuery({ slug })
+        const record = await productsQueries.findOneQuery({ where: { slug } }, [
+            "withAssociations",
+        ])
         if (record) {
             res.status(200).json(record)
         } else {
@@ -50,11 +55,14 @@ export default {
             .split(" ")
             .filter((q) => q !== "")
             .map((q) => ({ title: { [Op.like]: `%${q}%` } }))
-        const rows = await productsQueries.findAllQuery({
-            where: {
-                [Op.or]: [...queries],
+        const rows = await productsQueries.findAllQuery(
+            {
+                where: {
+                    [Op.or]: [...queries],
+                },
             },
-        })
+            ["withAssociations"]
+        )
         if (rows) {
             return res.status(200).json(rows)
         } else {
@@ -100,12 +108,15 @@ export default {
             })
         }
 
-        const rows = await productsQueries.findAll({
-            where: {
-                [Op.and]: [{ ...queryFilter }, { ...priceFilter }],
+        const rows = await productsQueries.findAll(
+            {
+                where: {
+                    [Op.and]: [{ ...queryFilter }, { ...priceFilter }],
+                },
+                include: [...categoryFilter],
             },
-            include: [...categoryFilter],
-        })
+            ["withAssociations"]
+        )
         if (rows) {
             return res.status(200).json(rows)
         } else {

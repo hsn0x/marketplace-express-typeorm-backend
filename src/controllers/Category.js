@@ -8,7 +8,7 @@ import {
 export default {
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
-        const data = await categoriesQueries.findOneQuery({ id })
+        const data = await categoriesQueries.findOneQuery({ where: { id } })
         if (data) {
             res.status(200).json(data)
         } else {
@@ -20,7 +20,7 @@ export default {
 
     getByName: async (req, res) => {
         const name = req.params.name
-        const record = await categoriesQueries.findOneQuery({ name })
+        const record = await categoriesQueries.findOneQuery({ where: { name } })
         if (record) {
             res.status(200).json(record)
         } else {

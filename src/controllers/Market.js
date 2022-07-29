@@ -1,3 +1,4 @@
+import { Op } from "sequelize"
 import { marketsQueries } from "../queries/index.js"
 import {
     validateCreateMarket,
@@ -7,7 +8,9 @@ import {
 export default {
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
-        const data = await marketsQueries.findOneQuery({ id })
+        const data = await marketsQueries.findOneQuery({ where: { id } }, [
+            "withAssociations",
+        ])
         if (data) {
             res.status(200).json(data)
         } else {
@@ -18,7 +21,9 @@ export default {
     },
     getByName: async (req, res) => {
         const name = req.params.name
-        const record = await marketsQueries.findOneQuery({ name })
+        const record = await marketsQueries.findOneQuery({ where: { name } }, [
+            "withAssociations",
+        ])
         if (record) {
             res.status(200).json(record)
         } else {
@@ -52,11 +57,14 @@ export default {
             .split(" ")
             .filter((q) => q !== "")
             .map((q) => ({ title: { [Op.like]: `%${q}%` } }))
-        const rows = await marketsQueries.findAllQuery({
-            where: {
-                [Op.or]: [...queries],
+        const rows = await marketsQueries.findAllQuery(
+            {
+                where: {
+                    [Op.or]: [...queries],
+                },
             },
-        })
+            ["withAssociations"]
+        )
         if (rows) {
             return res.status(200).json(rows)
         } else {

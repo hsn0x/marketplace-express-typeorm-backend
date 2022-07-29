@@ -50,7 +50,9 @@ export default {
             return res.status(400).json({ message: "Username is required" })
         }
 
-        const isUsernameTaken = await usersQueries.findOneQuery({ username })
+        const isUsernameTaken = await usersQueries.findOneQuery({
+            where: { username },
+        })
         if (isUsernameTaken) {
             return res.status(401).json({
                 message: `Username ${username} is already taken`,
@@ -71,7 +73,9 @@ export default {
     isEmailExist: async (req, res, next) => {
         const { email } = req.body
 
-        const isEmailExist = await usersQueries.findOneQuery({ email })
+        const isEmailExist = await usersQueries.findOneQuery({
+            where: { email },
+        })
         if (isEmailExist) {
             return res.status(401).json({
                 message: `User with email ${email} already exist`,

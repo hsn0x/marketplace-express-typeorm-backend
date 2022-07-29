@@ -23,11 +23,17 @@ export default {
             gender: ownerConfig.gender,
         })
 
-        const ADMIN_ROLE = await rolesQueries.findOneQuery({ name: "ADMIN" })
-        const MODERATOR_ROLE = await rolesQueries.findOneQuery({
-            name: "MODERATOR",
+        const ADMIN_ROLE = await rolesQueries.findOneQuery({
+            where: { name: "ADMIN" },
         })
-        const EDITOR_ROLE = await rolesQueries.findOneQuery({ name: "EDITOR" })
+        const MODERATOR_ROLE = await rolesQueries.findOneQuery({
+            where: {
+                name: "MODERATOR",
+            },
+        })
+        const EDITOR_ROLE = await rolesQueries.findOneQuery({
+            where: { name: "EDITOR" },
+        })
 
         await ADMIN_USER.addRole(ADMIN_ROLE.id)
         await ADMIN_USER.addRole(MODERATOR_ROLE.id)

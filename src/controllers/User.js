@@ -27,7 +27,7 @@ export default {
 
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
-        const user = await usersQueries.findOneQuery({ id })
+        const user = await usersQueries.findOneQuery({ where: { id } })
         if (user) {
             res.status(200).json({ user })
         } else {
@@ -37,7 +37,7 @@ export default {
 
     getByUsername: async (req, res) => {
         const username = req.params.username
-        const user = await usersQueries.findOneQuery({ username })
+        const user = await usersQueries.findOneQuery({ where: { username } })
         if (user) {
             res.status(200).json({ user })
         } else {
@@ -49,7 +49,7 @@ export default {
 
     getByEmail: async (req, res) => {
         const email = parseInt(req.params.email)
-        const user = await usersQueries.findOneQuery({ email })
+        const user = await usersQueries.findOneQuery({ where: { email } })
         if (user) {
             res.status(200).json({ user })
         } else {
@@ -186,7 +186,7 @@ export default {
             })
         }
 
-        const currentUser = await usersQueries.findOneQuery({ id }, false)
+        const currentUser = await usersQueries.findOneQuery({ where: { id } })
         if (!currentUser) {
             return res.status(404).json({
                 message: `User not found with ID: ${id}`,

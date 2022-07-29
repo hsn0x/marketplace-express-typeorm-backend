@@ -35,7 +35,7 @@ export default {
 
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
-        const vote = await votesQueries.findOneQuery({ id })
+        const vote = await votesQueries.findOneQuery({ where: { id } })
         if (vote) {
             res.status(200).json({ vote })
         } else {
@@ -44,7 +44,7 @@ export default {
     },
     getBySlug: async (req, res) => {
         const slug = req.params.slug
-        const vote = await votesQueries.findOneQuery({ slug })
+        const vote = await votesQueries.findOneQuery({ where: { slug } })
         if (vote) {
             res.status(200).json({ vote })
         } else {

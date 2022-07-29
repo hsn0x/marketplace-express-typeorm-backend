@@ -38,7 +38,7 @@ export default {
         const id = parseInt(req.params.id)
         const { session, user } = req
 
-        const isOwner = await findOneQuery({ id, userId: user.id })
+        const isOwner = await findOneQuery({ where: { id, userId: user.id } })
 
         if (isOwner) {
             return next()

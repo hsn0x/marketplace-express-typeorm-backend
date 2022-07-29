@@ -17,7 +17,7 @@ export default {
     },
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
-        const like = await likes.findOneQuery({ id })
+        const like = await likes.findOneQuery({ where: { id } })
         if (like) {
             res.status(200).json({ like })
         } else {

@@ -6,7 +6,7 @@ import {
 export default {
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
-        const data = await commentsQueries.findOneQuery({ id })
+        const data = await commentsQueries.findOneQuery({ where: { id } })
         if (data) {
             res.status(200).json(data)
         } else {

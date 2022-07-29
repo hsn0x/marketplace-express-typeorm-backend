@@ -1,7 +1,7 @@
-import sequelize from "../db/sequelize.js";
-import SequelizeSlugify from "sequelize-slugify";
+import sequelize from "../db/sequelize.js"
+import SequelizeSlugify from "sequelize-slugify"
 
-import { ARRAY, INTEGER, STRING, TEXT } from "../db/dataTypes.js";
+import { ARRAY, INTEGER, STRING, TEXT } from "../db/dataTypes.js"
 
 const Product = sequelize.define(
     "Product",
@@ -18,10 +18,6 @@ const Product = sequelize.define(
             type: TEXT,
             allowNull: false,
         },
-        about: {
-            type: TEXT,
-            allowNull: false,
-        },
         price: {
             type: INTEGER,
             allowNull: false,
@@ -32,8 +28,8 @@ const Product = sequelize.define(
         },
     },
     {}
-);
+)
 
-SequelizeSlugify.slugifyModel(Product, { source: ["title"] });
+SequelizeSlugify.slugifyModel(Product, { source: ["title"] })
 
-export default Product;
+export default Product
