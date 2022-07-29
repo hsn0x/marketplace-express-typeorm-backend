@@ -44,8 +44,8 @@ export default {
         return recordCreated
     },
 
-    update: async (data, where) => {
-        await PermissionScope.update(data, { where })
+    update: async (data, filter) => {
+        await PermissionScope.update(data, filter)
         const recordUpdated = await PermissionScope.scope(scope).findOne(filter)
         recordUpdated.categories.map(
             async (c) => await recordUpdated.removeCategory(c.id)

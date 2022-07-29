@@ -44,8 +44,8 @@ export default {
         return recordCreated
     },
 
-    update: async (data, where) => {
-        await ResourceScope.update(data, { where })
+    update: async (data, filter) => {
+        await ResourceScope.update(data, filter)
         const recordUpdated = await ResourceScope.scope(scope).findOne(filter)
         recordUpdated.categories.map(
             async (c) => await recordUpdated.removeCategory(c.id)

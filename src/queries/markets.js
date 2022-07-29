@@ -44,8 +44,8 @@ export default {
         return recordCreated
     },
 
-    create: async (data, where) => {
-        await MarketScope.update(data, { where })
+    update: async (data, filter) => {
+        await MarketScope.update(data, filter)
         const recordUpdated = await MarketScope.scope(scope).findOne(filter)
         recordUpdated.categories.map(
             async (c) => await recordUpdated.removeCategory(c.id)

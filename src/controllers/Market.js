@@ -86,7 +86,7 @@ export default {
             description,
             about,
             UserId: user.id,
-            CategoriesIds,
+            CategoriesIds: CategoriesIds.map((id) => parseInt(id)),
         }
 
         const isMarketValid = validateCreateMarket(marketData)
@@ -101,10 +101,7 @@ export default {
         const createdMarket = await marketsQueries.create(marketData)
 
         if (createdMarket) {
-            return res.status(201).json({
-                message: `Market added with ID: ${createdMarket.id}`,
-                data: createdMarket,
-            })
+            return res.status(201).json(createdMarket)
         } else {
             return res.status(500).json({ message: `Faile to create a market` })
         }

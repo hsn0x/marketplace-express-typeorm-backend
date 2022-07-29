@@ -44,8 +44,8 @@ export default {
         return recordCreated
     },
 
-    create: async (data, where) => {
-        await ReviewScope.update(data, { where })
+    update: async (data, filter) => {
+        await ReviewScope.update(data, filter)
         const recordUpdated = await ReviewScope.scope(scope).findOne(filter)
         recordUpdated.categories.map(
             async (c) => await recordUpdated.removeCategory(c.id)

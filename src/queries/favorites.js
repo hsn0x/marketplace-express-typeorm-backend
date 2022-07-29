@@ -44,7 +44,7 @@ export default {
         return recordCreated
     },
 
-    update: async (data, where) => {},
+    update: async (data, filter) => {},
 
     remove: async (filter) => {
         const recordDeleted = await Favorite.destroy(filter)

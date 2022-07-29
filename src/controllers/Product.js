@@ -134,10 +134,10 @@ export default {
         const data = {
             title,
             description,
-            price,
-            quantity,
-            MarketId,
-            CategoriesIds,
+            price: Number(price),
+            quantity: Number(quantity),
+            MarketId: Number(MarketId),
+            CategoriesIds: CategoriesIds.map((ci) => Number(ci)),
             UserId: user.id,
         }
 
