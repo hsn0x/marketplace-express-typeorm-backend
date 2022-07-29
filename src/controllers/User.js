@@ -8,12 +8,7 @@ import {
     Student,
 } from "../models/index.js"
 import { usersQueries } from "../queries/index.js"
-import {
-    validateCreate,
-    validateUpdateUserEmail,
-    validateUpdateUserPassword,
-    validateUpdateUser,
-} from "../validation/User.js"
+import { UserValidation } from "../validation/index.js"
 
 export default {
     getAll: async (req, res) => {
@@ -86,7 +81,7 @@ export default {
         userData.passwordHash = hashedPassword.hash
         userData.passwordSalt = hashedPassword.salt
 
-        const isUserValid = validateCreate(userData)
+        const isUserValid = UserValidation.validateCreate(userData)
 
         if (!isUserValid.valid) {
             return res.status(401).json({
@@ -125,7 +120,7 @@ export default {
 
         userData.age = Number(userData.age)
 
-        const isUserValid = validateUpdateUser(userData)
+        const isUserValid = UserValidation.validateUpdateUser(userData)
 
         if (!isUserValid.valid) {
             return res.status(401).json({
@@ -156,7 +151,7 @@ export default {
             email,
         }
 
-        const isUserValid = validateUpdateUserEmail(userData)
+        const isUserValid = UserValidation.validateUpdateUserEmail(userData)
 
         if (!isUserValid.valid) {
             return res.status(401).json({
@@ -202,7 +197,7 @@ export default {
         /**
          * Check if the current password is valid
          */
-        let isUserValid = validateUpdateUserPassword({
+        let isUserValid = UserValidation.validateUpdateUserPassword({
             ...userData,
             passwordHash: currentUser.passwordHash,
             passwordSalt: currentUser.passwordSalt,
@@ -221,7 +216,7 @@ export default {
         /**
          * Check if the current password is valid
          */
-        isUserValid = validateUpdateUserPassword(userData)
+        isUserValid = UserValidation.validateUpdateUserPassword(userData)
         if (!isUserValid.valid) {
             return res.status(401).json({
                 valid: isUserValid.valid,

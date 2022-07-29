@@ -1,7 +1,7 @@
 import { VoteMiddleware } from "../middleware/index.js"
 import Product from "../models/Product.js"
 import { productsQueries, votesQueries } from "../queries/index.js"
-import { validateCreate, validateUpdateVote } from "../validation/Vote.js"
+import { VoteValidation } from "../validation/index.js"
 
 export default {
     getAll: async (req, res) => {

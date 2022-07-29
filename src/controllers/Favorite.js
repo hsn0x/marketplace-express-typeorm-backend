@@ -1,10 +1,7 @@
 import { FavoriteMiddleware } from "../middleware/index.js"
 import Product from "../models/Product.js"
 import { favoritesQueries, productsQueries } from "../queries/index.js"
-import {
-    validateCreate,
-    validateUpdateFavorite,
-} from "../validation/Favorite.js"
+import { FavoriteValidation } from "../validation/index.js"
 
 export default {
     getAll: async (req, res) => {
@@ -68,7 +65,7 @@ export default {
             ProductId,
         }
 
-        // const isValid = validateCreate(favoriteData);
+        // const isValid = FavoriteValidation.validateCreate(favoriteData);
 
         // if (!isValid.valid) {
         //     return res.status(400).json({

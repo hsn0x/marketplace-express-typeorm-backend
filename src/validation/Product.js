@@ -59,7 +59,7 @@ const updateSchema = {
 }
 
 export default {
-    validatecreate: async (productData) => {
+    validateCreate: async (productData) => {
         const valid = ajv.validate(createSchema, productData)
         if (!valid)
             return {
@@ -68,7 +68,7 @@ export default {
             }
         return { valid }
     },
-    validateupdate: async (productData) => {
+    validateUpdate: async (productData) => {
         const valid = ajv.validate(updateSchema, productData)
         if (!valid)
             return {

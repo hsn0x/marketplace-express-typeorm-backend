@@ -1,7 +1,7 @@
 import { Op } from "sequelize"
 import { getPagingData } from "../lib/handlePagination.js"
 import { productsQueries } from "../queries/index.js"
-import { validatecreate, validateupdate } from "../validation/Product.js"
+import { ProductValidation } from "../validation/index.js"
 
 export default {
     getById: async (req, res) => {
@@ -141,7 +141,7 @@ export default {
             UserId: user.id,
         }
 
-        const isValid = validatecreate(data)
+        const isValid = ProductValidation.validateCreate(data)
 
         if (!isValid.valid) {
             return res.status(400).json({
@@ -174,7 +174,7 @@ export default {
             UserId: user.id,
         }
 
-        const isValid = validateupdate(data)
+        const isValid = ProductValidation.update(data)
 
         if (!isValid.valid) {
             return res.status(400).json({

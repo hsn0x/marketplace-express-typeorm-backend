@@ -1,5 +1,5 @@
 import { reviewsQueries } from "../queries/index.js"
-import { validateCreate, validateUpdateReview } from "../validation/Review.js"
+import { ReviewValidation } from "../validation/index.js"
 export default {
     getById: async (req, res) => {
         const id = parseInt(req.params.id)
@@ -43,7 +43,7 @@ export default {
             UserId: user.id,
         }
 
-        const isReviewValid = validateCreate(reviewData)
+        const isReviewValid = ReviewValidation.validateCreate(reviewData)
 
         if (!isReviewValid.valid) {
             return res.status(400).json({
@@ -75,7 +75,7 @@ export default {
             UserId: user.id,
         }
 
-        const isReviewValid = validateUpdateReview(reviewData)
+        const isReviewValid = ReviewValidation.validateUpdateReview(reviewData)
 
         if (!isReviewValid) {
             res.status(400).json({ message: "Review not updated" })

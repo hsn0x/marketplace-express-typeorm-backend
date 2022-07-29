@@ -1,6 +1,6 @@
 import { UserController } from "./index.js"
 import passport from "passport"
-import { validateRegister } from "../validation/Auth.js"
+import { AuthValidation } from "../validation/index.js"
 import { authQueries } from "../queries/index.js"
 import { genPassword } from "../lib/passwordUtils.js"
 
@@ -63,7 +63,7 @@ export default {
         data.passwordHash = hashedPassword.hash
         data.passwordSalt = hashedPassword.salt
 
-        const isRegisterValid = validateRegister(data)
+        const isRegisterValid = AuthValidation.validateRegister(data)
 
         if (!isRegisterValid.valid) {
             return res.status(401).json({

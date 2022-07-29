@@ -1,9 +1,6 @@
 import { categoriesQueries } from "../queries/index.js"
 
-import {
-    validateCreateCategory,
-    validateUpdateCategory,
-} from "../validation/Category.js"
+import { CategoryValidation } from "../validation/index.js"
 
 export default {
     getById: async (req, res) => {
@@ -79,7 +76,7 @@ export default {
             type,
         }
 
-        const isValid = validateCreateCategory(categoryData)
+        const isValid = CategoryValidation.validateCreate(categoryData)
 
         if (!isValid.valid) {
             return res.status(400).json({
@@ -115,7 +112,7 @@ export default {
             title,
         }
 
-        const isValid = validateUpdateCategory(categoryData)
+        const isValid = CategoryValidation.validateUpdate(categoryData)
 
         if (!isValid) {
             res.status(400).json({ message: "Category not updated" })
