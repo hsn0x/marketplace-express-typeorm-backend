@@ -1,5 +1,5 @@
 {
-    "name": "marketplace-express-sequelize-backend",
+    "name": "marketplace-express-typeorm-backend",
     "version": "1.0.5",
     "description": "Marketplace with multi stores, products, members",
     "main": "src/index.js",
@@ -8,7 +8,7 @@
     "type": "module",
     "private": true,
     "repository": {
-        "url": "https://github.com/hsn0x/marketplace-express-sequelize-backend.git",
+        "url": "https://github.com/hsn0x/marketplace-express-typeorm-backend.git",
         "type": "git",
         "directory": "."
     },
