@@ -2,7 +2,7 @@
 import express from "express"
 import passport from "passport"
 // Local Import
-import sequelize from "./db/sequelize.js"
+import typeorm from "./db/typeorm.js"
 import "./associations/index.js"
 
 // Route
@@ -29,13 +29,10 @@ const serverHost = expressConfig.host
 const serverPort = expressConfig.port
 
 const server = async () => {
-    await sequelize.sync({ force: true })
+    await typeorm.initialize()
 
-    // await sequelize.sync({ alter: true });
-    // await sequelize.sync();
-
-    await seeders.dbSeed()
-    await seeders.dbSeedFake()
+    // await seeders.dbSeed()
+    // await seeders.dbSeedFake()
 
     app.listen(serverPort, () => {
         console.log(

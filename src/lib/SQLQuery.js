@@ -1,33 +1,33 @@
-import sequelize from "../db/sequelize.js";
+import typeorm from "../db/typeorm.js"
 
 const querySQLFile = (fileName) => {
     return new Promise((resolve, reject) => {
         fs.readFile(fileName, "utf8", (err, data) => {
             if (err) {
-                reject(err);
+                reject(err)
             }
-            resolve(data);
-        });
-    });
-};
+            resolve(data)
+        })
+    })
+}
 
 const runSQLFile = (fileName) => {
     return new Promise((resolve, reject) => {
         querySQLFile(fileName)
             .then((data) => {
-                sequelize
+                typeorm
                     .query(data)
                     .then((result) => {
-                        resolve(result);
+                        resolve(result)
                     })
                     .catch((err) => {
-                        reject(err);
-                    });
+                        reject(err)
+                    })
             })
             .catch((err) => {
-                reject(err);
-            });
-    });
-};
+                reject(err)
+            })
+    })
+}
 
-export { querySQLFile, runSQLFile };
+export { querySQLFile, runSQLFile }
