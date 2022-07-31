@@ -1,6 +1,6 @@
 {
     "name": "marketplace-express-typeorm-backend",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "Marketplace with multi stores, products, members",
     "main": "src/index.js",
     "author": "Hassane Bendaoud <40140987+hsn0x@users.noreply.github.com>",
@@ -19,6 +19,7 @@
     "dependencies": {
         "@elastic/elasticsearch": "^8.2.1",
         "@faker-js/faker": "^7.2.0",
+        "@types/express": "^4.17.13",
         "ajv": "^8.11.0",
         "axios": "^0.27.2",
         "body-parser": "^1.20.0",
@@ -42,7 +43,9 @@
         "sequelize-slugify": "^1.6.1",
         "slugify": "^1.6.5",
         "sqlite3": "^5.0.8",
+        "ts-node": "^10.9.1",
         "typeorm": "^0.3.7",
+        "typescript": "^4.7.4",
         "uuid": "^8.3.2",
         "validator": "^13.7.0"
     },
