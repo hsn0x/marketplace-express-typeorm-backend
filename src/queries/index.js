@@ -11,7 +11,7 @@ export { default as marketsQueries } from "./markets.js"
 export { default as categoriesQueries } from "./categories.js"
 
 export { default as commentsQueries } from "./comments.js"
-export { default as reviewsQueries } from "./comments.js"
+export { default as reviewsQueries } from "./reviews.js"
 
 export { default as favoritesQueries } from "./favorites.js"
 export { default as votesQueries } from "./votes.js"
